@@ -140,7 +140,7 @@ public class Sim {
 
     public void tidur() {
         Scanner scanner = new Scanner(System.in);
-        int durasi = scanner.nextInt();    
+        int durasi = scanner.nextInt();
         // EFEK TIDUR
         mood += (30 * (durasi / 4));
         kesehatan += (20 * (durasi / 4));
