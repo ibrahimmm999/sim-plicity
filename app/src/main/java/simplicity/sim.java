@@ -52,8 +52,16 @@ public class Sim {
         return kekenyangan;
     }
 
+    public void setKekenyangan(int kekenyangan) {
+        this.kekenyangan = kekenyangan;
+    }
+
     public int getMood() {
         return mood;
+    }
+
+    public void setmood(int mood) {
+        this.mood = mood;
     }
 
     public int getKesehatan() {
@@ -114,6 +122,7 @@ public class Sim {
             } else {
                 System.out.println("Masukkan input yang benar");
             }
+            scanner.close();
         }
     }
 
@@ -135,6 +144,7 @@ public class Sim {
             } else {
                 System.out.println("Masukkan input yang benar");
             }
+            scanner.close();
         }
     }
 
@@ -144,23 +154,104 @@ public class Sim {
         // EFEK TIDUR
         mood += (30 * (durasi / 4));
         kesehatan += (20 * (durasi / 4));
-
+        scanner.close();
     }
 
-    public void makan() {
+    public void makan(Makanan makanan) {
+        if (inventory.getInventory().containsKey(makanan) && inventory.getInventory().get(makanan) > 0) {
+            kekenyangan += makanan.getKenyang();
+            cekKekenyangan();
+            mood += 5;
+            cekMood();
+            inventory.removeInventory(makanan);
+            System.out.println(namaLengkap + " berhasil makan " + makanan.getNama() + "!");
+        } else {
+            System.out.println(namaLengkap + " tidak memiliki " + makanan.getNama() + " dalam inventory!");
+        }
 
-    }
-
-    public void memasak(BahanMakanan[] listBahanMakanan) {
-
+    public void memasak(Masakan masakan, Inventory inventory) {
+        List<BahanMakanan> bahanDibutuhkan = masakan.getBahanDibutuhkan();
+        boolean semuaBahanTersedia = true;
+        for (BahanMakanan bahan : bahanDibutuhkan) {
+            if (!inventory.contains(bahan)) {
+                semuaBahanTersedia = false;
+                break;
+            }
+        }
+        if (semuaBahanTersedia) {
+            for (BahanMakanan bahan : bahanDibutuhkan) {
+                inventory.removeInventory(bahan);
+            }
+            int waktuMasak = (int) (1.5 * kekenyangan);
+            kekenyangan += masakan.getKenyang();
+            cekKekenyangan();
+            mood += 10;
+            cekMood();
+            inventory.addInventory(masakan);
+            Thread masakThread = new Thread(() -> {
+                try {
+                    Thread.sleep(waktuMasak * 1000);
+                    inventory.removeInventory(masakan);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+            masakThread.start();
+        } else {
+            System.out.println("Bahan makanan tidak cukup!");
+        }
     }
 
     public void berkunjung(Rumah tujuan) {
-
+        int waktuTempuh;
+        // this.getRumah() maksudnya buat rumah sim yang sedang dimainkan
+        if (this.getRumah() == tujuan.getRumah()) {
+            waktuTempuh = 0;
+        } else {
+            // getRumah yang disini maksudnya rumah nya si sim yg dimainkan
+            // kurang tau gmn buatnya jadi aku buat this.getRumah() aja dulu
+            waktuTempuh = (int) Math
+                    .round(Math.sqrt(Math.pow(tujuan.getKoordinat().getX() - this.getRumah().getKoordinat().getX(), 2)
+                            + Math.pow(tujuan.getKoordinat().getY() - this.getRumah().getKoordinat().getY(), 2)));
+            this.getRumah().keluarRumah(this);
+            tujuan.getRumah().masukRumah(this, tujuan.getKoordinat());
+        }
+        this.setmood(this.getMood() + waktuTempuh / 3); // Mood meningkat sebesar 10 untuk setiap 30 detik
+        this.setKekenyangan(this.getKekenyangan() - waktuTempuh / 3); // Kekenyangan menurun sebesar 10 untuk setiap 30
+                                                                      // detik
     }
 
     public void buangAir() {
-
+        boolean berhasilBuangAir = false;
+        for (int i = 0; i < inventory.getBarang().size(); i++) {
+            if (ruangan.getBarang().get(i) instanceof Toilet) { // cek apakah ruangan memiliki toilet
+                Toilet toilet = (Toilet) inventory.getBarang().get(i);
+                if (toilet.getIsAvailable() && toilet.getIsOccupied()) { // cek apakah toilet tersedia
+                    // getIsAvailable dan getIsOccupied bakal ada di kelas tiap objek
+                    toilet.setIsAvailable(false); // ubah status toilet menjadi tidak tersedia
+                    toilet.setIsOccupied(false);
+                    kekenyangan -= 20;
+                    cekKekenyangan();
+                    mood += 10;
+                    cekMood();
+                    berhasilBuangAir = true;
+                    System.out.println(namaLengkap + " berhasil buang air di " + toilet.getNamaObjek());
+                    break;
+                }
+            }
+        }
+        if (!berhasilBuangAir) {
+            if (waktuKerjaSim - pekerjaan.getWaktuKerja() >= 4) { // cek apakah sudah 4 menit setelah makan
+                kesehatan -= 5;
+                cekKesehatan();
+                mood -= 5;
+                cekMood();
+                System.out.println(namaLengkap + " tidak berhasil buang air dan mengalami kesehatan dan mood menurun");
+            } else {
+                System.out.println(
+                        namaLengkap + " tidak berhasil buang air dan masih terlalu cepat untuk mengalami efek negatif");
+            }
+        }
     }
 
     public void upgradeRumah() {
