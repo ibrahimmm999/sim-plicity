@@ -1,6 +1,6 @@
 package simplicity;
 
-public enum pekerjaan {
+public enum Pekerjaan {
     BADUT_SULAP("Badut Sulap", 15, 4),
     KOKI("Koki", 30, 4),
     POLISI("Polisi", 35, 4),
@@ -11,7 +11,7 @@ public enum pekerjaan {
     private final int gaji;
     private final int waktuKerja;
 
-    pekerjaan(String namaPekerjaan, int gaji, int waktuKerja) {
+    Pekerjaan(String namaPekerjaan, int gaji, int waktuKerja) {
         this.namaPekerjaan = namaPekerjaan;
         this.gaji = gaji;
         this.waktuKerja = waktuKerja;
@@ -29,7 +29,7 @@ public enum pekerjaan {
         return waktuKerja;
     }
 
-    public pekerjaan[] getAllPekerjaan() {
+    public Pekerjaan[] getAllPekerjaan() {
         return values();
     }
 }

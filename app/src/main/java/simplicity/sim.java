@@ -1,29 +1,32 @@
 package simplicity;
 
 import java.util.Random;
+import java.util.Scanner;
 
-public class sim {
+public class Sim {
     private String namaLengkap;
-    private pekerjaan pekerjaan;
+    private Pekerjaan pekerjaan;
     private int uang;
-    private inventory inventory;
+    private Inventory inventory;
     private int kekenyangan;
     private int mood;
     private int kesehatan;
     private String status;
+    private int waktuKerjaSim; // waktu total sim kerja buat ngecek gajian
 
-    public sim(String namaLengkap) {
+    public Sim(String namaLengkap) {
         this.namaLengkap = namaLengkap;
         this.pekerjaan = getRandomPekerjaan();
         this.uang = 100;
         this.kekenyangan = 80;
         this.mood = 80;
         this.kesehatan = 80;
+        this.waktuKerjaSim = 0;
     }
 
     // pekerjaan harusnya dimasukin ke array dulu
-    public pekerjaan getRandomPekerjaan() {
-        pekerjaan[] daftarPekerjaan = pekerjaan.getAllPekerjaan();
+    public Pekerjaan getRandomPekerjaan() {
+        Pekerjaan[] daftarPekerjaan = pekerjaan.getAllPekerjaan();
         Random random = new Random();
         int index = random.nextInt(daftarPekerjaan.length);
         return daftarPekerjaan[index];
@@ -33,7 +36,7 @@ public class sim {
         return namaLengkap;
     }
 
-    public pekerjaan getPekerjaan() {
+    public Pekerjaan getPekerjaan() {
         return pekerjaan;
     }
 
@@ -41,7 +44,7 @@ public class sim {
         return uang;
     }
 
-    public inventory getInventory() {
+    public Inventory getInventory() {
         return inventory;
     }
 
@@ -90,7 +93,125 @@ public class sim {
     }
 
     public void kerja() {
+        while (true) {
+            System.out.print("Masukkan durasi kerja dalam satuan detik (kelipatan 120) : ");
+            Scanner scanner = new Scanner(System.in);
+            int durasi = scanner.nextInt();
+            if (durasi % 120 == 0) {
+                setStatus("kerja");
+                kekenyangan -= (10 * (durasi / 30));
+                mood -= (10 * (durasi / 30));
+                waktuKerjaSim += durasi;
+                if (waktuKerjaSim >= 240) {
+                    uang += pekerjaan.getGaji() * waktuKerjaSim / 240;
+                    waktuKerjaSim = waktuKerjaSim % 240;
+                }
+                // CEK MATI
+                cekMood();
+                cekKesehatan();
+                cekKekenyangan();
+                break;
+            } else {
+                System.out.println("Masukkan input yang benar");
+            }
+        }
+    }
+
+    public void olahraga() {
+        while (true) {
+            System.out.print("Masukkan durasi olahraga dalam satuan detik (kelipatan 20) : ");
+            Scanner scanner = new Scanner(System.in);
+            int durasi = scanner.nextInt();
+            if (durasi % 20 == 0) {
+                setStatus("olahraga");
+                kekenyangan -= (5 * (durasi / 20));
+                kesehatan += (5 * (durasi / 20));
+                mood += (10 * (durasi / 20));
+                // CEK MATI
+                cekMood();
+                cekKesehatan();
+                cekKekenyangan();
+                break;
+            } else {
+                System.out.println("Masukkan input yang benar");
+            }
+        }
+    }
+
+    public void tidur() {
+        Scanner scanner = new Scanner(System.in);
+        int durasi = scanner.nextInt();    
+        // EFEK TIDUR
+        mood += (30 * (durasi / 4));
+        kesehatan += (20 * (durasi / 4));
 
     }
 
+    public void makan() {
+
+    }
+
+    public void memasak(BahanMakanan[] listBahanMakanan) {
+
+    }
+
+    public void berkunjung(Rumah tujuan) {
+
+    }
+
+    public void buangAir() {
+
+    }
+
+    public void upgradeRumah() {
+
+    }
+
+    public void beliBarang(Objek barang) {
+
+    }
+
+    public void pindahRuangan() {
+
+    }
+
+    public void lihatInventory() {
+
+    }
+
+    public void pasangBarang() {
+
+    }
+
+    public void lihatWaktu() {
+
+    }
+
+    public void berdoa() {
+
+    }
+
+    public void rapihinKasur() {
+
+    }
+
+    public void meditasi() {
+
+    }
+
+    public void socialize() {
+
+    }
+
+    public void beresinKamarMandi() {
+
+    }
+
+    public void belajar() {
+
+    }
+
+    public void nubes() {
+
+    }
 }
