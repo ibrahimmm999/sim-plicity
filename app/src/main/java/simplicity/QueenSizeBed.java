@@ -1,11 +1,21 @@
 package simplicity;
 
 public class QueenSizeBed extends Non_Makanan {
-    public QueenSizeBed(){
-        super("Kasur Queen Size",4,2,"Tidur",100);
+    private boolean isAvailable;
+
+    public QueenSizeBed() {
+        super("Kasur Queen Size", 4, 2, "Tidur", 100);
     }
 
-    public boolean isOccupied(){
+    public boolean isOccupied() {
         return false;
+    }
+
+    public boolean getIsAvailable() {
+        return isAvailable;
+    }
+
+    public void setIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 }
