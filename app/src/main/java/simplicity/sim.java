@@ -1,6 +1,8 @@
 package simplicity;
 
 import java.util.Random;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Sim {
@@ -255,23 +257,118 @@ public class Sim {
     }
 
     public void upgradeRumah() {
+        // biayaupgrade nya brp ya? blm tau ini masih ngasal dlu biayanya
+        int biayaUpgrade = 50; // biaya upgrade untuk menambah satu ruangan
 
+        // cek apakah sim memiliki cukup uang untuk upgrade
+        if (uang < biayaUpgrade) {
+            System.out.println("Maaf, uang anda tidak cukup untuk melakukan upgrade rumah.");
+            return;
+        }
+
+        // tambahkan ruangan baru pada rumah
+        Ruangan ruanganBaru = new Ruangan();
+        rumah.addRuangan(ruanganBaru);
+
+        // kurangi uang sim sesuai biaya upgrade
+        uang -= biayaUpgrade;
+
+        // tambahkan waktu upgrade ke waktu total Sim
+        // ini blm di update ke waktu yg di world nnt
+        waktuKerjaSim += 18 * 60;
+
+        System.out.println("Rumah berhasil diupgrade dengan tambahan satu ruangan.");
     }
 
     public void beliBarang(Objek barang) {
-
+        if (this.uang < barang.getHarga()) {
+            System.out.println("Uang anda tidak cukup!");
+            return;
+        }
+        Random random = new Random();
+        int durasi = random.nextInt(30) + 1;
+        // kurangi uang sim
+        this.uang -= barang.getHarga();
+        // tambahkan objek ke inventory
+        this.inventory.tambahBarang(barang);
+        System.out.println("Anda telah membeli " + barang.getNama() + " seharga " + barang.getHarga() + ".");
     }
 
-    public void pindahRuangan() {
+    public void pindahRuangan(Ruangan tujuan) {
+        // Cek apakah tujuan ruangan sama dengan ruangan saat ini
+        if (this.rumah.getRuangan() == tujuan) {
+            System.out.println("Anda sudah berada di ruangan tersebut.");
+            return;
+        }
 
+        // Cek apakah tujuan ruangan penuh
+        // ini bisa full ga ya? blm tau
+        if (tujuan.getJumlahObjek() >= tujuan.getKapasitas()) {
+            System.out.println("Ruangan penuh.");
+            return;
+        }
+
+        // Pindah ruangan dan update lokasi ruangan inventory
+        this.rumah.setRuangan(tujuan);
+        System.out.println("Anda telah pindah ke ruangan " + tujuan.getNama() + ".");
     }
 
     public void lihatInventory() {
-
+        HashMap<Object, Integer> simInventory = inventory.getInventory();
+        if (simInventory.isEmpty()) {
+            System.out.println("Inventory kosong.");
+        } else {
+            System.out.println("Isi inventory:");
+            for (Map.Entry<Object, Integer> entry : simInventory.entrySet()) {
+                Object item = entry.getKey();
+                int jumlah = entry.getValue();
+                System.out.println("- " + item.toString() + " (" + jumlah + ")");
+            }
+        }
     }
 
-    public void pasangBarang() {
+    public void pasangBarang(Barang barang, Ruangan ruangan) {
+        // Cek apakah ruangan memiliki ruang kosong
+        boolean adaRuangKosong = false;
+        for (Map.Entry<Object, Posisi> entry : ruangan.getListObjek().entrySet()) {
+            Posisi posisi = entry.getValue();
+            if (posisi == null) {
+                adaRuangKosong = true;
+                break;
+            }
+        }
 
+        if (!adaRuangKosong) {
+            System.out.println("Ruangan sudah penuh, tidak dapat memasang barang lagi.");
+            return;
+        }
+
+        // Cek apakah barang muat di dalam ruangan
+        if (!barang.cocokDenganRuangan(ruangan)) {
+            System.out.println("Barang tidak muat dalam ruangan.");
+            return;
+        }
+
+        // Cek apakah barang ada di inventory
+        if (!inventory.cariBarang(barang.getNama())) {
+            System.out.println("Barang tidak ditemukan di inventory.");
+            return;
+        }
+
+        // Cari ruang kosong dan pasang barang di dalamnya
+        for (Map.Entry<Object, Posisi> entry : ruangan.getListObjek().entrySet()) {
+            Object key = entry.getKey();
+            Posisi posisi = entry.getValue();
+            if (posisi == null) {
+                Point titikTengah = new Point((posisi.getKananAtas().x + posisi.getKiriBawah().x) / 2,
+                        (posisi.getKananAtas().y + posisi.getKiriBawah().y) / 2);
+                posisi.setObjek(barang);
+                inventory.hapusBarang(barang.getNama());
+                System.out.printf("%s berhasil dipasang di (%d, %d).\n", barang.getNama(), titikTengah.x,
+                        titikTengah.y);
+                return;
+            }
+        }
     }
 
     public void lihatWaktu() {

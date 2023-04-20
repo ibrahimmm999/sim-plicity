@@ -9,10 +9,10 @@ public class Toilet extends Non_Makanan {
     }
 
     public boolean isOccupied() {
-        return false;
+        return isOccupied;
     }
-    
-    public void setIsOccupied(boolean isOccupied){
+
+    public void setIsOccupied(boolean isOccupied) {
         this.isOccupied = isOccupied;
     }
 
