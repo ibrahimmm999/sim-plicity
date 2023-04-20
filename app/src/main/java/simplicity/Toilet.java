@@ -2,6 +2,7 @@ package simplicity;
 
 public class Toilet extends Non_Makanan {
     private boolean isAvailable;
+    private boolean isOccupied;
 
     public Toilet() {
         super("Toilet", 1, 1, "Buang air", 50);
@@ -9,6 +10,10 @@ public class Toilet extends Non_Makanan {
 
     public boolean isOccupied() {
         return false;
+    }
+    
+    public void setIsOccupied(boolean isOccupied){
+        this.isOccupied = isOccupied;
     }
 
     public boolean getIsAvailable() {
