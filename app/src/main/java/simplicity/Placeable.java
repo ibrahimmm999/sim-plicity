@@ -1,12 +1,13 @@
 package simplicity;
 
 interface Placeable {
+    
     public boolean checkEmptyPosisi(Posisi posisi);
     
-    public void addObject(Object object, Posisi posisiObjek, boolean isRotate);
+    public void addObject(Objek objek, Posisi posisiObjek, boolean isRotate);
     
-    public void removeObject(Object object, Posisi posisiObjek);
+    public void removeObject(Objek objek, Posisi posisiObjek);
     
-    public void moveObject(Object object, Posisi posisiAkhir, boolean isRotate);
+    public void moveObject(Objek objek, Posisi posisiAwal, Posisi posisiAkhir, boolean isRotate);
     
 }
