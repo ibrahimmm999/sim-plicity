@@ -9,5 +9,8 @@ Tugas Besar Object Oriented Programming - IF2212 Kelompok 4 K02
 * 18221142 - Yasmin Arum Sari
 
 ## Deskripsi Singkat Program
+Sim Plicity merupakan sebuah permainan dalam BNMO berupa simplifikasi permainan The Sims. Tidak jauh berbeda, tujuan utama permainan ini adalah menjaga kesejahteraan Sim agar tidak depresi yang berujung pada kematian. Hal ini dilakukan dengan melakukan beragam aksi, meliputi aksi aktif, upgrade, dan nonaktif.
+
+Dalam sebuah world, terdapat beberapa Sim yang masing-masing memiliki sebuah rumah dengan ruangan-ruangan dan objek-objek di dalamnya yang bisa di-custom. Pemain dapat mengganti Sim pada pertengahan permainan asalkan Sim tidak sedang melakukan aksi aktif. Bahkan, antar-Sim dapat saling berkunjung, serta membeli objek-objek dengan uang virtual yang didapat setelah bekerja selama beberapa waktu. Pada permainan ini, sehari setara dengan 12 menit.
 
 ## Cara Kompilasi Program
