@@ -13,4 +13,6 @@ Sim Plicity merupakan sebuah permainan dalam BNMO berupa simplifikasi permainan 
 
 Dalam sebuah world, terdapat beberapa Sim yang masing-masing memiliki sebuah rumah dengan ruangan-ruangan dan objek-objek di dalamnya yang bisa di-custom. Pemain dapat mengganti Sim pada pertengahan permainan asalkan Sim tidak sedang melakukan aksi aktif. Bahkan, antar-Sim dapat saling berkunjung, serta membeli objek-objek dengan uang virtual yang didapat setelah bekerja selama beberapa waktu. Pada permainan ini, sehari setara dengan 12 menit.
 
+Program ini dibuat menggunakan bahasa Java dengan menerapkan konsep-konsep pemrograman berbasis objek, mencakup inheritance, abstract class, interface, polymorphism, generics, exceptions, dan concurrency, serta mengimplementasikan state design pattern.
+
 ## Cara Kompilasi Program
