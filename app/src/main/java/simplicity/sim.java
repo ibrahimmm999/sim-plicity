@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Sim {
     private String namaLengkap;
@@ -159,46 +160,70 @@ public class Sim {
         scanner.close();
     }
 
-    public void makan(Makanan makanan) {
-        if (inventory.getInventory().containsKey(makanan) && inventory.getInventory().get(makanan) > 0) {
-            kekenyangan += makanan.getKenyang();
-            cekKekenyangan();
-            mood += 5;
-            cekMood();
-            inventory.removeInventory(makanan);
-            System.out.println(namaLengkap + " berhasil makan " + makanan.getNama() + "!");
+    public void makan(Object object) {
+        if (object instanceof Masakan || object instanceof Bahan_Makanan) {
+            if (inventory.getInventory().containsKey(object) && inventory.getInventory().get(object) > 0) {
+                if (object instanceof Masakan) {
+                    kekenyangan += ((Masakan) object).getValueKekenyangan();
+                } else {
+                    kekenyangan += ((Bahan_Makanan) object).getValueKekenyangan();
+                }
+                cekKekenyangan();
+                mood += 5;
+                cekMood();
+                inventory.removeInventory(object);
+                if (object instanceof Masakan) {
+                    System.out.println(namaLengkap + " berhasil makan " + ((Masakan) object).getNamaObjek() + "!");
+                } else {
+                    System.out
+                            .println(namaLengkap + " berhasil makan " + ((Bahan_Makanan) object).getNamaObjek() + "!");
+                }
+            } else {
+                if (object instanceof Masakan) {
+                    System.out.println(
+                            namaLengkap + " tidak memiliki " + ((Masakan) object).getNamaObjek() + " dalam inventory!");
+                } else {
+                    System.out.println(namaLengkap + " tidak memiliki " + ((Bahan_Makanan) object).getNama()
+                            + " dalam inventory!");
+                }
+            }
         } else {
-            System.out.println(namaLengkap + " tidak memiliki " + makanan.getNama() + " dalam inventory!");
+            System.out.println("Object cannot be eaten.");
         }
+    }
 
     public void memasak(Masakan masakan, Inventory inventory) {
-        List<BahanMakanan> bahanDibutuhkan = masakan.getBahanDibutuhkan();
+        ArrayList<Bahan_Makanan> bahanDibutuhkan = masakan.getBahan();
         boolean semuaBahanTersedia = true;
-        for (BahanMakanan bahan : bahanDibutuhkan) {
+        for (Bahan_Makanan bahan : bahanDibutuhkan) {
             if (!inventory.contains(bahan)) {
                 semuaBahanTersedia = false;
                 break;
             }
         }
+
         if (semuaBahanTersedia) {
-            for (BahanMakanan bahan : bahanDibutuhkan) {
+            for (Bahan_Makanan bahan : bahanDibutuhkan) {
                 inventory.removeInventory(bahan);
             }
-            int waktuMasak = (int) (1.5 * kekenyangan);
-            kekenyangan += masakan.getKenyang();
+            int waktuMasak = (int) (1.5 * masakan.getValueKekenyangan());
+            kekenyangan += masakan.getValueKekenyangan();
             cekKekenyangan();
             mood += 10;
             cekMood();
+            masakan.setIsAvailable(false);
             inventory.addInventory(masakan);
             Thread masakThread = new Thread(() -> {
                 try {
                     Thread.sleep(waktuMasak * 1000);
+                    masakan.setIsAvailable(true);
                     inventory.removeInventory(masakan);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             });
             masakThread.start();
+            System.out.println("Memasak " + masakan.getNamaObjek() + "...");
         } else {
             System.out.println("Bahan makanan tidak cukup!");
         }
