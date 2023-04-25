@@ -15,7 +15,7 @@ public class Inventory {
     }
 
     public void addInventory(Object object) {
-        if (object instanceof Masakan || object instanceof Bahan_Makanan) {
+        if (object instanceof Masakan || object instanceof Bahan_Makanan || object instanceof Non_Makanan) {
             if (inventory.containsKey(object)) {
                 int currentQuantity = inventory.get(object);
                 inventory.put(object, currentQuantity + 1);
