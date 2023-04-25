@@ -12,5 +12,10 @@ public abstract class Objek {
         return this.namaObjek;
     }
 
+
+    public void setNamaObjek(String namaObjek) {
+        this.namaObjek = namaObjek;
+    }
+
     public abstract boolean isPurchasable();
 }
