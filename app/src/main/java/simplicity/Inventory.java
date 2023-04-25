@@ -40,14 +40,21 @@ public class Inventory {
         }
     }
 
-}
+    public boolean contains(Bahan_Makanan bahan) {
+        if (inventory.containsKey(bahan)) {
+            int quantity = inventory.get(bahan);
+            if (quantity > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-public boolean contains(Bahan_Makanan bahan) {
-    if (inventory.containsKey(bahan)) {
-        int quantity = inventory.get(bahan);
-        if (quantity > 0) {
-            return true;
+    public int getQuantity(Bahan_Makanan bahan) {
+        if (inventory.containsKey(bahan)) {
+            return inventory.get(bahan);
+        } else {
+            return 0;
         }
     }
-    return false;
 }
