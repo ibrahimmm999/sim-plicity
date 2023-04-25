@@ -4,6 +4,7 @@ public class Non_Makanan extends Objek {
     private boolean isAvailable;
     private int panjang;
     private int lebar;
+    private Posisi posisi;
     private String aksi;
     private int harga;
 
@@ -13,6 +14,7 @@ public class Non_Makanan extends Objek {
         this.lebar = lebar;
         this.aksi = aksi;
         this.harga = harga;
+        this.posisi = null;
     }
 
     public int getPanjang() {
@@ -23,6 +25,10 @@ public class Non_Makanan extends Objek {
         return this.lebar;
     }
 
+    public Posisi getPosisi() {
+        return posisi;    
+    }
+    
     public String getAksi() {
         return this.aksi;
     }
@@ -41,5 +47,9 @@ public class Non_Makanan extends Objek {
 
     public void setIsAvailable(boolean isAvailable) {
         this.isAvailable = isAvailable;
+    }
+    
+    public void setPosisi(Posisi posisi) {
+        this.posisi = posisi;
     }
 }

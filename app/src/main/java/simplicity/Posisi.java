@@ -3,31 +3,23 @@ package simplicity;
 public class Posisi {
     
     private Point kiriAtas;
-    private Point kiriBawah;
-    private Point kananAtas;
     private Point kananBawah;
     
-    public Posisi(Point kiriAtas, Point kiriBawah, Point kananAtas, Point kananBawah) {
-        if(kiriAtas.getX() == kiriBawah.getX() && kananAtas.getX() == kananBawah.getX() && kiriAtas.getY() == kananAtas.getY() && kiriBawah.getY() == kananBawah.getY()) {
+    public Posisi(Point kiriAtas, Point kananBawah) {
+        if(kiriAtas.getX() <= kananBawah.getX() && kiriAtas.getY() <= kananBawah.getY()){
             this.kiriAtas = kiriAtas;
-            this.kiriBawah = kiriBawah;
-            this.kananAtas = kananAtas;
             this.kananBawah = kananBawah;    
         } else {
-            throw new RuntimeException("Baik kiriAtas dengan kiriBawah maupun kananAtas dengan kananBawah harus berada pada garis lurus secara horizontal, juga kiriAtas dengan kananAtas maupun kiriBawah dengan kananBawah harus berada pada garis lurus secara horizontal");
+            System.out.println("Perhatikan kembali posisi titik kiri atas dan kanan bawah: nilai x pada koordinat kiri atas harus lebih kecil atau sama dengan nilai x pada koordinat anan bawah, sedangkan nilai y pada koordinat kiri atas harus lebih besar atau sama dengan nilai y pada koordinat kanan bawah.");
         }
+    }
+    
+    public void cetakPosisi() {
+        System.out.println("(" + kiriAtas.getX() + ", " + kiriAtas.getY() + "); (" + kananBawah.getX() + ", " + kananBawah.getY() + ")");
     }
     
     public Point getKiriAtas() {
         return kiriAtas;
-    }
-    
-    public Point getKiriBawah() {
-        return kiriBawah;
-    }
-    
-    public Point getKananAtas() {
-        return kananAtas;
     }
     
     public Point getKananBawah() {

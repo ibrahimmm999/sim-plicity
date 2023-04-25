@@ -4,10 +4,10 @@ interface Placeable {
     
     public boolean checkEmptyPosisi(Posisi posisi);
     
-    public void addObject(Objek objek, Posisi posisiObjek, boolean isRotate);
+    public void addObject(Non_Makanan objek, Point koordinatObjek, boolean isRotated, Inventory inventory);
     
-    public void removeObject(Objek objek, Posisi posisiObjek);
+    public void removeObject(Posisi posisiObjek, Inventory inventory);
     
-    public void moveObject(Objek objek, Posisi posisiAwal, Posisi posisiAkhir, boolean isRotate);
+    public void moveObject(Posisi posisiAwal, Point koordinatAkhir, boolean isRotated, Inventory inventory);
     
 }
