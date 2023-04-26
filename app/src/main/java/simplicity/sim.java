@@ -507,11 +507,37 @@ public class Sim {
         kekenyangan -= 5;
     }
 
-    public void belajar() {
-
+    public void belajar(Ruangan ruangan) {
+        MejaKursi mejaKursi = null;
+        for (Map.Entry<String, Non_Makanan> entry : ruangan.getListObjek().entrySet()) {
+            Objek objek = entry.getValue();
+            if (objek instanceof MejaKursi) {
+                mejaKursi = (MejaKursi) objek;
+                break;
+            }
+        }
+        if (mejaKursi != null) {
+            Posisi posisiMejaKursi = mejaKursi.getPosisi();
+            System.out.println("Sim belajar di meja kursi pada posisi " + posisiMejaKursi);
+        } else {
+            System.out.println("Sim tidak menemukan meja kursi di ruangan ini untuk belajar");
+        }
     }
 
-    public void nubes() {
-
+    public void ngegame(Ruangan ruangan) {
+        MejaKursi mejaKursi = null;
+        for (Map.Entry<String, Non_Makanan> entry : ruangan.getListObjek().entrySet()) {
+            Objek objek = entry.getValue();
+            if (objek instanceof MejaKursi) {
+                mejaKursi = (MejaKursi) objek;
+                break;
+            }
+        }
+        if (mejaKursi != null) {
+            Posisi posisiMejaKursi = mejaKursi.getPosisi();
+            System.out.println("Sim bermain game di meja kursi pada posisi " + posisiMejaKursi);
+        } else {
+            System.out.println("Sim tidak menemukan meja kursi di ruangan ini untuk bermain game");
+        }
     }
 }
