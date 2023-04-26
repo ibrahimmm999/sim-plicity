@@ -183,7 +183,7 @@ public class Sim {
                     System.out.println(
                             namaLengkap + " tidak memiliki " + ((Masakan) object).getNamaObjek() + " dalam inventory!");
                 } else {
-                    System.out.println(namaLengkap + " tidak memiliki " + ((Bahan_Makanan) object).getNama()
+                    System.out.println(namaLengkap + " tidak memiliki " + ((Bahan_Makanan) object).getNamaObjek()
                             + " dalam inventory!");
                 }
             }
@@ -248,14 +248,13 @@ public class Sim {
                                                                       // detik
     }
 
-    public void buangAir() {
+    public void buangAir(Ruangan ruangan) {
         boolean berhasilBuangAir = false;
-        for (int i = 0; i < inventory.getBarang().size(); i++) {
-            if (ruangan.getBarang().get(i) instanceof Toilet) { // cek apakah ruangan memiliki toilet
-                Toilet toilet = (Toilet) inventory.getBarang().get(i);
-                if (toilet.getIsAvailable() && toilet.getIsOccupied()) { // cek apakah toilet tersedia
-                    // getIsAvailable dan getIsOccupied bakal ada di kelas tiap objek
-                    toilet.setIsAvailable(false); // ubah status toilet menjadi tidak tersedia
+        for (Non_Makanan objek : ruangan.getListObjek().values()) {
+            if (objek instanceof Toilet) {
+                Toilet toilet = (Toilet) objek;
+                if (toilet.getIsAvailable() && toilet.isOccupied()) {
+                    toilet.setIsAvailable(false);
                     toilet.setIsOccupied(false);
                     kekenyangan -= 20;
                     cekKekenyangan();
@@ -268,7 +267,7 @@ public class Sim {
             }
         }
         if (!berhasilBuangAir) {
-            if (waktuKerjaSim - pekerjaan.getWaktuKerja() >= 4) { // cek apakah sudah 4 menit setelah makan
+            if (waktuKerjaSim - pekerjaan.getWaktuKerja() >= 4) {
                 kesehatan -= 5;
                 cekKesehatan();
                 mood -= 5;
@@ -281,7 +280,7 @@ public class Sim {
         }
     }
 
-    public void upgradeRumah() {
+    public void upgradeRumah(Posisi posisi) {
         // biayaupgrade nya brp ya? blm tau ini masih ngasal dlu biayanya
         int biayaUpgrade = 50; // biaya upgrade untuk menambah satu ruangan
 
@@ -292,8 +291,9 @@ public class Sim {
         }
 
         // tambahkan ruangan baru pada rumah
-        Ruangan ruanganBaru = new Ruangan();
-        rumah.addRuangan(ruanganBaru);
+        Ruangan ruanganBaru = new Ruangan(posisi);
+        // ini blm ada rumah
+        Rumah.addRuangan(ruanganBaru);
 
         // kurangi uang sim sesuai biaya upgrade
         uang -= biayaUpgrade;
@@ -306,35 +306,55 @@ public class Sim {
     }
 
     public void beliBarang(Objek barang) {
-        if (this.uang < barang.getHarga()) {
-            System.out.println("Uang anda tidak cukup!");
-            return;
+        if (barang instanceof Non_Makanan) {
+            Non_Makanan nm = (Non_Makanan) barang;
+            if (this.uang < nm.getHarga()) {
+                System.out.println("Uang anda tidak cukup!");
+                return;
+            }
+            Random random = new Random();
+            int durasi = random.nextInt(30) + 1;
+            // kurangi uang sim
+            this.uang -= nm.getHarga();
+            // tambahkan objek ke inventory
+            this.inventory.addInventory(nm);
+            System.out.println("Anda telah membeli " + nm.getNamaObjek() + " seharga " + nm.getHarga() + ".");
+            try {
+                Thread.sleep(durasi * 10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else if (barang instanceof Bahan_Makanan) {
+            Bahan_Makanan bahan = (Bahan_Makanan) barang;
+            if (this.uang < bahan.getHarga()) {
+                System.out.println("Uang anda tidak cukup!");
+                return;
+            }
+            Random random = new Random();
+            int durasi = random.nextInt(30) + 1;
+            // kurangi uang sim
+            this.uang -= bahan.getHarga();
+            // tambahkan objek ke inventory
+            this.inventory.addInventory(bahan);
+            System.out.println("Anda telah membeli " + bahan.getNamaObjek() + " seharga " + bahan.getHarga() + ".");
+            try {
+                Thread.sleep(durasi * 10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        Random random = new Random();
-        int durasi = random.nextInt(30) + 1;
-        // kurangi uang sim
-        this.uang -= barang.getHarga();
-        // tambahkan objek ke inventory
-        this.inventory.tambahBarang(barang);
-        System.out.println("Anda telah membeli " + barang.getNama() + " seharga " + barang.getHarga() + ".");
     }
 
+    //
     public void pindahRuangan(Ruangan tujuan) {
         // Cek apakah tujuan ruangan sama dengan ruangan saat ini
-        if (this.rumah.getRuangan() == tujuan) {
+        if (this.Rumah.getRuangan() == tujuan) {
             System.out.println("Anda sudah berada di ruangan tersebut.");
             return;
         }
 
-        // Cek apakah tujuan ruangan penuh
-        // ini bisa full ga ya? blm tau
-        if (tujuan.getJumlahObjek() >= tujuan.getKapasitas()) {
-            System.out.println("Ruangan penuh.");
-            return;
-        }
-
         // Pindah ruangan dan update lokasi ruangan inventory
-        this.rumah.setRuangan(tujuan);
+        this.Rumah.setRuangan(tujuan);
         System.out.println("Anda telah pindah ke ruangan " + tujuan.getNama() + ".");
     }
 
@@ -352,12 +372,11 @@ public class Sim {
         }
     }
 
-    public void pasangBarang(Barang barang, Ruangan ruangan) {
+    public void pasangBarang(Non_Makanan barang, Ruangan ruangan) {
         // Cek apakah ruangan memiliki ruang kosong
         boolean adaRuangKosong = false;
-        for (Map.Entry<Object, Posisi> entry : ruangan.getListObjek().entrySet()) {
-            Posisi posisi = entry.getValue();
-            if (posisi == null) {
+        for (int i = 0; i < ruangan.getListPosisiObjek().length; i++) {
+            if (ruangan.getListPosisiObjek()[i] == null) {
                 adaRuangKosong = true;
                 break;
             }
@@ -369,28 +388,32 @@ public class Sim {
         }
 
         // Cek apakah barang muat di dalam ruangan
-        if (!barang.cocokDenganRuangan(ruangan)) {
+        int[] ukuranBarang = { barang.getPanjang(), barang.getLebar() };
+        Matriks matriks = ruangan.getMatriks();
+        Posisi posisiBarang = matriks.cariPosisi(ukuranBarang);
+        if (posisiBarang == null) {
             System.out.println("Barang tidak muat dalam ruangan.");
             return;
         }
 
         // Cek apakah barang ada di inventory
-        if (!inventory.cariBarang(barang.getNama())) {
+        if (!inventory.cariBarang(barang.getNamaObjek())) {
             System.out.println("Barang tidak ditemukan di inventory.");
             return;
         }
 
-        // Cari ruang kosong dan pasang barang di dalamnya
-        for (Map.Entry<Object, Posisi> entry : ruangan.getListObjek().entrySet()) {
-            Object key = entry.getKey();
-            Posisi posisi = entry.getValue();
-            if (posisi == null) {
-                Point titikTengah = new Point((posisi.getKananAtas().x + posisi.getKiriBawah().x) / 2,
-                        (posisi.getKananAtas().y + posisi.getKiriBawah().y) / 2);
-                posisi.setObjek(barang);
-                inventory.hapusBarang(barang.getNama());
-                System.out.printf("%s berhasil dipasang di (%d, %d).\n", barang.getNama(), titikTengah.x,
-                        titikTengah.y);
+        // Pasang barang di posisi yang tersedia
+        String[] listPosisiObjek = ruangan.getListPosisiObjek();
+        for (int i = 0; i < listPosisiObjek.length; i++) {
+            if (listPosisiObjek[i] == null) {
+                barang.setPosisi(posisiBarang);
+                inventory.hapusBarang(barang.getNamaObjek());
+                System.out.printf("%s berhasil dipasang di (%d, %d).\n", barang.getNamaObjek(),
+                        posisiBarang.getKiriAtas().getX(), posisiBarang.getKiriAtas().getY());
+                listPosisiObjek[i] = barang.getNamaObjek();
+                ruangan.setListPosisiObjek(listPosisiObjek);
+                ruangan.addListObjek(barang, posisiBarang);
+                matriks.tandaiPosisi(posisiBarang);
                 return;
             }
         }
@@ -400,12 +423,44 @@ public class Sim {
 
     }
 
-    public void berdoa() {
-
+    public void berdoa(Ruangan ruangan) {
+        MejaKursi mejaKursi = null;
+        for (Map.Entry<String, Non_Makanan> entry : ruangan.getListObjek().entrySet()) {
+            Objek objek = entry.getValue();
+            if (objek instanceof MejaKursi) {
+                mejaKursi = (MejaKursi) objek;
+                break;
+            }
+        }
+        if (mejaKursi != null) {
+            Posisi posisiMejaKursi = mejaKursi.getPosisi();
+            System.out.println("Sim berdoa di meja kursi pada posisi " + posisiMejaKursi);
+        } else {
+            System.out.println("Sim tidak menemukan meja kursi di ruangan ini");
+        }
     }
 
-    public void rapihinKasur() {
-
+    public void rapihinKasur(Object object) {
+        if (kekenyangan >= 5) {
+            if (object instanceof SingleBed) {
+                System.out.println("SIM merapikan kasur Single Bed");
+            } else if (object instanceof QueenSizeBed) {
+                System.out.println("SIM merapikan kasur Queen Size Bed");
+            } else if (object instanceof KingSizeBed) {
+                System.out.println("SIM merapikan kasur King Size Bed");
+            } else {
+                System.out.println("Kasur yang diberikan tidak valid");
+                return;
+            }
+            kekenyangan -= 5;
+            try {
+                Thread.sleep(20000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("SIM kekurangan energi untuk merapikan kasur " + ((Objek) object).getNamaObjek());
+        }
     }
 
     public void meditasi() {
@@ -416,8 +471,40 @@ public class Sim {
 
     }
 
-    public void beresinKamarMandi() {
+    public void beresinKamarMandi(Ruangan ruangan) {
+        // Cari toilet
+        Toilet toilet = null;
+        for (Map.Entry<String, Non_Makanan> entry : ruangan.getListObjek().entrySet()) {
+            Objek objek = entry.getValue();
+            if (objek instanceof MejaKursi) {
+                toilet = (Toilet) objek;
+                break;
+            }
+        }
 
+        if (toilet == null) { // jika toilet tidak ditemukan, tampilkan pesan kesalahan
+            System.out.println("Tidak ada toilet dalam ruangan ini");
+            return;
+        }
+
+        if (toilet.isOccupied()) { // jika toilet sedang digunakan, tampilkan pesan kesalahan
+            System.out.println("Toilet sedang digunakan");
+            return;
+        }
+
+        // membersihkan toilet dan menandai toilet sebagai sedang digunakan
+        toilet.setIsOccupied(true);
+
+        // menunggu selama 10 detik
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // menandai toilet sebagai tersedia kembali dan mengurangi kekenyangan sebesar 5
+        toilet.setIsOccupied(false);
+        kekenyangan -= 5;
     }
 
     public void belajar() {

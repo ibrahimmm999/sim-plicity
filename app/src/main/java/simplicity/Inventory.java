@@ -57,4 +57,37 @@ public class Inventory {
             return 0;
         }
     }
+
+    public boolean cariBarang(String namaObjek) {
+        for (Object objek : inventory.keySet()) {
+            if (objek instanceof Masakan || objek instanceof Bahan_Makanan || objek instanceof Non_Makanan) {
+                if (((Objek) objek).getNamaObjek().equals(namaObjek)) {
+                    int currentQuantity = inventory.get(objek);
+                    if (currentQuantity > 0) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public void hapusBarang(String namaObjek) {
+        for (Object objek : inventory.keySet()) {
+            if (objek instanceof Masakan || objek instanceof Bahan_Makanan || objek instanceof Non_Makanan) {
+                if (((Objek) objek).getNamaObjek().equals(namaObjek)) {
+                    int currentQuantity = inventory.get(objek);
+                    if (currentQuantity > 1) {
+                        inventory.put(objek, currentQuantity - 1);
+                    } else {
+                        inventory.remove(objek);
+                    }
+                    System.out.println("Objek " + namaObjek + " telah dihapus dari inventory.");
+                    return;
+                }
+            }
+        }
+        System.out.println("Objek " + namaObjek + " tidak ditemukan dalam inventory.");
+    }
+
 }
