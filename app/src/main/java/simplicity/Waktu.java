@@ -61,16 +61,8 @@ public class Waktu {
         this.detik = detik;
     }
 
-    public int convertToSecond() {
+    public int convert() {
         return day * 24 * 60 * 60 + jam * 60 * 60 + menit * 60 + detik;
     }
-
-    public Waktu addTime(Waktu time) {
-        return new Waktu(this.convertToSecond() + time.convertToSecond());
-    }
     
-    public String remainingTime() {
-        int remaining = 720 - (jam * 60 + menit) * 60 + detik;
-        return "Remaining time: " + (remaining / 60) + " minute(s) and " + (remaining % 60) + " second(s) in the day.";
-    }
 }
