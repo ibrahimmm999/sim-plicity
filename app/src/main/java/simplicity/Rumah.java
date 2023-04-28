@@ -36,9 +36,9 @@ public class Rumah {
         return daftarNamaRuangan;
     }
 
-    public Ruangan getRuangan(String namaRuangan){
-        for (Ruangan ruangan : daftarRuangan){
-            if ((ruangan.getNamaRuangan()).equals(namaRuangan)){
+    public Ruangan getRuangan(String namaRuangan) {
+        for (Ruangan ruangan : daftarRuangan) {
+            if ((ruangan.getNamaRuangan()).equals(namaRuangan)) {
                 return ruangan;
             }
         }

@@ -12,6 +12,17 @@ public class Game {
         System.out.println("1. start");
         System.out.println("2. help");
         System.out.println("3. exit");
+        System.out.println("4. view sim info");
+        System.out.println("5. view current location");
+        System.out.println("6. view inventory");
+        System.out.println("7. upgrade house");
+        System.out.println("8. move room");
+        System.out.println("9. edit room");
+        System.out.println("10. add sim");
+        System.out.println("11. change sim");
+        System.out.println("12. list object");
+        System.out.println("13. go to object");
+        System.out.println("14. action");
     }
 
     public static void help() {
@@ -39,9 +50,37 @@ public class Game {
                     break;
                 case "3":
                     System.out.println("Keluar dari permainan");
+                    scanner.close();
                     isPlaying = false;
                     break;
+                case "4":
+                    break;
+                case "5":
+                    break;
+                case "6":
+                    break;
+                case "7":
+                    break;
+                case "8":
+                    break;
+                case "9":
+                    break;
+                case "10":
+                    System.out.print("Masukkan nama sim: ");
+                    // STEP LANJUTAN
+                    world.createSIM();
+                    break;
+                case "11":
+                    break;
+                case "12":
+                    break;
+                case "13":
+                    break;
+                case "14":
+                    break;
+                default:
             }
         }
+
     }
 }
