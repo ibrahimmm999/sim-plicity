@@ -4,16 +4,22 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Rumah {
+    private String namaRumah;
     private Point koordinat;
     private ArrayList<String> daftarNamaRuangan;
     private ArrayList<Ruangan> daftarRuangan;
 
-    public Rumah(Point koordinat) {
+    public Rumah(Point koordinat, String namaRumah) {
+        this.namaRumah = namaRumah;
         this.koordinat = koordinat;
         daftarNamaRuangan = new ArrayList<String>();
         daftarRuangan = new ArrayList<Ruangan>();
         Ruangan ruangUtama = new Ruangan(new Posisi(new Point(0, 6), new Point(6, 0)));
         // MASIH KURANG NAMBAHIN BARANG DEFAULT (liat flow permainan di docs)
+    }
+
+    public String getNamaRumah() {
+        return namaRumah;
     }
 
     public Point getKoordinat() {
@@ -49,7 +55,7 @@ public class Rumah {
                     Point kananBawah = new Point(kananBawahX, kananBawahY);
                     if (checkEmptyKoordinat(kiriAtas, kananBawah)) {
                         Posisi posisiRuanganBaru = new Posisi(kiriAtas, kananBawah);
-                        Ruangan ruanganBaru = new Ruangan(posisiRuanganBaru);
+                        Ruangan ruanganBaru = new Ruangan(namaRuangan, posisiRuanganBaru);
                         daftarRuangan.add(ruanganBaru);
                         daftarNamaRuangan.add(namaRuangan);
                         System.out.println("Ruangan berhasil ditambahkan!");
@@ -75,10 +81,11 @@ public class Rumah {
             Scanner scanner = new Scanner(System.in);
             System.out.print("Masukkan nama ruangan yang akan dihapus : ");
             String namaRuangan = scanner.nextLine();
+            scanner.close();
             if ((daftarNamaRuangan.contains(namaRuangan))) {
                 daftarNamaRuangan.remove(namaRuangan);
                 for (Ruangan ruangan : daftarRuangan) {
-                    if ((ruangan.getNama()).equals(namaRuangan)) {
+                    if ((ruangan.getNamaRuangan()).equals(namaRuangan)) {
                         daftarRuangan.remove(ruangan);
                         break;
                     }
@@ -102,4 +109,7 @@ public class Rumah {
         return true;
     }
 
+    public void masukRumah(Rumah now, Point koordinat) {
+        now.koordinat = koordinat;
+    }
 }
