@@ -7,18 +7,24 @@ import java.util.Map;
 import java.util.Arrays;
 
 public class Ruangan implements Placeable {
+    private String namaRuangan;
     private Posisi posisi;
     private HashMap<String, Non_Makanan> listObjek;
     private Matriks matriks;
     String[] listPosisiObjek = new String[217];
 
-    public Ruangan(Posisi posisi) {
+    public Ruangan(String namaRuangan, Posisi posisi) {
+        this.namaRuangan = namaRuangan;
         matriks = new Matriks(6, 6);
         this.posisi = posisi;
         listObjek = new HashMap<>();
         Arrays.fill(listPosisiObjek, null);
     }
 
+    public String getNamaRuangan() {
+        return namaRuangan;
+    }
+    
     public Posisi getPosisi() {
         return posisi;
     }
