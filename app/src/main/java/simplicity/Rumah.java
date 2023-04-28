@@ -11,6 +11,9 @@ public class Rumah {
     public Rumah(Point koordinat) {
         this.koordinat = koordinat;
         daftarNamaRuangan = new ArrayList<String>();
+        daftarRuangan = new ArrayList<Ruangan>();
+        Ruangan ruangUtama = new Ruangan(new Posisi(new Point(0, 6), new Point(6, 0)));
+        // MASIH KURANG NAMBAHIN BARANG DEFAULT (liat flow permainan di docs)
     }
 
     public Point getKoordinat() {
@@ -23,41 +26,47 @@ public class Rumah {
 
     public void addRuangan() {
         while (true) {
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Masukkan nama ruangan : ");
-            String namaRuangan = scanner.nextLine();
-            System.out.println(namaRuangan);
-            if (!(daftarNamaRuangan.contains(namaRuangan))) {
-                System.out.println("Silahkan masukkan koordinat untuk titik kiri atas dan kanan bawah ruangan!");
-                System.out.print("Masukkan titik X koordinat kiri atas : ");
-                int kiriAtasX = scanner.nextInt();
-                System.out.println(kiriAtasX);
-                System.out.print("\nMasukkan titik Y koordinat kiri atas : ");
-                int kiriAtasY = scanner.nextInt();
-                System.out.println(kiriAtasY);
-                System.out.print("\nMasukkan titik Y koordinat kanan bawah : ");
-                int kananBawahX = scanner.nextInt();
-                System.out.println(kananBawahX);
-                System.out.print("\nMasukkan titik Y koordinat kanan bawah : ");
-                int kananBawahY = scanner.nextInt();
-                System.out.println(kananBawahY);
-                Point kiriAtas = new Point(kiriAtasX, kiriAtasY);
-                Point kananBawah = new Point(kananBawahX, kananBawahY);
-                if (checkEmptyKoordinat(kiriAtas, kananBawah)) {
-                    Posisi posisiRuanganBaru = new Posisi(kiriAtas, kananBawah);
-                    Ruangan ruanganBaru = new Ruangan(posisiRuanganBaru);
-                    daftarRuangan.add(ruanganBaru);
-                    daftarNamaRuangan.add(namaRuangan);
-                    System.out.println("Ruangan berhasil ditambahkan!");
-                    break;
+            try {
+                Scanner scanner = new Scanner(System.in);
+                System.out.print("Masukkan nama ruangan : ");
+                String namaRuangan = scanner.nextLine();
+                System.out.println(namaRuangan);
+                if (!(daftarNamaRuangan.contains(namaRuangan))) {
+                    System.out.println("Silahkan masukkan koordinat untuk titik kiri atas dan kanan bawah ruangan!");
+                    System.out.print("Masukkan titik X koordinat kiri atas : ");
+                    int kiriAtasX = scanner.nextInt();
+                    System.out.println(kiriAtasX);
+                    System.out.print("\nMasukkan titik Y koordinat kiri atas : ");
+                    int kiriAtasY = scanner.nextInt();
+                    System.out.println(kiriAtasY);
+                    System.out.print("\nMasukkan titik Y koordinat kanan bawah : ");
+                    int kananBawahX = scanner.nextInt();
+                    System.out.println(kananBawahX);
+                    System.out.print("\nMasukkan titik Y koordinat kanan bawah : ");
+                    int kananBawahY = scanner.nextInt();
+                    System.out.println(kananBawahY);
+                    Point kiriAtas = new Point(kiriAtasX, kiriAtasY);
+                    Point kananBawah = new Point(kananBawahX, kananBawahY);
+                    if (checkEmptyKoordinat(kiriAtas, kananBawah)) {
+                        Posisi posisiRuanganBaru = new Posisi(kiriAtas, kananBawah);
+                        Ruangan ruanganBaru = new Ruangan(posisiRuanganBaru);
+                        daftarRuangan.add(ruanganBaru);
+                        daftarNamaRuangan.add(namaRuangan);
+                        System.out.println("Ruangan berhasil ditambahkan!");
+                        scanner.close();
+                        break;
+                    } else {
+                        System.out.println("Koordinat sudah terpakai!");
+                    }
                 } else {
-                    System.out.println("Koordinat sudah terpakai!");
+                    System.out.println("Nama ruangan sudah terpakai!");
                 }
-            } else {
-                System.out.println("Nama ruangan sudah terpakai!");
+                System.out.println("Silahkan ulangi!");
+                scanner.close();
+            } catch (Exception e) {
+                System.out.println("Input salah, silahkan ulangi!");
             }
-            System.out.println("Silahkan ulangi!");
-            scanner.close();
+
         }
     }
 
