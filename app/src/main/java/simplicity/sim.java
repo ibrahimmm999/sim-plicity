@@ -16,6 +16,9 @@ public class Sim {
     private int kesehatan;
     private String status;
     private int waktuKerjaSim; // waktu total sim kerja buat ngecek gajian
+    private Posisi posisiSim;
+    private Rumah rumahSim;
+    private Ruangan ruanganSim;
 
     public Sim(String namaLengkap) {
         this.namaLengkap = namaLengkap;
@@ -27,12 +30,64 @@ public class Sim {
         this.waktuKerjaSim = 0;
     }
 
+    public void printStatus() {
+        System.out.println("Nama Lengkap: " + namaLengkap);
+        System.out.println("Pekerjaan: " + pekerjaan.getNamaPekerjaan());
+        System.out.println("Uang: " + uang);
+        System.out.println("Kekenyangan: " + kekenyangan);
+        System.out.println("Mood: " + mood);
+        System.out.println("Kesehatan: " + kesehatan);
+        System.out.println("Status: " + status);
+    }
+
+    public void printInventory() {
+        HashMap<Object, Integer> inventory = this.inventory.getInventory();
+        for (Map.Entry<Object, Integer> entry : inventory.entrySet()) {
+            Object object = entry.getKey();
+            int quantity = entry.getValue();
+            if (object instanceof Masakan) {
+                Masakan masakan = (Masakan) object;
+                System.out.println(masakan.getNamaObjek() + " (" + quantity + ")");
+            } else if (object instanceof Bahan_Makanan) {
+                Bahan_Makanan bahan = (Bahan_Makanan) object;
+                System.out.println(bahan.getNamaObjek() + " (" + quantity + ")");
+            } else if (object instanceof Non_Makanan) {
+                Non_Makanan non_makanan = (Non_Makanan) object;
+                System.out.println(non_makanan.getNamaObjek() + " (" + quantity + ")");
+            }
+        }
+    }
+
     // pekerjaan harusnya dimasukin ke array dulu
     public Pekerjaan getRandomPekerjaan() {
         Pekerjaan[] daftarPekerjaan = pekerjaan.getAllPekerjaan();
         Random random = new Random();
         int index = random.nextInt(daftarPekerjaan.length);
         return daftarPekerjaan[index];
+    }
+
+    public Posisi getPosisiSim() {
+        return posisiSim;
+    }
+
+    public Rumah getRumahSim() {
+        return rumahSim;
+    }
+
+    public Ruangan getRuanganSim() {
+        return ruanganSim;
+    }
+
+    public void setPosisiSim(Posisi posisiSim) {
+        this.posisiSim = posisiSim;
+    }
+
+    public void setRumahSim(Rumah rumahSim) {
+        this.rumahSim = rumahSim;
+    }
+
+    public void setRuanganSim(Ruangan ruanganSim) {
+        this.ruanganSim = ruanganSim;
     }
 
     public String getNamaLengkap() {
@@ -206,7 +261,7 @@ public class Sim {
             for (Bahan_Makanan bahan : bahanDibutuhkan) {
                 inventory.removeInventory(bahan);
             }
-            int waktuMasak = (int) (1.5 * masakan.getValueKekenyangan());
+            waktuKerjaSim = (int) (1.5 * masakan.getValueKekenyangan());
             kekenyangan += masakan.getValueKekenyangan();
             cekKekenyangan();
             mood += 10;
@@ -215,7 +270,7 @@ public class Sim {
             inventory.addInventory(masakan);
             Thread masakThread = new Thread(() -> {
                 try {
-                    Thread.sleep(waktuMasak * 1000);
+                    Thread.sleep(waktuKerjaSim * 1000);
                     masakan.setIsAvailable(true);
                     inventory.removeInventory(masakan);
                 } catch (InterruptedException e) {
@@ -229,19 +284,18 @@ public class Sim {
         }
     }
 
-    public void berkunjung(Rumah tujuan) {
+    public void berkunjung(Rumah now, Rumah tujuan) {
         int waktuTempuh;
         // this.getRumah() maksudnya buat rumah sim yang sedang dimainkan
-        if (this.getRumah() == tujuan.getRumah()) {
+        if (now.getNamaRumah().equals(tujuan.getNamaRumah())) {
             waktuTempuh = 0;
         } else {
             // getRumah yang disini maksudnya rumah nya si sim yg dimainkan
             // kurang tau gmn buatnya jadi aku buat this.getRumah() aja dulu
             waktuTempuh = (int) Math
-                    .round(Math.sqrt(Math.pow(tujuan.getKoordinat().getX() - this.getRumah().getKoordinat().getX(), 2)
-                            + Math.pow(tujuan.getKoordinat().getY() - this.getRumah().getKoordinat().getY(), 2)));
-            this.getRumah().keluarRumah(this);
-            tujuan.getRumah().masukRumah(this, tujuan.getKoordinat());
+                    .round(Math.sqrt(Math.pow(tujuan.getKoordinat().getX() - now.getKoordinat().getX(), 2)
+                            + Math.pow(tujuan.getKoordinat().getY() - now.getKoordinat().getY(), 2)));
+            tujuan.masukRumah(now, tujuan.getKoordinat());
         }
         this.setmood(this.getMood() + waktuTempuh / 3); // Mood meningkat sebesar 10 untuk setiap 30 detik
         this.setKekenyangan(this.getKekenyangan() - waktuTempuh / 3); // Kekenyangan menurun sebesar 10 untuk setiap 30
@@ -280,7 +334,7 @@ public class Sim {
         }
     }
 
-    public void upgradeRumah(Posisi posisi) {
+    public void upgradeRumah(Rumah rumah) {
         // biayaupgrade nya brp ya? blm tau ini masih ngasal dlu biayanya
         int biayaUpgrade = 50; // biaya upgrade untuk menambah satu ruangan
 
@@ -291,9 +345,8 @@ public class Sim {
         }
 
         // tambahkan ruangan baru pada rumah
-        Ruangan ruanganBaru = new Ruangan(posisi);
         // ini blm ada rumah
-        Rumah.addRuangan(ruanganBaru);
+        rumah.addRuangan();
 
         // kurangi uang sim sesuai biaya upgrade
         uang -= biayaUpgrade;
@@ -346,16 +399,16 @@ public class Sim {
     }
 
     //
-    public void pindahRuangan(Ruangan tujuan) {
+    public void pindahRuangan(Ruangan asal, Ruangan tujuan) {
         // Cek apakah tujuan ruangan sama dengan ruangan saat ini
-        if (this.Rumah.getRuangan() == tujuan) {
+        if (asal.getNamaRuangan().equals(tujuan.getNamaRuangan())) {
             System.out.println("Anda sudah berada di ruangan tersebut.");
             return;
         }
 
-        // Pindah ruangan dan update lokasi ruangan inventory
-        this.Rumah.setRuangan(tujuan);
-        System.out.println("Anda telah pindah ke ruangan " + tujuan.getNama() + ".");
+        // Pindah ruangan dan update lokasi ruangan
+        this.setRuanganSim(tujuan);
+        System.out.println("Anda telah pindah ke ruangan " + tujuan.getNamaRuangan() + ".");
     }
 
     public void lihatInventory() {
@@ -420,7 +473,31 @@ public class Sim {
     }
 
     public void lihatWaktu() {
+        // blm tau nerapin2 waktu2 nya gmn
+        Waktu currentTime = new Waktu(8, 0, 0); // asumsi waktu saat ini adalah jam 8 pagi
+        Waktu totalAvailableTime = new Waktu(16, 0, 0); // asumsi waktu yang tersedia dari jam 8 pagi sampai jam 12
+                                                        // malam
+        Waktu remainingTime = new Waktu(totalAvailableTime.convert() - currentTime.convert()); // hitung waktu yang
+                                                                                               // masih tersedia
 
+        // tampilkan sisa waktu pada hari tersebut
+        System.out.println("Sisa waktu hari ini: " + remainingTime.getDay() + " hari, " + remainingTime.getHour()
+                + " jam, " + remainingTime.getMinute() + " menit, " + remainingTime.getSecond() + " detik");
+
+        // hitung waktu yang dibutuhkan untuk setiap tindakan yang bisa ditinggalkan dan
+        // kurangi dengan sisa waktu yang masih ada
+        Waktu upgradeTime = new Waktu(0, 30, 0); // asumsi waktu yang dibutuhkan untuk upgrade rumah adalah 30 menit
+        Waktu remainingUpgradeTime = new Waktu(remainingTime.convert() - upgradeTime.convert()); // hitung waktu yang
+                                                                                                 // masih tersedia untuk
+                                                                                                 // upgrade rumah
+
+        // tampilkan sisa waktu yang masih ada untuk upgrade rumah
+        System.out.println("Sisa waktu untuk upgrade rumah: " + remainingUpgradeTime.getHour() + " jam, "
+                + remainingUpgradeTime.getMinute() + " menit, " + remainingUpgradeTime.getSecond() + " detik");
+
+        // lanjutkan dengan menghitung waktu untuk tindakan-tindakan lainnya yang bisa
+        // ditinggalkan
+        // ...
     }
 
     public void berdoa(Ruangan ruangan) {
@@ -464,11 +541,36 @@ public class Sim {
     }
 
     public void meditasi() {
-
+        if (kekenyangan >= 5) {
+            System.out.println("SIM meditasi");
+            kekenyangan -= 5;
+            try {
+                Thread.sleep(20000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("SIM kekurangan energi untuk meditasi");
+        }
     }
 
-    public void socialize() {
+    public void socialize(Sim sim) {
+        if (sim == this) {
+            System.out.println("Sim tidak bisa socialize dengan dirinya sendiri");
+            return;
+        }
 
+        if (sim.getRumahSim() != this.getRumahSim()) {
+            System.out.println("Sim tidak berada di rumah yang sama");
+            return;
+        }
+
+        if (sim.getPosisiSim() != this.getPosisiSim()) {
+            System.out.println("Sim tidak berada di posisi yang sama");
+            return;
+        }
+
+        System.out.println("Sim socialize dengan " + sim.getNamaLengkap());
     }
 
     public void beresinKamarMandi(Ruangan ruangan) {
