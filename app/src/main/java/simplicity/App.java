@@ -3,20 +3,9 @@
  */
 package simplicity;
 
-import java.util.Scanner;
-
 public class App {
-    public void startGame() {
-        World world = new World(64, 64, null);
-        Scanner scanner = new Scanner(System.in);
-        String namaSim = scanner.nextLine();
-        Sim sim = new Sim(namaSim);
-    }
-
-    public void help() {
-
-    }
 
     public static void main(String[] args) {
+
     }
 }

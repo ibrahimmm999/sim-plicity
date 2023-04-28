@@ -4,23 +4,25 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Rumah {
-    private String namaRumah;
+    // private String namaRumah;
     private Point koordinat;
     private ArrayList<String> daftarNamaRuangan;
     private ArrayList<Ruangan> daftarRuangan;
+    private Sim pemilik;
 
-    public Rumah(Point koordinat, String namaRumah) {
-        this.namaRumah = namaRumah;
+    public Rumah(Point koordinat, Sim pemilik) {
+        // this.namaRumah = namaRumah;
         this.koordinat = koordinat;
+        this.pemilik = pemilik;
         daftarNamaRuangan = new ArrayList<String>();
         daftarRuangan = new ArrayList<Ruangan>();
-        Ruangan ruangUtama = new Ruangan(new Posisi(new Point(0, 6), new Point(6, 0)));
+        Ruangan ruang1 = new Ruangan("Ruang 1", new Posisi(new Point(0, 6), new Point(6, 0)));
         // MASIH KURANG NAMBAHIN BARANG DEFAULT (liat flow permainan di docs)
     }
 
-    public String getNamaRumah() {
-        return namaRumah;
-    }
+    // public String getNamaRumah() {
+    // return namaRumah;
+    // }
 
     public Point getKoordinat() {
         return koordinat;
@@ -28,6 +30,19 @@ public class Rumah {
 
     public ArrayList<String> getdaftarNamaRuangan() {
         return daftarNamaRuangan;
+    }
+
+    public ArrayList<String> getListRuangan() {
+        return daftarNamaRuangan;
+    }
+
+    public Ruangan getRuangan(String namaRuangan){
+        for (Ruangan ruangan : daftarRuangan){
+            if ((ruangan.getNamaRuangan()).equals(namaRuangan)){
+                return ruangan;
+            }
+        }
+        return null;
     }
 
     public void addRuangan() {
