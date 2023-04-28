@@ -1,11 +1,13 @@
 package simplicity;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class World{
     private int panjang = 0;
     private int lebar = 0;
     private Waktu time;
+    private Sim sim;
     private ArrayList<Rumah> listRumah;
 
     public World(int panjang, int lebar, ArrayList<Rumah> listRumah){
@@ -13,10 +15,14 @@ public class World{
         this.lebar = lebar;
         this.listRumah = listRumah;
         this.time = new Waktu();
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Masukkan nama SIM: ");
+        this.sim = new Sim(scanner.nextLine());
     }
     public void createSIM(){
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Masukkan nama SIM: ");
+        Sim sim = new Sim(scanner.nextLine());
     }
     public int getPanjang(){
         return panjang;
