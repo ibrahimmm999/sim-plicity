@@ -12,7 +12,7 @@ public class World{
         this.panjang = panjang;
         this.lebar = lebar;
         this.listRumah = listRumah;
-        Waktu time = new Waktu();
+        this.time = new Waktu();
 
     }
     public void createSIM(){
@@ -25,7 +25,7 @@ public class World{
         return lebar;
     }
     public String getTime(){
-        return getDay() + " day, " + getHour() + " hour, " + getMinute() + " minute, " + getSecond() + " second";
+        return time.getDay() + " day, " + time.getHour() + " hour, " + time.getMinute() + " minute, " + time.getSecond() + " second";
     }
     public int getDay(){
         return time.getDay();
