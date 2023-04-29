@@ -18,14 +18,65 @@ public class World {
         this.time = new Waktu();
         Scanner scanner = new Scanner(System.in);
         System.out.print("Masukkan nama SIM: ");
-        this.currentSim = new Sim(scanner.nextLine());
+        this.currentSim = new Sim(scanner.next());
+        scanner.close();
     }
 
     public void createSIM() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Masukkan nama SIM: ");
-        Sim sim = new Sim(scanner.nextLine());
-        listSim.add(sim);
+        Sim sim;
+        Rumah rumah;
+        String namaSim;
+        while (true) {
+            System.out.print("Masukkan nama SIM: ");
+            namaSim = scanner.next();
+            if (checkSimAvailability(namaSim)) {
+                sim = new Sim(namaSim);
+                listSim.add(sim);
+                break;
+            } else {
+                System.out.println("Nama SIM sudah terpakai!");
+            }
+        }
+        while (true) {
+            System.out.println("Masukkan koordinat rumah yang diinginkan:");
+            System.out.print("Koordinat X : ");
+            int x = scanner.nextInt();
+            System.out.print("Koordinat Y : ");
+            int y = scanner.nextInt();
+            if (checkKoordinatAvailability(x, y)) {
+                rumah = new Rumah(new Point(x, y), sim);
+                sim.setRumahSim(rumah);
+                sim.setRuanganSim(rumah.getRuangan("Ruang 1"));
+                sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
+                break;
+            } else {
+                System.out.println("Koordinat sudah terpakai!");
+            }
+        }
+        scanner.close();
+    }
+
+    public boolean checkSimAvailability(String name) {
+        boolean cek = true;
+        for (Sim sim : listSim) {
+            if (sim.getNamaLengkap().equals(name)) {
+                cek = false;
+                break;
+            }
+        }
+        return cek;
+    }
+
+    public boolean checkKoordinatAvailability(int x, int y) {
+        boolean cek = true;
+        for (Rumah rumah : listRumah) {
+            if (x == rumah.getKoordinat().getX() && y == rumah.getKoordinat().getY()) {
+                cek = false;
+                break;
+            }
+        }
+        return cek;
     }
 
     public void setCurrentSim(Sim sim) {

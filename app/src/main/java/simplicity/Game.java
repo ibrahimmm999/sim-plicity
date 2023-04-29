@@ -309,12 +309,7 @@ public class Game {
     public static void startGame() {
         String command;
         System.out.println("Welcome to Sim-Plicity");
-        System.out.print("Masukkan nama sim: ");
-        Sim sim1 = new Sim(scanner.next());
-        Rumah rumah1 = new Rumah(null, sim1); // INI DIISI APA KOORDINATNYA
-        sim1.setRumahSim(rumah1);
-        sim1.setRuanganSim(rumah1.getRuangan("Ruang 1"));
-        sim1.setPosisiSim(rumah1.getRuangan("Ruang 1").getPosisi());
+        world.createSIM();
         showMenu();
         while (isPlaying) {
             System.out.println("Masukkan nomor perintah : ");
