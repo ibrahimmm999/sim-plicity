@@ -47,14 +47,72 @@ public class Game {
     }
 
     public static void upgradeHouse() {
-
+        Sim sim = world.getCurrentSim();
+        for (Rumah rumah : world.getListRumah()) {
+            if (rumah.getPemilikRumah().getNamaLengkap().equals(sim.getNamaLengkap())) {
+                sim.upgradeRumah(rumah);
+                break;
+            }
+        }
     }
 
     public static void moveRoom() {
-
+        int i = 1;
+        int pilihanRuangan;
+        Sim sim = world.getCurrentSim();
+        System.out.println("Pilihan ruangan : ");
+        for (Ruangan ruangan : sim.getRumahSim().getListRuangan()) {
+            System.out.println(i + ". " + ruangan.getNamaRuangan());
+        }
+        System.out.print("Pilih nomor ruangan yang akan dituju : ");
+        pilihanRuangan = scanner.nextInt();
+        sim.pindahRuangan(sim.getRuanganSim(), sim.getRumahSim().getListRuangan().get(pilihanRuangan));
     }
 
     public static void editRoom() {
+        Sim sim = world.getCurrentSim();
+        String idx;
+        String nomorBarang;
+        while (true) {
+            System.out.println("Aksi yang tersedia :");
+            System.out.println("1. Membeli barang");
+            System.out.println("2. Install barang");
+            System.out.print("Pilih nomor :  ");
+            idx = scanner.next();
+            if (idx.equals("1")) {
+                System.out.println("\n1. Non Makanan");
+                System.out.println("\n2. Bahan Makanan :");
+                System.out.print("Pilih nomor : ");
+                nomorBarang = scanner.next();
+                if (nomorBarang.equals("1")) {
+                    System.out.println("- Kasur Single ( harga: 50 )");
+                    System.out.println("- Kasur Queen Size ( harga: 100 )");
+                    System.out.println("- Kasur King Size ( harga: 150 )");
+                    System.out.println("- Toilet ( harga: 50 )");
+                    System.out.println("- Kompor Gas ( harga: 100 )");
+                    System.out.println("- Kompor Listrik ( harga: 200 )");
+                    System.out.println("- Meja dan Kursi ( harga: 50 )");
+                    System.out.print("Masukkan nama barang yang ingin dibeli : ");
+                    String namaBarang = scanner.next();
+                } else if (nomorBarang.equals("2")) {
+                    System.out.println("- Nasi ( harga: 5 )");
+                    System.out.println("- Kentang ( harga: 3 )");
+                    System.out.println("- Ayam ( harga: 10 )");
+                    System.out.println("- Sapi ( harga: 12 )");
+                    System.out.println("- Wortel ( harga: 3 )");
+                    System.out.println("- Bayam ( harga: 3 )");
+                    System.out.println("- Kacang ( harga: 2 )");
+                    System.out.println("- Susu ( harga: 2 )");
+                    String namaBarang = scanner.next();
+                } else {
+                    System.out.println("Input tidak sesuai!");
+                }
+            } else if (idx.equals("2")) {
+
+            } else {
+                System.out.println("Masukkan nomor yang sesuai");
+            }
+        }
 
     }
 

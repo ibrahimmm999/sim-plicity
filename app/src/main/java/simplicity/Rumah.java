@@ -32,8 +32,8 @@ public class Rumah {
         return daftarNamaRuangan;
     }
 
-    public ArrayList<String> getListRuangan() {
-        return daftarNamaRuangan;
+    public ArrayList<Ruangan> getListRuangan() {
+        return daftarRuangan;
     }
 
     public Ruangan getRuangan(String namaRuangan) {
