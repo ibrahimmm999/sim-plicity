@@ -222,7 +222,7 @@ public class Sim {
         scanner.close();
     }
 
-    public void makan(Object object) {
+    public void makan(Objek object) {
         if (object instanceof Masakan || object instanceof Bahan_Makanan) {
             if (inventory.getInventory().containsKey(object) && inventory.getInventory().get(object) > 0) {
                 if (object instanceof Masakan) {
@@ -294,7 +294,7 @@ public class Sim {
     public void berkunjung(Rumah now, Rumah tujuan) {
         int waktuTempuh;
         // this.getRumah() maksudnya buat rumah sim yang sedang dimainkan
-        if (now.getNamaRumah().equals(tujuan.getNamaRumah())) {
+        if (now.getPemilikRumah().getNamaLengkap().equals(tujuan.getPemilikRumah().getNamaLengkap())) {
             waktuTempuh = 0;
         } else {
             // getRumah yang disini maksudnya rumah nya si sim yg dimainkan
@@ -524,13 +524,13 @@ public class Sim {
         }
     }
 
-    public void rapihinKasur(Object object) {
+    public void rapihinKasur(String object) {
         if (kekenyangan >= 5) {
-            if (object instanceof SingleBed) {
+            if (object.equals("Kasur Single")) {
                 System.out.println("SIM merapikan kasur Single Bed");
-            } else if (object instanceof QueenSizeBed) {
+            } else if (object.equals("Kasur Queen Size")) {
                 System.out.println("SIM merapikan kasur Queen Size Bed");
-            } else if (object instanceof KingSizeBed) {
+            } else if (object.equals("Kasur King Size")) {
                 System.out.println("SIM merapikan kasur King Size Bed");
             } else {
                 System.out.println("Kasur yang diberikan tidak valid");
@@ -543,7 +543,7 @@ public class Sim {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("SIM kekurangan energi untuk merapikan kasur " + ((Objek) object).getNamaObjek());
+            System.out.println("SIM kekurangan energi untuk merapikan " + object);
         }
     }
 

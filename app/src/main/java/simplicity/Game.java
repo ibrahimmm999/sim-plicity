@@ -114,7 +114,115 @@ public class Game {
     }
 
     public static void action() {
+        Sim sim = world.getCurrentSim();
+        System.out.println("==== Daftar Action : ====");
+        System.out.println("1. Kerja");
+        System.out.println("2. Olahraga");
+        System.out.println("3. Tidur");
+        System.out.println("4. Makan");
+        System.out.println("5. Memasak");
+        System.out.println("6. Berkunjung");
+        System.out.println("7. Buang Air");
+        System.out.println("8. Melihat Waktu");
+        System.out.println("9. Berdoa");
+        System.out.println("10. Meditasi");
+        System.out.println("11. Merapihkan kasur");
+        System.out.println("12. Socialize");
+        System.out.println("13. Beresin kamar mandi");
+        System.out.println("14. Belajar");
+        System.out.println("15. Ngegame");
+        System.out.print("Silahkan pilih nomor untuk melakukan aksi yang ingin dilakukan : ");
+        String aksi = scanner.next();
+        if (aksi.equals("1")) {
+            sim.kerja();
+        }
 
+        else if (aksi.equals("2")) {
+            sim.olahraga();
+        }
+
+        else if (aksi.equals("3")) {
+            if (sim.getObjekDipakai().equals("Kasur Single") || sim.getObjekDipakai().equals("Kasur Queen Size")
+                    || sim.getObjekDipakai().equals("Kasur King Size")) {
+                sim.tidur();
+            } else {
+                System.out.println("Silahkan pergi ke objek 'Kasur' terlebih dahulu!");
+            }
+        }
+
+        else if (aksi.equals("4")) {
+            System.out.println("Daftar makanan : ");
+            // STEP BERIKUTNYA
+        }
+
+        else if (aksi.equals("5")) {
+            if (sim.getObjekDipakai().equals("Kompor Gas") || sim.getObjekDipakai().equals("Kompor Listrik")) {
+                System.out.println("Daftar menu untuk dimasak :");
+                // STEP BERIKUTNYA
+            } else {
+                System.out.println("Silahkan pergi ke objek 'Kompor' terlebih dahulu!");
+            }
+        }
+
+        else if (aksi.equals("6")) {
+            int i = 1;
+            int simDikunjungi;
+            System.out.println("Daftar rumah Sim untuk dikunjungi :");
+            for (Rumah rumah : world.getListRumah()) {
+                System.out.println(i + ". " + rumah.getPemilikRumah().getNamaLengkap());
+                i++;
+            }
+            while (true) {
+                System.out.print("Pilih nomor Sim untuk dikunjungi :");
+                simDikunjungi = scanner.nextInt();
+                if (simDikunjungi > 0 && simDikunjungi <= world.getListRumah().size()) {
+                    break;
+                }
+            }
+            sim.berkunjung(sim.getRumahSim(), world.getListRumah().get(simDikunjungi - 1));
+
+        } else if (aksi.equals("7")) {
+            if (sim.getObjekDipakai().equals("Toilet")) {
+                sim.buangAir(sim.getRuanganSim());
+            } else {
+                System.out.println("Silahkan pergi ke objek 'Toilet' terlebih dahulu!");
+            }
+
+        } else if (aksi.equals("8")) {
+            if (sim.getObjekDipakai().equals("Jam")) {
+                sim.lihatWaktu();
+            } else {
+                System.out.println("Silahkan pergi ke object 'Jam' untuk lihat waktu!");
+            }
+        }
+
+        else if (aksi.equals("9")) {
+            sim.berdoa(sim.getRuanganSim());
+        }
+
+        else if (aksi.equals("10")) {
+            sim.meditasi();
+        }
+
+        else if (aksi.equals("11")) {
+            if (sim.getObjekDipakai().equals("Kasur Single") || sim.getObjekDipakai().equals("Kasur Queen Size")
+                    || sim.getObjekDipakai().equals("Kasur King Size")) {
+                sim.rapihinKasur(sim.getObjekDipakai());
+            } else {
+                System.out.println("Silahkan pergi ke objek 'Kasur' terlebih dahulu!");
+            }
+
+        } else if (aksi.equals("12")) {
+
+        } else if (aksi.equals("13")) {
+
+        } else if (aksi.equals("14")) {
+
+        } else if (aksi.equals("15")) {
+
+        } else {
+            System.out.println("Masukkan input yang sesuai");
+        }
     }
 
     public static void startGame() {
