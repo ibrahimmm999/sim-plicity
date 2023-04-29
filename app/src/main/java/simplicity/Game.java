@@ -211,16 +211,39 @@ public class Game {
             } else {
                 System.out.println("Silahkan pergi ke objek 'Kasur' terlebih dahulu!");
             }
+        }
 
-        } else if (aksi.equals("12")) {
+        else if (aksi.equals("12")) {
+            int i = 1;
+            int simSocialize;
+            System.out.println("Daftar Sim untuk diajak socialize :");
+            for (Sim simLawan : world.getListSim()) {
+                System.out.println(i + ". " + simLawan.getNamaLengkap());
+                i++;
+            }
+            while (true) {
+                System.out.print("Pilih nomor Sim untuk diajak socialize :");
+                simSocialize = scanner.nextInt();
+                if (simSocialize > 0 && simSocialize <= world.getListSim().size()) {
+                    break;
+                }
+            }
+            sim.socialize(world.getListSim().get(simSocialize));
+        }
 
-        } else if (aksi.equals("13")) {
+        else if (aksi.equals("13")) {
+            sim.beresinKamarMandi(sim.getRuanganSim());
+        }
 
-        } else if (aksi.equals("14")) {
+        else if (aksi.equals("14")) {
+            sim.belajar(sim.getRuanganSim());
+        }
 
-        } else if (aksi.equals("15")) {
+        else if (aksi.equals("15")) {
+            sim.ngegame(sim.getRuanganSim());
+        }
 
-        } else {
+        else {
             System.out.println("Masukkan input yang sesuai");
         }
     }
