@@ -127,4 +127,8 @@ public class Rumah {
     public void masukRumah(Rumah now, Point koordinat) {
         now.koordinat = koordinat;
     }
+
+    public Sim getPemilikRumah() {
+        return pemilik;
+    }
 }
