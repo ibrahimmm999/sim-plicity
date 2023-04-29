@@ -15,6 +15,7 @@ public class Sim {
     private int mood;
     private int kesehatan;
     private String status;
+    private String objekDipakai;
     private int waktuKerjaSim; // waktu total sim kerja buat ngecek gajian
     private Posisi posisiSim;
     private Rumah rumahSim;
@@ -74,6 +75,10 @@ public class Sim {
         return rumahSim;
     }
 
+    public String getObjekDipakai() {
+        return objekDipakai;
+    }
+
     public Ruangan getRuanganSim() {
         return ruanganSim;
     }
@@ -130,6 +135,10 @@ public class Sim {
         return status;
     }
 
+    public void setObjekDipakai(String objek) {
+        objekDipakai = objek;
+    }
+
     public void setStatus(String status) {
         this.status = status;
     }
@@ -164,7 +173,6 @@ public class Sim {
             Scanner scanner = new Scanner(System.in);
             int durasi = scanner.nextInt();
             if (durasi % 120 == 0) {
-                setStatus("kerja");
                 kekenyangan -= (10 * (durasi / 30));
                 mood -= (10 * (durasi / 30));
                 waktuKerjaSim += durasi;
@@ -190,7 +198,6 @@ public class Sim {
             Scanner scanner = new Scanner(System.in);
             int durasi = scanner.nextInt();
             if (durasi % 20 == 0) {
-                setStatus("olahraga");
                 kekenyangan -= (5 * (durasi / 20));
                 kesehatan += (5 * (durasi / 20));
                 mood += (10 * (durasi / 20));

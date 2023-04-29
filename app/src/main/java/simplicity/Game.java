@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Game {
     private static World world = new World(64, 64, null);
     private static boolean isPlaying = true;
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void showMenu() {
         System.out.println("=== MENU ===");
@@ -58,19 +59,58 @@ public class Game {
     }
 
     public static void addSim() {
-
+        world.createSIM();
     }
 
     public static void changeSim() {
-
+        if (world.getListSim().size() > 0) {
+            System.out.println("Daftar Sim yang tersedia");
+            int idx = 1;
+            for (Sim sim : world.getListSim()) {
+                System.out.println(idx + ". " + sim.getNamaLengkap());
+                idx++;
+            }
+            System.out.print("Silahkan pilih nomor sim : ");
+            while (true) {
+                int simDipilih = scanner.nextInt();
+                if (simDipilih > 0 && simDipilih <= world.getListSim().size()) {
+                    world.setCurrentSim(world.getListSim().get(simDipilih - 1));
+                    break;
+                } else {
+                    System.out.println("Pilih nomor yang sesuai!");
+                }
+            }
+            System.out.println("Berhasil mengganti Sim ke " + world.getCurrentSim().getNamaLengkap());
+        } else {
+            System.out.println("Tidak ada Sim yang tersedia!");
+        }
     }
 
     public static void listObject() {
-
+        Sim sim = world.getCurrentSim();
+        System.out.println("List Objek dalam ruangan : ");
+        int idx = 1;
+        for (Objek i : sim.getRuanganSim().getListObjek().values()) {
+            System.out.println(idx + ". " + i.getNamaObjek());
+            idx++;
+        }
     }
 
     public static void goToObject() {
-
+        Sim sim = world.getCurrentSim();
+        String objek;
+        listObject();
+        while (true) {
+            System.out.print("Pilih objek : ");
+            objek = scanner.next();
+            if (sim.getRuanganSim().getListObjek().containsKey(objek)) {
+                break;
+            } else {
+                System.out.println("Objek tidak ditemukan");
+            }
+        }
+        sim.setObjekDipakai(objek);
+        System.out.println("Sim " + sim.getNamaLengkap() + " menggunakan " + sim.getObjekDipakai());
     }
 
     public static void action() {
@@ -79,10 +119,9 @@ public class Game {
 
     public static void startGame() {
         String command;
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to Sim-Plicity");
         System.out.print("Masukkan nama sim: ");
-        Sim sim1 = new Sim(scanner.nextLine());
+        Sim sim1 = new Sim(scanner.next());
         Rumah rumah1 = new Rumah(null, sim1); // INI DIISI APA KOORDINATNYA
         sim1.setRumahSim(rumah1);
         sim1.setRuanganSim(rumah1.getRuangan("Ruang 1"));
@@ -90,7 +129,7 @@ public class Game {
         showMenu();
         while (isPlaying) {
             System.out.println("Masukkan nomor perintah : ");
-            command = scanner.nextLine();
+            command = scanner.next();
             switch (command) {
                 case "1":
                     System.out.println("Game sedang berjalan...");
@@ -139,6 +178,5 @@ public class Game {
                 default:
             }
         }
-
     }
 }

@@ -9,6 +9,7 @@ public class World {
     private Waktu time;
     private Sim currentSim;
     private ArrayList<Rumah> listRumah;
+    private ArrayList<Sim> listSim = new ArrayList<>();
 
     public World(int panjang, int lebar, ArrayList<Rumah> listRumah) {
         this.panjang = panjang;
@@ -24,14 +25,19 @@ public class World {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Masukkan nama SIM: ");
         Sim sim = new Sim(scanner.nextLine());
-    }
-
-    public Sim getCurrentSim() {
-        return currentSim;
+        listSim.add(sim);
     }
 
     public void setCurrentSim(Sim sim) {
         currentSim = sim;
+    }
+
+    public ArrayList<Sim> getListSim() {
+        return listSim;
+    }
+
+    public Sim getCurrentSim() {
+        return currentSim;
     }
 
     public int getPanjang() {
