@@ -162,26 +162,31 @@ public class Game {
     }
 
     public static void changeSim() {
-        if (world.getListSim().size() > 0) {
-            System.out.println("Daftar Sim yang tersedia");
-            int idx = 1;
-            for (Sim sim : world.getListSim()) {
-                System.out.println(idx + ". " + sim.getNamaLengkap());
-                idx++;
-            }
-            System.out.print("Silahkan pilih nomor sim : ");
-            while (true) {
-                int simDipilih = scanner.nextInt();
-                if (simDipilih > 0 && simDipilih <= world.getListSim().size()) {
-                    world.setCurrentSim(world.getListSim().get(simDipilih - 1));
-                    break;
-                } else {
-                    System.out.println("Pilih nomor yang sesuai!");
+        try {
+            if (world.getListSim().size() > 0) {
+                System.out.println("Daftar Sim yang tersedia");
+                int idx = 1;
+                for (Sim sim : world.getListSim()) {
+                    System.out.println(idx + ". " + sim.getNamaLengkap());
+                    idx++;
                 }
+                System.out.print("Silahkan pilih nomor sim : ");
+                while (true) {
+                    int simDipilih = scanner.nextInt();
+                    if (simDipilih > 0 && simDipilih <= world.getListSim().size()) {
+                        world.setCurrentSim(world.getListSim().get(simDipilih - 1));
+                        break;
+                    } else {
+                        System.out.println("Pilih nomor yang sesuai!");
+                    }
+                }
+                System.out.println("Berhasil mengganti Sim ke " + world.getCurrentSim().getNamaLengkap());
+            } else {
+                System.out.println("Tidak ada Sim yang tersedia!");
             }
-            System.out.println("Berhasil mengganti Sim ke " + world.getCurrentSim().getNamaLengkap());
-        } else {
-            System.out.println("Tidak ada Sim yang tersedia!");
+        } catch (NoSuchElementException e) {
+            System.out.println("Input salah, silakan coba lagi.");
+            scanner.nextLine();
         }
     }
 
@@ -250,9 +255,22 @@ public class Game {
         }
 
         else if (aksi.equals("4")) {
-            System.out.println("Daftar makanan : ");
+            System.out.println("Daftar makanan yang merupakan Bahan Makanan : ");
+            System.out.println("1. Nasi");
+            System.out.println("2. Kentang");
+            System.out.println("3. Ayam");
+            System.out.println("4. Sapi");
+            System.out.println("5. Wortel");
+            System.out.println("6. Bayam");
+            System.out.println("7. Kacang");
+            System.out.println("8. Susu");
+            System.out.println("Daftar makanan yang merupakan Hasil Masakan: ");
+            System.out.println("1. Nasi Ayam");
+            System.out.println("2. Nasi Kari");
+            System.out.println("3. Susu Kacang");
+            System.out.println("4. Tumis Sayur");
+            System.out.println("5. Bistik");
             sim.makan();
-            // STEP BERIKUTNYA
         }
 
         else if (aksi.equals("5")) {
@@ -354,12 +372,13 @@ public class Game {
     }
 
     public static void startGame() {
+        boolean a = false;
         String command;
         world.createSIM1();
         world.getCurrentSim();
         showMenu2();
         try {
-            while (true) {
+            while (!a) {
                 try {
                     System.out.print("Masukkan nomor perintah : ");
                     command = scanner.nextLine();
@@ -410,6 +429,7 @@ public class Game {
                                         case "13":
                                             System.out.println("Keluar dari permainan");
                                             isPlaying = false;
+                                            a = true;
                                             break;
                                         default:
                                             System.out.println("Masukkan input yang sesuai");
@@ -425,7 +445,7 @@ public class Game {
                             break;
                         case "3":
                             System.out.println("Keluar dari permainan");
-                            isPlaying = false;
+                            a = true;
                             break;
                         default:
                             System.out.println("Masukkan input yang sesuai");

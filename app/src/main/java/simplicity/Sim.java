@@ -188,7 +188,6 @@ public class Sim {
             } else {
                 System.out.println("Masukkan input yang benar");
             }
-            scanner.close();
         }
     }
 
@@ -223,6 +222,9 @@ public class Sim {
     }
 
     public void makan() {
+        if (inventory == null) {
+            inventory = new Inventory(); // inisialisasi inventory jika belum ada
+        }
         inventory.listMasakan();
         inventory.listBahanMakanan();
         Scanner scanner = new Scanner(System.in);
@@ -257,7 +259,6 @@ public class Sim {
         } else {
             System.out.println("Object cannot be eaten.");
         }
-        scanner.close();
     }
 
     public void memasak() {
@@ -355,7 +356,7 @@ public class Sim {
 
     public void upgradeRumah(Rumah rumah) {
         // biayaupgrade nya brp ya? blm tau ini masih ngasal dlu biayanya
-        int biayaUpgrade = 50; // biaya upgrade untuk menambah satu ruangan
+        int biayaUpgrade = 1500; // biaya upgrade untuk menambah satu ruangan
 
         // cek apakah sim memiliki cukup uang untuk upgrade
         if (uang < biayaUpgrade) {
