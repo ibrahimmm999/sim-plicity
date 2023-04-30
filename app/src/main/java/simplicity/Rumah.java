@@ -2,6 +2,7 @@ package simplicity;
 
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 public class Rumah {
     // private String namaRumah;
@@ -47,9 +48,9 @@ public class Rumah {
     }
 
     public void addRuangan() {
+        Scanner scanner = new Scanner(System.in);
         while (true) {
             try {
-                Scanner scanner = new Scanner(System.in);
                 System.out.print("Masukkan nama ruangan : ");
                 String namaRuangan = scanner.nextLine();
                 System.out.println(namaRuangan);
@@ -57,16 +58,12 @@ public class Rumah {
                     System.out.println("Silahkan masukkan koordinat untuk titik kiri atas dan kanan bawah ruangan!");
                     System.out.print("Masukkan titik X koordinat kiri atas : ");
                     int kiriAtasX = scanner.nextInt();
-                    System.out.println(kiriAtasX);
                     System.out.print("\nMasukkan titik Y koordinat kiri atas : ");
                     int kiriAtasY = scanner.nextInt();
-                    System.out.println(kiriAtasY);
-                    System.out.print("\nMasukkan titik Y koordinat kanan bawah : ");
+                    System.out.print("\nMasukkan titik X koordinat kanan bawah : ");
                     int kananBawahX = scanner.nextInt();
-                    System.out.println(kananBawahX);
                     System.out.print("\nMasukkan titik Y koordinat kanan bawah : ");
                     int kananBawahY = scanner.nextInt();
-                    System.out.println(kananBawahY);
                     Point kiriAtas = new Point(kiriAtasX, kiriAtasY);
                     Point kananBawah = new Point(kananBawahX, kananBawahY);
                     if (checkEmptyKoordinat(kiriAtas, kananBawah)) {
@@ -75,7 +72,6 @@ public class Rumah {
                         daftarRuangan.add(ruanganBaru);
                         daftarNamaRuangan.add(namaRuangan);
                         System.out.println("Ruangan berhasil ditambahkan!");
-                        scanner.close();
                         break;
                     } else {
                         System.out.println("Koordinat sudah terpakai!");
@@ -84,11 +80,10 @@ public class Rumah {
                     System.out.println("Nama ruangan sudah terpakai!");
                 }
                 System.out.println("Silahkan ulangi!");
-                scanner.close();
-            } catch (Exception e) {
-                System.out.println("Input salah, silahkan ulangi!");
+            } catch (NoSuchElementException e) {
+                System.out.println("Input salah, silakan coba lagi.");
+                scanner.nextLine();
             }
-
         }
     }
 

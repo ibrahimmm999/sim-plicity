@@ -8,23 +8,38 @@ public class Game {
     private static boolean isPlaying = true;
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void showMenu() {
-        System.out.println("=== MENU ===");
+    public static void showMenu2() {
+        System.out.println("=== MENU UTAMA ===");
         System.out.println("Silakan pilih nomor menu : ");
         System.out.println("1. start");
         System.out.println("2. help");
         System.out.println("3. exit");
-        System.out.println("4. view sim info");
-        System.out.println("5. view current location");
-        System.out.println("6. view inventory");
-        System.out.println("7. upgrade house");
-        System.out.println("8. move room");
-        System.out.println("9. edit room");
-        System.out.println("10. add sim");
-        System.out.println("11. change sim");
-        System.out.println("12. list object");
-        System.out.println("13. go to object");
-        System.out.println("14. action");
+    }
+
+    public static void help2() {
+        System.out.println("=== MENU UTAMA ===");
+        System.out.println("Silakan pilih nomor menu : ");
+        System.out.println("1. start");
+        System.out.println("2. help");
+        System.out.println("3. exit");
+    }
+
+    public static void showMenu() {
+        System.out.println("=== MENU ===");
+        System.out.println("Silakan pilih nomor menu : ");
+        System.out.println("1. view sim info");
+        System.out.println("2. view current location");
+        System.out.println("3. view inventory");
+        System.out.println("4. upgrade house");
+        System.out.println("5. move room");
+        System.out.println("6. edit room");
+        System.out.println("7. add sim");
+        System.out.println("8. change sim");
+        System.out.println("9. list object");
+        System.out.println("10. go to object");
+        System.out.println("11. action");
+        System.out.println("12. help");
+        System.out.println("13. exit");
     }
 
     public static void help() {
@@ -143,7 +158,7 @@ public class Game {
     }
 
     public static void addSim() {
-        world.createSIM();
+        world.createSIMNext();
     }
 
     public static void changeSim() {
@@ -340,65 +355,88 @@ public class Game {
 
     public static void startGame() {
         String command;
-        world.createSIM();
-        showMenu();
-        while (isPlaying) {
-            try {
-                System.out.print("Masukkan nomor perintah : ");
-                command = scanner.nextLine();
-                switch (command) {
-                    case "1":
-                        System.out.println("Game sedang berjalan...");
-                        break;
-                    case "2":
-                        help();
-                        break;
-                    case "3":
-                        System.out.println("Keluar dari permainan");
-                        scanner.close();
-                        isPlaying = false;
-                        break;
-                    case "4":
-                        viewSimInfo();
-                        break;
-                    case "5":
-                        viewCurrentLocation();
-                        break;
-                    case "6":
-                        viewInventory();
-                        break;
-                    case "7":
-                        upgradeHouse();
-                        break;
-                    case "8":
-                        moveRoom();
-                        break;
-                    case "9":
-                        editRoom();
-                        break;
-                    case "10":
-                        addSim();
-                        break;
-                    case "11":
-                        changeSim();
-                        break;
-                    case "12":
-                        listObject();
-                        break;
-                    case "13":
-                        goToObject();
-                        break;
-                    case "14":
-                        action();
-                        break;
-                    default:
-                        System.out.println("Masukkan input yang sesuai");
-                        break;
+        world.createSIM1();
+        world.getCurrentSim();
+        showMenu2();
+        try {
+            while (true) {
+                try {
+                    System.out.print("Masukkan nomor perintah : ");
+                    command = scanner.nextLine();
+                    switch (command) {
+                        case "1":
+                            showMenu();
+                            while (isPlaying) {
+                                try {
+                                    System.out.print("Masukkan nomor perintah : ");
+                                    command = scanner.nextLine();
+                                    switch (command) {
+                                        case "1":
+                                            viewSimInfo();
+                                            break;
+                                        case "2":
+                                            viewCurrentLocation();
+                                            break;
+                                        case "3":
+                                            viewInventory();
+                                            break;
+                                        case "4":
+                                            upgradeHouse();
+                                            break;
+                                        case "5":
+                                            moveRoom();
+                                            break;
+                                        case "6":
+                                            editRoom();
+                                            break;
+                                        case "7":
+                                            addSim();
+                                            break;
+                                        case "8":
+                                            changeSim();
+                                            break;
+                                        case "9":
+                                            listObject();
+                                            break;
+                                        case "10":
+                                            goToObject();
+                                            break;
+                                        case "11":
+                                            action();
+                                            break;
+                                        case "12":
+                                            help();
+                                            break;
+                                        case "13":
+                                            System.out.println("Keluar dari permainan");
+                                            isPlaying = false;
+                                            break;
+                                        default:
+                                            System.out.println("Masukkan input yang sesuai");
+                                            break;
+                                    }
+                                } catch (NoSuchElementException e) {
+                                    System.out.println("Masukkan input yang sesuai");
+                                }
+                            }
+                            break;
+                        case "2":
+                            help2();
+                            break;
+                        case "3":
+                            System.out.println("Keluar dari permainan");
+                            isPlaying = false;
+                            break;
+                        default:
+                            System.out.println("Masukkan input yang sesuai");
+                            break;
+                    }
+                } catch (NoSuchElementException e) {
+                    System.out.println("Masukkan input yang sesuai");
                 }
-            } catch (NoSuchElementException e) {
-                System.out.println("Input salah, silakan coba lagi.");
-                scanner.nextLine();
             }
+        } catch (NoSuchElementException e) {
+            System.out.println("Masukkan input yang sesuai");
         }
     }
 }
