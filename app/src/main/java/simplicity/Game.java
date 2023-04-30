@@ -240,19 +240,28 @@ public class Game {
         String aksi = scanner.next();
         if (aksi.equals("1")) {
             sim.kerja();
+            scanner.nextLine();
         }
 
         else if (aksi.equals("2")) {
             sim.olahraga();
+            scanner.nextLine();
         }
 
         else if (aksi.equals("3")) {
-            if (sim.getObjekDipakai().equals("Kasur Single") || sim.getObjekDipakai().equals("Kasur Queen Size")
-                    || sim.getObjekDipakai().equals("Kasur King Size")) {
-                sim.tidur();
+            if (sim != null) {
+                String objekDipakai = sim.getObjekDipakai();
+                if (objekDipakai != null
+                        && (objekDipakai.equals("Kasur Single") || objekDipakai.equals("Kasur Queen Size")
+                                || objekDipakai.equals("Kasur King Size"))) {
+                    sim.tidur();
+                } else {
+                    System.out.println("Silahkan pergi ke objek 'Kasur' terlebih dahulu!");
+                }
             } else {
-                System.out.println("Silahkan pergi ke objek 'Kasur' terlebih dahulu!");
+                System.out.println("Objek 'sim' bernilai null!");
             }
+            scanner.nextLine();
         }
 
         else if (aksi.equals("4")) {
@@ -276,7 +285,8 @@ public class Game {
         }
 
         else if (aksi.equals("5")) {
-            if (sim.getObjekDipakai().equals("Kompor Gas") || sim.getObjekDipakai().equals("Kompor Listrik")) {
+            if (sim.getObjekDipakai() != null
+                    && (sim.getObjekDipakai().equals("Kompor Gas") || sim.getObjekDipakai().equals("Kompor Listrik"))) {
                 System.out.println("1. Nasi Ayam");
                 System.out.println("2. Nasi Kari");
                 System.out.println("3. Susu Kacang");
@@ -287,6 +297,7 @@ public class Game {
             } else {
                 System.out.println("Silahkan pergi ke objek 'Kompor' terlebih dahulu!");
             }
+            scanner.nextLine();
         }
 
         else if (aksi.equals("6")) {
@@ -307,14 +318,16 @@ public class Game {
             sim.berkunjung(sim.getRumahSim(), world.getListRumah().get(simDikunjungi - 1));
 
         } else if (aksi.equals("7")) {
-            if (sim.getObjekDipakai().equals("Toilet")) {
+            String objekDipakai = sim.getObjekDipakai();
+            if (objekDipakai != null && objekDipakai.equals("Toilet")) {
                 sim.buangAir(sim.getRuanganSim());
             } else {
                 System.out.println("Silahkan pergi ke objek 'Toilet' terlebih dahulu!");
             }
 
         } else if (aksi.equals("8")) {
-            if (sim.getObjekDipakai().equals("Jam")) {
+            String objekDipakai = sim.getObjekDipakai();
+            if (objekDipakai != null && objekDipakai.equals("Jam")) {
                 sim.lihatWaktu();
             } else {
                 System.out.println("Silahkan pergi ke object 'Jam' untuk lihat waktu!");
@@ -330,9 +343,10 @@ public class Game {
         }
 
         else if (aksi.equals("11")) {
-            if (sim.getObjekDipakai().equals("Kasur Single") || sim.getObjekDipakai().equals("Kasur Queen Size")
-                    || sim.getObjekDipakai().equals("Kasur King Size")) {
-                sim.rapihinKasur(sim.getObjekDipakai());
+            String objekDipakai = sim.getObjekDipakai();
+            if (objekDipakai != null && (objekDipakai.equals("Kasur Single") || objekDipakai.equals("Kasur Queen Size")
+                    || objekDipakai.equals("Kasur King Size"))) {
+                sim.rapihinKasur(objekDipakai);
             } else {
                 System.out.println("Silahkan pergi ke objek 'Kasur' terlebih dahulu!");
             }
@@ -353,7 +367,11 @@ public class Game {
                     break;
                 }
             }
-            sim.socialize(world.getListSim().get(simSocialize));
+            if (simSocialize > 0 && simSocialize <= world.getListSim().size()) {
+                sim.socialize(world.getListSim().get(simSocialize - 1));
+            } else {
+                System.out.println("Nomor Sim yang dipilih tidak valid.");
+            }
         }
 
         else if (aksi.equals("13")) {
@@ -371,6 +389,7 @@ public class Game {
         else {
             System.out.println("Masukkan input yang sesuai");
         }
+        scanner.nextLine();
     }
 
     public static void startGame() {

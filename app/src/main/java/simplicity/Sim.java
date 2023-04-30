@@ -309,7 +309,6 @@ public class Sim {
         } else {
             System.out.println("Bahan makanan tidak cukup!");
         }
-        scanner.close();
     }
 
     public void berkunjung(Rumah now, Rumah tujuan) {
