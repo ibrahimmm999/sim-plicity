@@ -1,6 +1,7 @@
 package simplicity;
 
 import java.util.Scanner;
+import java.util.NoSuchElementException;
 
 public class Game {
     private static World world = new World(64, 64, null);
@@ -342,54 +343,61 @@ public class Game {
         world.createSIM();
         showMenu();
         while (isPlaying) {
-            System.out.println("Masukkan nomor perintah : ");
-            command = scanner.next();
-            switch (command) {
-                case "1":
-                    System.out.println("Game sedang berjalan...");
-                    break;
-                case "2":
-                    help();
-                    break;
-                case "3":
-                    System.out.println("Keluar dari permainan");
-                    scanner.close();
-                    isPlaying = false;
-                    break;
-                case "4":
-                    viewSimInfo();
-                    break;
-                case "5":
-                    viewCurrentLocation();
-                    break;
-                case "6":
-                    viewInventory();
-                    break;
-                case "7":
-                    upgradeHouse();
-                    break;
-                case "8":
-                    moveRoom();
-                    break;
-                case "9":
-                    editRoom();
-                    break;
-                case "10":
-                    addSim();
-                    break;
-                case "11":
-                    changeSim();
-                    break;
-                case "12":
-                    listObject();
-                    break;
-                case "13":
-                    goToObject();
-                    break;
-                case "14":
-                    action();
-                    break;
-                default:
+            try {
+                System.out.print("Masukkan nomor perintah : ");
+                command = scanner.nextLine();
+                switch (command) {
+                    case "1":
+                        System.out.println("Game sedang berjalan...");
+                        break;
+                    case "2":
+                        help();
+                        break;
+                    case "3":
+                        System.out.println("Keluar dari permainan");
+                        scanner.close();
+                        isPlaying = false;
+                        break;
+                    case "4":
+                        viewSimInfo();
+                        break;
+                    case "5":
+                        viewCurrentLocation();
+                        break;
+                    case "6":
+                        viewInventory();
+                        break;
+                    case "7":
+                        upgradeHouse();
+                        break;
+                    case "8":
+                        moveRoom();
+                        break;
+                    case "9":
+                        editRoom();
+                        break;
+                    case "10":
+                        addSim();
+                        break;
+                    case "11":
+                        changeSim();
+                        break;
+                    case "12":
+                        listObject();
+                        break;
+                    case "13":
+                        goToObject();
+                        break;
+                    case "14":
+                        action();
+                        break;
+                    default:
+                        System.out.println("Masukkan input yang sesuai");
+                        break;
+                }
+            } catch (NoSuchElementException e) {
+                System.out.println("Input salah, silakan coba lagi.");
+                scanner.nextLine();
             }
         }
     }

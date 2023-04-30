@@ -66,8 +66,8 @@ public class World {
                 scanner.nextLine();
             }
         }
+        this.currentSim = sim;
         System.out.println("Sim berhasil dibuat");
-        scanner.close();
     }
 
     public boolean checkSimAvailability(String name) {
