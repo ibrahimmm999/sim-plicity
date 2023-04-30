@@ -210,12 +210,18 @@ public class Game {
 
         else if (aksi.equals("4")) {
             System.out.println("Daftar makanan : ");
+            sim.makan();
             // STEP BERIKUTNYA
         }
 
         else if (aksi.equals("5")) {
             if (sim.getObjekDipakai().equals("Kompor Gas") || sim.getObjekDipakai().equals("Kompor Listrik")) {
-                System.out.println("Daftar menu untuk dimasak :");
+                System.out.println("1. Nasi Ayam");
+                System.out.println("2. Nasi Kari");
+                System.out.println("3. Susu Kacang");
+                System.out.println("4. Tumis Sayur");
+                System.out.println("5. Bistik");
+                sim.memasak();
                 // STEP BERIKUTNYA
             } else {
                 System.out.println("Silahkan pergi ke objek 'Kompor' terlebih dahulu!");
