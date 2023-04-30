@@ -54,6 +54,7 @@ public class World {
                 System.out.println("Koordinat sudah terpakai!");
             }
         }
+        System.out.println("Sim berhasil dibuat");
         scanner.close();
     }
 

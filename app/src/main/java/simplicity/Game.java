@@ -94,6 +94,25 @@ public class Game {
                     System.out.println("- Meja dan Kursi ( harga: 50 )");
                     System.out.print("Masukkan nama barang yang ingin dibeli : ");
                     String namaBarang = scanner.next();
+                    if (namaBarang.equals("Kasur Single")) {
+                        sim.beliBarang(new SingleBed());
+                    } else if (namaBarang.equals("Kasur Queen Size")) {
+                        sim.beliBarang(new QueenSizeBed());
+                    } else if (namaBarang.equals("Kasur Queen Size")) {
+                        sim.beliBarang(new QueenSizeBed());
+                    } else if (namaBarang.equals("Kasur King Size")) {
+                        sim.beliBarang(new KingSizeBed());
+                    } else if (namaBarang.equals("Toilet")) {
+                        sim.beliBarang(new Toilet());
+                    } else if (namaBarang.equals("Kompor Gas")) {
+                        sim.beliBarang(new KomporGas());
+                    } else if (namaBarang.equals("Kompor Listrik")) {
+                        sim.beliBarang(new KomporListrik());
+                    } else if (namaBarang.equals("Meja dan Kursi")) {
+                        sim.beliBarang(new MejaKursi());
+                    } else {
+                        System.out.println("Barang tidak tersedia");
+                    }
                 } else if (nomorBarang.equals("2")) {
                     System.out.println("- Nasi ( harga: 5 )");
                     System.out.println("- Kentang ( harga: 3 )");
@@ -104,6 +123,13 @@ public class Game {
                     System.out.println("- Kacang ( harga: 2 )");
                     System.out.println("- Susu ( harga: 2 )");
                     String namaBarang = scanner.next();
+                    if (namaBarang.equals("Nasi") || namaBarang.equals("Ayam") || namaBarang.equals("Wortel")
+                            || namaBarang.equals("Kentang") || namaBarang.equals("Sapi") || namaBarang.equals("Bayam")
+                            || namaBarang.equals("Susu") || namaBarang.equals("Kacang")) {
+                        sim.beliBarang(new Bahan_Makanan(namaBarang));
+                    } else {
+                        System.out.println("Barang tidak tersedia");
+                    }
                 } else {
                     System.out.println("Input tidak sesuai!");
                 }
