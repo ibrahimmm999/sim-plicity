@@ -17,6 +17,7 @@ public class Rumah {
         daftarNamaRuangan = new ArrayList<String>();
         daftarRuangan = new ArrayList<Ruangan>();
         Ruangan ruang1 = new Ruangan("Ruang 1", new Posisi(new Point(0, 6), new Point(6, 0)));
+        daftarRuangan.add(ruang1);
         // MASIH KURANG NAMBAHIN BARANG DEFAULT (liat flow permainan di docs)
     }
 

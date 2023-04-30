@@ -139,7 +139,6 @@ public class Game {
                 System.out.println("Masukkan nomor yang sesuai");
             }
         }
-
     }
 
     public static void addSim() {
@@ -340,7 +339,6 @@ public class Game {
 
     public static void startGame() {
         String command;
-        System.out.println("Welcome to Sim-Plicity");
         world.createSIM();
         showMenu();
         while (isPlaying) {

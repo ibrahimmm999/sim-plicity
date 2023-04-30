@@ -29,7 +29,7 @@ public enum Pekerjaan {
         return waktuKerja;
     }
 
-    public Pekerjaan[] getAllPekerjaan() {
+    public static Pekerjaan[] getAllPekerjaan() {
         return values();
     }
 }

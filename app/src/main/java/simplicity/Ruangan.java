@@ -24,7 +24,7 @@ public class Ruangan implements Placeable {
     public String getNamaRuangan() {
         return namaRuangan;
     }
-    
+
     public Posisi getPosisi() {
         return posisi;
     }

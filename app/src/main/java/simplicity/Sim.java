@@ -61,7 +61,7 @@ public class Sim {
 
     // pekerjaan harusnya dimasukin ke array dulu
     public Pekerjaan getRandomPekerjaan() {
-        Pekerjaan[] daftarPekerjaan = pekerjaan.getAllPekerjaan();
+        Pekerjaan[] daftarPekerjaan = Pekerjaan.getAllPekerjaan();
         Random random = new Random();
         int index = random.nextInt(daftarPekerjaan.length);
         return daftarPekerjaan[index];
