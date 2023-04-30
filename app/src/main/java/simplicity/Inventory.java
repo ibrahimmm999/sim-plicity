@@ -90,4 +90,26 @@ public class Inventory {
         System.out.println("Objek " + namaObjek + " tidak ditemukan dalam inventory.");
     }
 
+    public void listMasakan() {
+        for (Object objek : inventory.keySet()) {
+            if (objek instanceof Masakan) {
+                int currentQuantity = inventory.get(objek);
+                if (currentQuantity > 0) {
+                    System.out.println(((Masakan) objek).getNamaObjek() + " - " + currentQuantity);
+                }
+            }
+        }
+    }
+
+    public void listBahanMakanan() {
+        for (Object objek : inventory.keySet()) {
+            if (objek instanceof Bahan_Makanan) {
+                int currentQuantity = inventory.get(objek);
+                if (currentQuantity > 0) {
+                    System.out.println(((Bahan_Makanan) objek).getNamaObjek() + " - " + currentQuantity);
+                }
+            }
+        }
+    }
+
 }
