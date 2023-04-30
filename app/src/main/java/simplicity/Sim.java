@@ -222,7 +222,12 @@ public class Sim {
         scanner.close();
     }
 
-    public void makan(Objek object) {
+    public void makan() {
+        inventory.listMasakan();
+        inventory.listBahanMakanan();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Masukkan object yang ingin dimakan : ");
+        Object object = scanner.next();
         if (object instanceof Masakan || object instanceof Bahan_Makanan) {
             if (inventory.getInventory().containsKey(object) && inventory.getInventory().get(object) > 0) {
                 if (object instanceof Masakan) {
@@ -252,9 +257,15 @@ public class Sim {
         } else {
             System.out.println("Object cannot be eaten.");
         }
+        scanner.close();
     }
 
-    public void memasak(Masakan masakan, Inventory inventory) {
+    public void memasak() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Masukkan object yang ingin dimasak : ");
+        String namaMasakan = scanner.next();
+        Object object = (Object) namaMasakan;
+        Masakan masakan = (Masakan) object;
         ArrayList<Bahan_Makanan> bahanDibutuhkan = masakan.getBahan();
         boolean semuaBahanTersedia = true;
         for (Bahan_Makanan bahan : bahanDibutuhkan) {
@@ -289,6 +300,7 @@ public class Sim {
         } else {
             System.out.println("Bahan makanan tidak cukup!");
         }
+        scanner.close();
     }
 
     public void berkunjung(Rumah now, Rumah tujuan) {
