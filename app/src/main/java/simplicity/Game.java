@@ -173,6 +173,7 @@ public class Game {
                 System.out.print("Silahkan pilih nomor sim : ");
                 while (true) {
                     int simDipilih = scanner.nextInt();
+                    scanner.nextLine();
                     if (simDipilih > 0 && simDipilih <= world.getListSim().size()) {
                         world.setCurrentSim(world.getListSim().get(simDipilih - 1));
                         break;
@@ -271,6 +272,7 @@ public class Game {
             System.out.println("4. Tumis Sayur");
             System.out.println("5. Bistik");
             sim.makan();
+            scanner.nextLine();
         }
 
         else if (aksi.equals("5")) {

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 public class Sim {
     private String namaLengkap;
@@ -222,42 +223,49 @@ public class Sim {
     }
 
     public void makan() {
-        if (inventory == null) {
-            inventory = new Inventory(); // inisialisasi inventory jika belum ada
-        }
-        inventory.listMasakan();
-        inventory.listBahanMakanan();
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Masukkan object yang ingin dimakan : ");
-        Object object = scanner.next();
-        if (object instanceof Masakan || object instanceof Bahan_Makanan) {
-            if (inventory.getInventory().containsKey(object) && inventory.getInventory().get(object) > 0) {
-                if (object instanceof Masakan) {
-                    kekenyangan += ((Masakan) object).getValueKekenyangan();
+        try {
+            if (inventory == null) {
+                inventory = new Inventory(); // inisialisasi inventory jika belum ada
+            }
+            inventory.listMasakan();
+            inventory.listBahanMakanan();
+            System.out.print("Masukkan object yang ingin dimakan : ");
+            Object object = scanner.nextLine();
+            if (object instanceof Masakan || object instanceof Bahan_Makanan) {
+                if (inventory.getInventory().containsKey(object) && inventory.getInventory().get(object) > 0) {
+                    if (object instanceof Masakan) {
+                        kekenyangan += ((Masakan) object).getValueKekenyangan();
+                    } else {
+                        kekenyangan += ((Bahan_Makanan) object).getValueKekenyangan();
+                    }
+                    cekKekenyangan();
+                    mood += 5;
+                    cekMood();
+                    inventory.removeInventory(object);
+                    if (object instanceof Masakan) {
+                        System.out.println(namaLengkap + " berhasil makan " + ((Masakan) object).getNamaObjek() + "!");
+                    } else {
+                        System.out
+                                .println(namaLengkap + " berhasil makan " + ((Bahan_Makanan) object).getNamaObjek()
+                                        + "!");
+                    }
                 } else {
-                    kekenyangan += ((Bahan_Makanan) object).getValueKekenyangan();
-                }
-                cekKekenyangan();
-                mood += 5;
-                cekMood();
-                inventory.removeInventory(object);
-                if (object instanceof Masakan) {
-                    System.out.println(namaLengkap + " berhasil makan " + ((Masakan) object).getNamaObjek() + "!");
-                } else {
-                    System.out
-                            .println(namaLengkap + " berhasil makan " + ((Bahan_Makanan) object).getNamaObjek() + "!");
+                    if (object instanceof Masakan) {
+                        System.out.println(
+                                namaLengkap + " tidak memiliki " + ((Masakan) object).getNamaObjek()
+                                        + " dalam inventory!");
+                    } else {
+                        System.out.println(namaLengkap + " tidak memiliki " + ((Bahan_Makanan) object).getNamaObjek()
+                                + " dalam inventory!");
+                    }
                 }
             } else {
-                if (object instanceof Masakan) {
-                    System.out.println(
-                            namaLengkap + " tidak memiliki " + ((Masakan) object).getNamaObjek() + " dalam inventory!");
-                } else {
-                    System.out.println(namaLengkap + " tidak memiliki " + ((Bahan_Makanan) object).getNamaObjek()
-                            + " dalam inventory!");
-                }
+                System.out.println("Object cannot be eaten.");
             }
-        } else {
-            System.out.println("Object cannot be eaten.");
+        } catch (NoSuchElementException e) {
+            System.out.println("Input salah, silakan coba lagi.");
+            scanner.nextLine();
         }
     }
 
