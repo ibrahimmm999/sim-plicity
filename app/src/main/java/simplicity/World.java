@@ -175,8 +175,8 @@ public class World {
         return lebar;
     }
 
-    public int getHari() {
-        return time.getDay();
+    public Waktu getTime() {
+        return time;
     }
 
     public ArrayList<Rumah> getListRumah() {

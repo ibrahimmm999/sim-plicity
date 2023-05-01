@@ -281,7 +281,7 @@ public class Game {
         System.out.print("Silahkan pilih nomor untuk melakukan aksi yang ingin dilakukan : ");
         String aksi = scanner.next();
         if (aksi.equals("1")) {
-            sim.kerja();
+            sim.kerja(world);
             scanner.nextLine();
         }
 

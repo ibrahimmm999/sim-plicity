@@ -174,14 +174,25 @@ public class Sim {
         // implementasi lainnya
     }
 
-    public void kerja() {
+    public void kerja(World world) {
         while (true) {
             System.out.print("Masukkan durasi kerja dalam satuan detik (kelipatan 120) : ");
             Scanner scanner = new Scanner(System.in);
             int durasi = scanner.nextInt();
             if (durasi % 120 == 0) {
+                System.out.println("Sim bekerjaaaa");
+                world.getTime().delayWaktu(durasi);
                 kekenyangan -= (10 * (durasi / 30));
                 mood -= (10 * (durasi / 30));
+                waktuKerjaSim += durasi;
+                if (waktuKerjaSim % 240 == 0) {
+                    uang += pekerjaan.getGaji();
+                    System.out.println("Sim  mendapatkan " + pekerjaan.getGaji());
+                    System.out.println("Uang sim menjadi : " + uang);
+                } else {
+                    System.out.println("sim sudah bekerja selama " + waktuKerjaSim + " detik.");
+                }
+                world.getTime().updateWaktu(durasi);
                 waktuKerjaSim += durasi;
                 if (waktuKerjaSim >= 240) {
                     uang += pekerjaan.getGaji() * waktuKerjaSim / 240;
@@ -191,6 +202,7 @@ public class Sim {
                 cekMood();
                 cekKesehatan();
                 cekKekenyangan();
+                System.out.println("Sudah selesai kerja, klik enter");
                 break;
             } else {
                 System.out.println("Masukkan input yang benar");
@@ -507,30 +519,40 @@ public class Sim {
 
     public void lihatWaktu() {
         // blm tau nerapin2 waktu2 nya gmn
-        Waktu currentTime = new Waktu(8, 0, 0); // asumsi waktu saat ini adalah jam 8 pagi
-        Waktu totalAvailableTime = new Waktu(16, 0, 0); // asumsi waktu yang tersedia dari jam 8 pagi sampai jam 12
-                                                        // malam
-        Waktu remainingTime = new Waktu(totalAvailableTime.convert() - currentTime.convert()); // hitung waktu yang
-                                                                                               // masih tersedia
+        // Waktu currentTime = new Waktu(8, 0, 0); // asumsi waktu saat ini adalah jam 8
+        // pagi
+        // Waktu totalAvailableTime = new Waktu(16, 0, 0); // asumsi waktu yang tersedia
+        // dari jam 8 pagi sampai jam 12
+        // // malam
+        // Waktu remainingTime = new Waktu(totalAvailableTime.convert() -
+        // currentTime.convert()); // hitung waktu yang
+        // // masih tersedia
 
-        // tampilkan sisa waktu pada hari tersebut
-        System.out.println("Sisa waktu hari ini: " + remainingTime.getDay() + " hari, " + remainingTime.getHour()
-                + " jam, " + remainingTime.getMinute() + " menit, " + remainingTime.getSecond() + " detik");
+        // // tampilkan sisa waktu pada hari tersebut
+        // System.out.println("Sisa waktu hari ini: " + remainingTime.getDay() + " hari,
+        // " + remainingTime.getHour()
+        // + " jam, " + remainingTime.getMinute() + " menit, " +
+        // remainingTime.getSecond() + " detik");
 
-        // hitung waktu yang dibutuhkan untuk setiap tindakan yang bisa ditinggalkan dan
-        // kurangi dengan sisa waktu yang masih ada
-        Waktu upgradeTime = new Waktu(0, 30, 0); // asumsi waktu yang dibutuhkan untuk upgrade rumah adalah 30 menit
-        Waktu remainingUpgradeTime = new Waktu(remainingTime.convert() - upgradeTime.convert()); // hitung waktu yang
-                                                                                                 // masih tersedia untuk
-                                                                                                 // upgrade rumah
+        // // hitung waktu yang dibutuhkan untuk setiap tindakan yang bisa ditinggalkan
+        // dan
+        // // kurangi dengan sisa waktu yang masih ada
+        // Waktu upgradeTime = new Waktu(0, 30, 0); // asumsi waktu yang dibutuhkan
+        // untuk upgrade rumah adalah 30 menit
+        // Waktu remainingUpgradeTime = new Waktu(remainingTime.convert() -
+        // upgradeTime.convert()); // hitung waktu yang
+        // // masih tersedia untuk
+        // // upgrade rumah
 
-        // tampilkan sisa waktu yang masih ada untuk upgrade rumah
-        System.out.println("Sisa waktu untuk upgrade rumah: " + remainingUpgradeTime.getHour() + " jam, "
-                + remainingUpgradeTime.getMinute() + " menit, " + remainingUpgradeTime.getSecond() + " detik");
+        // // tampilkan sisa waktu yang masih ada untuk upgrade rumah
+        // System.out.println("Sisa waktu untuk upgrade rumah: "
+        // + remainingUpgradeTime.get + " menit, " + remainingUpgradeTime.getSecond() +
+        // " detik");
 
-        // lanjutkan dengan menghitung waktu untuk tindakan-tindakan lainnya yang bisa
-        // ditinggalkan
-        // ...
+        // // lanjutkan dengan menghitung waktu untuk tindakan-tindakan lainnya yang
+        // bisa
+        // // ditinggalkan
+        // // ...
     }
 
     public void berdoa(Ruangan ruangan) {
