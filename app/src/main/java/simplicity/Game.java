@@ -1,6 +1,7 @@
 package simplicity;
 
 import java.util.Scanner;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
 public class Game {
@@ -59,7 +60,7 @@ public class Game {
 
     public static void viewInventory() {
         Sim sim = world.getCurrentSim();
-        System.out.println(sim.getInventory());
+        sim.printInventory();
     }
 
     public static void upgradeHouse() {
@@ -474,6 +475,7 @@ public class Game {
                     }
                 } catch (NoSuchElementException e) {
                     System.out.println("Masukkan input yang sesuai");
+
                 }
             }
         } catch (NoSuchElementException e) {

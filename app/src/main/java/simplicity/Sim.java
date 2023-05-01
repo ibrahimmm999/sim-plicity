@@ -30,7 +30,7 @@ public class Sim {
         this.mood = 80;
         this.kesehatan = 80;
         this.waktuKerjaSim = 0;
-        this.inventory = new Inventory();
+        inventory = new Inventory();
     }
 
     public void printStatus() {
@@ -45,20 +45,25 @@ public class Sim {
 
     public void printInventory() {
         HashMap<Object, Integer> inventory = this.inventory.getInventory();
-        for (Map.Entry<Object, Integer> entry : inventory.entrySet()) {
-            Object object = entry.getKey();
-            int quantity = entry.getValue();
-            if (object instanceof Masakan) {
-                Masakan masakan = (Masakan) object;
-                System.out.println(masakan.getNamaObjek() + " (" + quantity + ")");
-            } else if (object instanceof Bahan_Makanan) {
-                Bahan_Makanan bahan = (Bahan_Makanan) object;
-                System.out.println(bahan.getNamaObjek() + " (" + quantity + ")");
-            } else if (object instanceof Non_Makanan) {
-                Non_Makanan non_makanan = (Non_Makanan) object;
-                System.out.println(non_makanan.getNamaObjek() + " (" + quantity + ")");
+        if (inventory.size() > 0) {
+            for (Map.Entry<Object, Integer> entry : inventory.entrySet()) {
+                Object object = entry.getKey();
+                int quantity = entry.getValue();
+                if (object instanceof Masakan) {
+                    Masakan masakan = (Masakan) object;
+                    System.out.println(masakan.getNamaObjek() + " (" + quantity + ")");
+                } else if (object instanceof Bahan_Makanan) {
+                    Bahan_Makanan bahan = (Bahan_Makanan) object;
+                    System.out.println(bahan.getNamaObjek() + " (" + quantity + ")");
+                } else if (object instanceof Non_Makanan) {
+                    Non_Makanan non_makanan = (Non_Makanan) object;
+                    System.out.println(non_makanan.getNamaObjek() + " (" + quantity + ")");
+                }
             }
+        } else {
+            System.out.println("Inventory kosong");
         }
+
     }
 
     // pekerjaan harusnya dimasukin ke array dulu
