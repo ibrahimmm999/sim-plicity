@@ -83,9 +83,21 @@ public class Game {
         for (Ruangan ruangan : sim.getRumahSim().getListRuangan()) {
             System.out.println(i + ". " + ruangan.getNamaRuangan());
         }
-        System.out.print("Pilih nomor ruangan yang akan dituju : ");
-        pilihanRuangan = scanner.nextInt();
-        sim.pindahRuangan(sim.getRuanganSim(), sim.getRumahSim().getListRuangan().get(pilihanRuangan));
+        while (true) {
+            try {
+                System.out.print("Pilih nomor ruangan yang akan dituju : ");
+                pilihanRuangan = scanner.nextInt();
+                if (pilihanRuangan <= sim.getRumahSim().getListRuangan().size() && pilihanRuangan > 0) {
+                    sim.pindahRuangan(sim.getRuanganSim(), sim.getRumahSim().getListRuangan().get(pilihanRuangan - 1));
+                    break;
+                } else {
+                    System.out.println("Masukkan nomor yang sesuai");
+                }
+            } catch (Exception e) {
+                System.out.println("Input tidak sesuai");
+            }
+        }
+        scanner.nextLine();
     }
 
     public static void editRoom() {
