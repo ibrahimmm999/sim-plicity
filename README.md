@@ -18,4 +18,6 @@ Program ini dibuat menggunakan bahasa Java dengan menerapkan konsep-konsep pemro
 ## Cara Kompilasi Program
 1. Buka terminal pada folder project
 2. Tulis "gradlew --console plain run" pada terminal
+
+
 ![image](https://user-images.githubusercontent.com/88817088/235449173-a252a6f3-fae5-4fbf-9ebc-5557eed9b4d4.png)
