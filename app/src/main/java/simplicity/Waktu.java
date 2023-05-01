@@ -66,3 +66,40 @@ public class Waktu {
     }
 
 }
+
+/*
+ * public class Waktu {
+ * private int hariKe;
+ * private int totalDetik; // TOTAL DETIK DALAM GAME
+ * 
+ * public Waktu() {
+ * hariKe = 1;
+ * }
+ * 
+ * public void updateWaktu(int duration) {
+ * this.totalDetik += duration;
+ * }
+ * 
+ * public int getHari() {
+ * hariKe = (totalDetik / 720) + 1;
+ * return hariKe;
+ * }
+ * 
+ * public int getTotalDetik() {
+ * return totalDetik;
+ * }
+ * 
+ * public int getSisaWaktu() {
+ * getHari();
+ * return hariKe * 720 - totalDetik;
+ * }
+ * 
+ * public void delayWaktu(int duration) {
+ * try {
+ * Thread.sleep(duration * 1000);
+ * } catch (Exception e) {
+ * Thread.interrupted();
+ * }
+ * }
+ * }
+ */

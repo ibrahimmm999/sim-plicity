@@ -175,25 +175,8 @@ public class World {
         return lebar;
     }
 
-    public String getTime() {
-        return time.getDay() + " day, " + time.getHour() + " hour, " + time.getMinute() + " minute, " + time.getSecond()
-                + " second";
-    }
-
-    public int getDay() {
+    public int getHari() {
         return time.getDay();
-    }
-
-    public int getHour() {
-        return time.getHour();
-    }
-
-    public int getMinute() {
-        return time.getMinute();
-    }
-
-    public int getSecond() {
-        return time.getSecond();
     }
 
     public ArrayList<Rumah> getListRumah() {
