@@ -131,7 +131,6 @@ public class World {
             }
         }
         System.out.println("Sim berhasil dibuat");
-        scanner.close();
     }
 
     public boolean checkSimAvailability(String name) {
