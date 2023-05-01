@@ -417,7 +417,7 @@ public class Game {
         }
 
         else if (aksi.equals("13")) {
-            sim.beresinKamarMandi(sim.getRuanganSim());
+            sim.beresinKamarMandi(sim.getRuanganSim(), world.getCurrentSim());
         }
 
         else if (aksi.equals("14")) {
