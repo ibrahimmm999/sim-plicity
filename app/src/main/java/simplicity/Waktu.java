@@ -77,6 +77,9 @@ public class Waktu {
 
     public void updateWaktu(int duration) {
         this.totalDetik += duration;
+        if (this.totalDetik % 720 == 0) {
+            hariKe++;
+        }
     }
 
     public int getHari() {

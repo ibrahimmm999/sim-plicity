@@ -109,12 +109,12 @@ public class Game {
             System.out.println("1. Membeli barang");
             System.out.println("2. Install barang");
             System.out.print("Pilih nomor :  ");
-            idx = scanner.next();
+            idx = scanner.nextLine();
             if (idx.equals("1")) {
                 System.out.println("\n1. Non Makanan");
                 System.out.println("\n2. Bahan Makanan :");
                 System.out.print("Pilih nomor : ");
-                nomorBarang = scanner.next();
+                nomorBarang = scanner.nextLine();
                 if (nomorBarang.equals("1")) {
                     System.out.println("1. Kasur Single ( harga: 50 )");
                     System.out.println("2. Kasur Queen Size ( harga: 100 )");
@@ -124,21 +124,28 @@ public class Game {
                     System.out.println("6. Kompor Listrik ( harga: 200 )");
                     System.out.println("7. Meja dan Kursi ( harga: 50 )");
                     System.out.print("Masukkan nama barang yang ingin dibeli : ");
-                    String namaBarang = scanner.next();
+                    String namaBarang = scanner.nextLine();
                     if (namaBarang.equals("1")) {
-                        sim.beliBarang(new SingleBed());
+                        sim.beliBarang(new SingleBed(), world);
+                        break;
                     } else if (namaBarang.equals("2")) {
-                        sim.beliBarang(new QueenSizeBed());
+                        sim.beliBarang(new QueenSizeBed(), world);
+                        break;
                     } else if (namaBarang.equals("3")) {
-                        sim.beliBarang(new KingSizeBed());
+                        sim.beliBarang(new KingSizeBed(), world);
+                        break;
                     } else if (namaBarang.equals("4")) {
-                        sim.beliBarang(new Toilet());
+                        sim.beliBarang(new Toilet(), world);
+                        break;
                     } else if (namaBarang.equals("5")) {
-                        sim.beliBarang(new KomporGas());
+                        sim.beliBarang(new KomporGas(), world);
+                        break;
                     } else if (namaBarang.equals("6")) {
-                        sim.beliBarang(new KomporListrik());
+                        sim.beliBarang(new KomporListrik(), world);
+                        break;
                     } else if (namaBarang.equals("7")) {
-                        sim.beliBarang(new MejaKursi());
+                        sim.beliBarang(new MejaKursi(), world);
+                        break;
                     } else {
                         System.out.println("Barang tidak tersedia");
                     }
@@ -155,7 +162,8 @@ public class Game {
                     if (namaBarang.equals("Nasi") || namaBarang.equals("Ayam") || namaBarang.equals("Wortel")
                             || namaBarang.equals("Kentang") || namaBarang.equals("Sapi") || namaBarang.equals("Bayam")
                             || namaBarang.equals("Susu") || namaBarang.equals("Kacang")) {
-                        sim.beliBarang(new Bahan_Makanan(namaBarang));
+                        sim.beliBarang(new Bahan_Makanan(namaBarang), world);
+                        break;
                     } else {
                         System.out.println("Barang tidak tersedia");
                     }

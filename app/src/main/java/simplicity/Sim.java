@@ -494,44 +494,69 @@ public class Sim {
         System.out.println("Rumah berhasil diupgrade dengan tambahan satu ruangan.");
     }
 
-    public void beliBarang(Objek barang) {
+    public void beliBarang(Objek barang, World world) {
+        Random random = new Random();
+        int durasi = random.nextInt(30) + 1;
+        setStatus("beli barang");
         if (barang instanceof Non_Makanan) {
             Non_Makanan nm = (Non_Makanan) barang;
-            if (this.uang < nm.getHarga()) {
+            if (world.getCurrentSim().getUang() < nm.getHarga()) {
                 System.out.println("Uang anda tidak cukup!");
                 return;
             }
-            Random random = new Random();
-            int durasi = random.nextInt(30) + 1;
+
             // kurangi uang sim
-            this.uang -= nm.getHarga();
+            uang -= nm.getHarga();
             // tambahkan objek ke inventory
-            this.inventory.addInventory(nm);
-            System.out.println("Anda telah membeli " + nm.getNamaObjek() + " seharga " + nm.getHarga() + ".");
-            try {
-                Thread.sleep(durasi * 10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            System.out.println("Anda telah membeli " + nm.getNamaObjek() + " seharga " + nm.getHarga()
+                    + " dengan durasi pengiriman " + durasi + " detik.");
         } else if (barang instanceof Bahan_Makanan) {
             Bahan_Makanan bahan = (Bahan_Makanan) barang;
-            if (this.uang < bahan.getHarga()) {
+            if (world.getCurrentSim().getUang() < bahan.getHarga()) {
                 System.out.println("Uang anda tidak cukup!");
                 return;
             }
-            Random random = new Random();
-            int durasi = random.nextInt(30) + 1;
             // kurangi uang sim
-            this.uang -= bahan.getHarga();
+            uang -= bahan.getHarga();
             // tambahkan objek ke inventory
-            this.inventory.addInventory(bahan);
-            System.out.println("Anda telah membeli " + bahan.getNamaObjek() + " seharga " + bahan.getHarga() + ".");
-            try {
-                Thread.sleep(durasi * 10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            System.out.println(
+                    "Anda telah membeli " + bahan.getNamaObjek() + " seharga " + bahan.getHarga()
+                            + " dengan durasi pengiriman " + durasi + " detik.");
         }
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                if (barang instanceof Non_Makanan) {
+                    Non_Makanan nm = (Non_Makanan) barang;
+                    Random random = new Random();
+                    try {
+                        for (int i = 0; i < durasi; i++) {
+                            Thread.sleep(1000);
+                            world.getTime().updateWaktu(1);
+                        }
+                        world.getCurrentSim().getInventory().addInventory(nm);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else if (barang instanceof Bahan_Makanan) {
+                    Bahan_Makanan bahan = (Bahan_Makanan) barang;
+                    Random random = new Random();
+                    int durasi = random.nextInt(30) + 1;
+                    try {
+                        for (int i = 0; i < durasi; i++) {
+                            Thread.sleep(1000);
+                            world.getTime().updateWaktu(1);
+                        }
+                        world.getCurrentSim().getInventory().addInventory(bahan);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                System.out.println("\nBarang yang dibeli sudah sampai\n");
+                world.getCurrentSim().setStatus("idle");
+            }
+        });
+        thread.start();
+
     }
 
     //
