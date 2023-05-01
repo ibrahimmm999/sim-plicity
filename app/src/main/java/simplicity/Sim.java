@@ -31,6 +31,7 @@ public class Sim {
         this.kesehatan = 80;
         this.waktuKerjaSim = 0;
         inventory = new Inventory();
+        this.status = "idle";
     }
 
     public void printStatus() {
@@ -123,19 +124,41 @@ public class Sim {
     }
 
     public void setKekenyangan(int kekenyangan) {
-        this.kekenyangan = kekenyangan;
+        if (this.kekenyangan + kekenyangan > 100) {
+            this.kekenyangan = 100;
+        } else if (this.kekenyangan + kekenyangan < 0) {
+            this.kekenyangan = 0;
+        } else {
+            this.kekenyangan += kekenyangan;
+        }
     }
 
     public int getMood() {
         return mood;
     }
 
-    public void setmood(int mood) {
-        this.mood = mood;
+    public void setMood(int mood) {
+        if (this.mood + mood > 100) {
+            this.mood = 100;
+        } else if (this.mood + mood < 0) {
+            this.mood = 0;
+        } else {
+            this.mood += mood;
+        }
     }
 
     public int getKesehatan() {
         return kesehatan;
+    }
+
+    public void setKesehatan() {
+        if (this.kesehatan + kesehatan > 100) {
+            this.kesehatan = 100;
+        } else if (this.kesehatan + kesehatan < 0) {
+            this.kesehatan = 0;
+        } else {
+            this.kesehatan += kesehatan;
+        }
     }
 
     public String getStatus() {
@@ -189,11 +212,11 @@ public class Sim {
             Scanner scanner = new Scanner(System.in);
             int durasi = scanner.nextInt();
             if (durasi % 120 == 0) {
-                System.out.println("Sim bekerjaaaa");
-                setStatus("Kerja");
+                System.out.println("Sim sedang bekerjaaaa....");
+                setStatus("kerja");
                 world.getTime().delayWaktu(durasi);
-                kekenyangan -= (10 * (durasi / 30));
-                mood -= (10 * (durasi / 30));
+                setKekenyangan(-(10 * (durasi / 30)));
+                setMood(-(10 * (durasi / 30)));
                 waktuKerjaSim += durasi;
                 if (waktuKerjaSim % 240 == 0) {
                     uang += pekerjaan.getGaji();
@@ -225,6 +248,7 @@ public class Sim {
                     }
                 } else {
                     System.out.println("Sudah selesai kerja, klik enter");
+                    setStatus("idle");
                 }
                 break;
             } else {
@@ -239,24 +263,14 @@ public class Sim {
             Scanner scanner = new Scanner(System.in);
             int durasi = scanner.nextInt();
             if (durasi % 20 == 0) {
+                System.out.println("Sim sedang olahraga....");
+                setStatus("olahraga");
+                world.getTime().delayWaktu(durasi);
                 kekenyangan -= (5 * (durasi / 20));
                 kesehatan += (5 * (durasi / 20));
                 mood += (10 * (durasi / 20));
                 // CEK MATI
-                if (!(cekMood())) {
-                    // MATI
-                    world.removeSimDanRumah(this);
-                    Game.changeSim();
-                    if (world.getListSim().size() > 0) {
-                        System.out.println("Klik enter 2x");
-                    }
-                } else if (!(cekKesehatan())) {
-                    world.removeSimDanRumah(this);
-                    Game.changeSim();
-                    if (world.getListSim().size() > 0) {
-                        System.out.println("Klik enter 2x");
-                    }
-                } else if (!(cekKekenyangan())) {
+                if (!(cekKekenyangan())) {
                     world.removeSimDanRumah(this);
                     Game.changeSim();
                     if (world.getListSim().size() > 0) {
@@ -264,6 +278,7 @@ public class Sim {
                     }
                 } else {
                     System.out.println("Sudah selesai olahraga, klik enter");
+                    setStatus("idle");
                 }
                 break;
             } else {
@@ -273,13 +288,20 @@ public class Sim {
         }
     }
 
-    public void tidur() {
+    public void tidur(World world) {
         Scanner scanner = new Scanner(System.in);
         int durasi = scanner.nextInt();
         // EFEK TIDUR
+        setStatus("tidur");
+        System.out.println("Sim sedang tidur....");
+        world.getTime().delayWaktu(durasi);
         mood += (30 * (durasi / 4));
         kesehatan += (20 * (durasi / 4));
+        setStatus("idle");
+        world.getTime().updateWaktu(durasi);
+        System.out.println("Sim sudah bangooon");
         scanner.close();
+        // EFEK TIDAK TIDUR NYA BELOM DIBUAT
     }
 
     public void makan() {
@@ -384,9 +406,9 @@ public class Sim {
                             + Math.pow(tujuan.getKoordinat().getY() - now.getKoordinat().getY(), 2)));
             tujuan.masukRumah(now, tujuan.getKoordinat());
         }
-        this.setmood(this.getMood() + waktuTempuh / 3); // Mood meningkat sebesar 10 untuk setiap 30 detik
-        this.setKekenyangan(this.getKekenyangan() - waktuTempuh / 3); // Kekenyangan menurun sebesar 10 untuk setiap 30
-                                                                      // detik
+        this.setMood(waktuTempuh / 3); // Mood meningkat sebesar 10 untuk setiap 30 detik
+        this.setKekenyangan(waktuTempuh / 3); // Kekenyangan menurun sebesar 10 untuk setiap 30
+                                              // detik
     }
 
     public void buangAir(Ruangan ruangan, World world) {
@@ -399,20 +421,7 @@ public class Sim {
                     toilet.setIsOccupied(false);
                     kekenyangan -= 20;
                     mood += 10;
-                    if (!(cekMood())) {
-                        // MATI
-                        world.removeSimDanRumah(this);
-                        Game.changeSim();
-                        if (world.getListSim().size() > 0) {
-                            System.out.println("Klik enter 2x");
-                        }
-                    } else if (!(cekKesehatan())) {
-                        world.removeSimDanRumah(this);
-                        Game.changeSim();
-                        if (world.getListSim().size() > 0) {
-                            System.out.println("Klik enter 2x");
-                        }
-                    } else if (!(cekKekenyangan())) {
+                    if (!(cekKekenyangan())) {
                         world.removeSimDanRumah(this);
                         Game.changeSim();
                         if (world.getListSim().size() > 0) {
@@ -421,7 +430,6 @@ public class Sim {
                     } else {
                         System.out.println("Sudah selesai kerja, klik enter");
                     }
-                    cekMood();
                     berhasilBuangAir = true;
                     System.out.println(namaLengkap + " berhasil buang air di " + toilet.getNamaObjek());
                     break;

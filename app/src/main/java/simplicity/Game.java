@@ -297,7 +297,7 @@ public class Game {
                 if (objekDipakai != null
                         && (objekDipakai.equals("Kasur Single") || objekDipakai.equals("Kasur Queen Size")
                                 || objekDipakai.equals("Kasur King Size"))) {
-                    sim.tidur();
+                    sim.tidur(world);
                 } else {
                     System.out.println("Silahkan pergi ke objek 'Kasur' terlebih dahulu!");
                 }
