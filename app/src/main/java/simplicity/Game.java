@@ -229,23 +229,24 @@ public class Game {
     }
 
     public static void goToObject() {
-        boolean j = false;
+        boolean objekDitemukan = false;
         Sim sim = world.getCurrentSim();
         Object objek;
-        listObject();
-        while (!j) {
+        sim.getRuanganSim().printListObjek();
+        while (!objekDitemukan) {
+            System.out.print("\n");
+            System.out.println("Format Input : [Nama Objek][Koordinat Objek]");
+            System.out.println("Contoh : Jam(1,4)");
+            System.out.print("\n");
             System.out.print("Pilih objek : ");
             objek = scanner.nextLine();
-            for (Objek i : sim.getRuanganSim().getListObjek().values()) {
-                if (sim.getRuanganSim().getListObjek().containsValue(i)) {
-                    break;
-                } else {
-                    System.out.println("Objek tidak ditemukan");
-                }
+            if (sim.getRuanganSim().getListObjek().containsKey(objek)) {
+                sim.setObjekDipakai(objek);
+                System.out.println("Sim " + sim.getNamaLengkap() + " menggunakan " + sim.getObjekDipakai());
+                objekDitemukan = true;
+            } else {
+                System.out.println("Objek tidak ditemukan");
             }
-            sim.setObjekDipakai(objek);
-            System.out.println("Sim " + sim.getNamaLengkap() + " menggunakan " + sim.getObjekDipakai());
-            j = true;
         }
     }
 
