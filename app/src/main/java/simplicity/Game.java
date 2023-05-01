@@ -229,20 +229,24 @@ public class Game {
     }
 
     public static void goToObject() {
+        boolean j = false;
         Sim sim = world.getCurrentSim();
-        String objek;
+        Object objek;
         listObject();
-        while (true) {
+        while (!j) {
             System.out.print("Pilih objek : ");
-            objek = scanner.next();
-            if (sim.getRuanganSim().getListObjek().containsKey(objek)) {
-                break;
-            } else {
-                System.out.println("Objek tidak ditemukan");
+            objek = scanner.nextLine();
+            for (Objek i : sim.getRuanganSim().getListObjek().values()) {
+                if (sim.getRuanganSim().getListObjek().containsValue(i)) {
+                    break;
+                } else {
+                    System.out.println("Objek tidak ditemukan");
+                }
             }
+            sim.setObjekDipakai(objek);
+            System.out.println("Sim " + sim.getNamaLengkap() + " menggunakan " + sim.getObjekDipakai());
+            j = true;
         }
-        sim.setObjekDipakai(objek);
-        System.out.println("Sim " + sim.getNamaLengkap() + " menggunakan " + sim.getObjekDipakai());
     }
 
     public static void action() {
@@ -277,7 +281,7 @@ public class Game {
 
         else if (aksi.equals("3")) {
             if (sim != null) {
-                String objekDipakai = sim.getObjekDipakai();
+                Object objekDipakai = sim.getObjekDipakai();
                 if (objekDipakai != null
                         && (objekDipakai.equals("Kasur Single") || objekDipakai.equals("Kasur Queen Size")
                                 || objekDipakai.equals("Kasur King Size"))) {
@@ -345,7 +349,7 @@ public class Game {
             sim.berkunjung(sim.getRumahSim(), world.getListRumah().get(simDikunjungi - 1));
 
         } else if (aksi.equals("7")) {
-            String objekDipakai = sim.getObjekDipakai();
+            Object objekDipakai = sim.getObjekDipakai();
             if (objekDipakai != null && objekDipakai.equals("Toilet")) {
                 sim.buangAir(sim.getRuanganSim());
             } else {
@@ -353,7 +357,7 @@ public class Game {
             }
 
         } else if (aksi.equals("8")) {
-            String objekDipakai = sim.getObjekDipakai();
+            Object objekDipakai = sim.getObjekDipakai();
             if (objekDipakai != null && objekDipakai.equals("Jam")) {
                 sim.lihatWaktu();
             } else {
@@ -370,7 +374,7 @@ public class Game {
         }
 
         else if (aksi.equals("11")) {
-            String objekDipakai = sim.getObjekDipakai();
+            Object objekDipakai = sim.getObjekDipakai();
             if (objekDipakai != null && (objekDipakai.equals("Kasur Single") || objekDipakai.equals("Kasur Queen Size")
                     || objekDipakai.equals("Kasur King Size"))) {
                 sim.rapihinKasur(objekDipakai);
