@@ -642,36 +642,52 @@ public class Sim {
         kekenyangan -= 5;
     }
 
-    public void belajar(Ruangan ruangan) {
+    public void belajar(Ruangan ruangan, Sim sim) {
         MejaKursi mejaKursi = null;
-        for (Map.Entry<String, Non_Makanan> entry : ruangan.getListObjek().entrySet()) {
-            Objek objek = entry.getValue();
-            if (objek instanceof MejaKursi) {
-                mejaKursi = (MejaKursi) objek;
-                break;
+        Object object = sim.getObjekDipakai();
+
+        if (object instanceof MejaKursi) {
+            mejaKursi = (MejaKursi) object;
+        } else if (object instanceof String && ((String) object).contains("Meja dan Kursi")) {
+            Map<String, Non_Makanan> listObjek = ruangan.getListObjek();
+            for (Map.Entry<String, Non_Makanan> entry : listObjek.entrySet()) {
+                Non_Makanan objek = entry.getValue();
+                if (objek instanceof MejaKursi) {
+                    mejaKursi = (MejaKursi) objek;
+                    break;
+                }
             }
         }
+
         if (mejaKursi != null) {
             String posisiMejaKursi = mejaKursi.getPosisi().cetakPosisi();
             System.out.println("Sim belajar di meja kursi pada posisi " + posisiMejaKursi);
             this.kekenyangan -= 10;
             this.mood += 5;
         } else {
-            System.out.println("Sim tidak menemukan meja kursi di ruangan ini untuk belajar");
+            System.out.println("Sim tidak sedang berada di Meja Kursi untuk belajar");
         }
     }
 
-    public void ngegame(Ruangan ruangan) {
+    public void ngegame(Ruangan ruangan, Sim sim) {
         MejaKursi mejaKursi = null;
-        for (Map.Entry<String, Non_Makanan> entry : ruangan.getListObjek().entrySet()) {
-            Objek objek = entry.getValue();
-            if (objek instanceof MejaKursi) {
-                mejaKursi = (MejaKursi) objek;
-                break;
+        Object object = sim.getObjekDipakai();
+
+        if (object instanceof MejaKursi) {
+            mejaKursi = (MejaKursi) object;
+        } else if (object instanceof String && ((String) object).contains("Meja dan Kursi")) {
+            Map<String, Non_Makanan> listObjek = ruangan.getListObjek();
+            for (Map.Entry<String, Non_Makanan> entry : listObjek.entrySet()) {
+                Non_Makanan objek = entry.getValue();
+                if (objek instanceof MejaKursi) {
+                    mejaKursi = (MejaKursi) objek;
+                    break;
+                }
             }
         }
+
         if (mejaKursi != null) {
-            Posisi posisiMejaKursi = mejaKursi.getPosisi();
+            String posisiMejaKursi = mejaKursi.getPosisi().cetakPosisi();
             System.out.println("Sim bermain game di meja kursi pada posisi " + posisiMejaKursi);
         } else {
             System.out.println("Sim tidak menemukan meja kursi di ruangan ini untuk bermain game");

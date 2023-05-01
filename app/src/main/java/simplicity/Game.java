@@ -421,11 +421,11 @@ public class Game {
         }
 
         else if (aksi.equals("14")) {
-            sim.belajar(sim.getRuanganSim());
+            sim.belajar(sim.getRuanganSim(), world.getCurrentSim());
         }
 
         else if (aksi.equals("15")) {
-            sim.ngegame(sim.getRuanganSim());
+            sim.ngegame(sim.getRuanganSim(), world.getCurrentSim());
         }
 
         else {
