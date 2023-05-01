@@ -30,6 +30,7 @@ public class Sim {
         this.mood = 80;
         this.kesehatan = 80;
         this.waktuKerjaSim = 0;
+        this.inventory = new Inventory();
     }
 
     public void printStatus() {

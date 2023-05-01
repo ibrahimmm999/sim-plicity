@@ -56,6 +56,12 @@ public class World {
                     sim.setRumahSim(rumah);
                     sim.setRuanganSim(rumah.getRuangan("Ruang 1"));
                     sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
+                    sim.getRuanganSim().addObject(new SingleBed(), new Point(0, 0), false, sim.getInventory());
+                    sim.getRuanganSim().addObject(new Toilet(), new Point(4, 0), false, sim.getInventory());
+                    sim.getRuanganSim().addObject(new KomporGas(), new Point(0, 1), false, sim.getInventory());
+                    sim.getRuanganSim().addObject(new Jam(), new Point(3, 1), false, sim.getInventory());
+                    sim.getRuanganSim().addObject(new MejaKursi(), new Point(2, 3), false, sim.getInventory());
+                    sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
                     listRumah.add(rumah); // add rumah to listRumah
                     break;
                 } else {
@@ -68,6 +74,7 @@ public class World {
         }
         System.out.println("Sim berhasil dibuat");
         currentSim = sim;
+        scanner.close();
     }
 
     public void createSIMNext() {
@@ -123,6 +130,7 @@ public class World {
             }
         }
         System.out.println("Sim berhasil dibuat");
+        scanner.close();
     }
 
     public boolean checkSimAvailability(String name) {
