@@ -16,7 +16,7 @@ public class Sim {
     private int mood;
     private int kesehatan;
     private String status;
-    private String objekDipakai;
+    private Object objekDipakai;
     private int waktuKerjaSim; // waktu total sim kerja buat ngecek gajian
     private Posisi posisiSim;
     private Rumah rumahSim;
@@ -82,7 +82,7 @@ public class Sim {
         return rumahSim;
     }
 
-    public String getObjekDipakai() {
+    public Object getObjekDipakai() {
         return objekDipakai;
     }
 
@@ -142,7 +142,7 @@ public class Sim {
         return status;
     }
 
-    public void setObjekDipakai(String objek) {
+    public void setObjekDipakai(Object objek) {
         objekDipakai = objek;
     }
 
@@ -550,7 +550,7 @@ public class Sim {
         }
     }
 
-    public void rapihinKasur(String object) {
+    public void rapihinKasur(Object object) {
         if (kekenyangan >= 5) {
             if (object.equals("Kasur Single")) {
                 System.out.println("SIM merapikan kasur Single Bed");

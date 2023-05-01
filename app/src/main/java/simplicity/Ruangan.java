@@ -141,7 +141,7 @@ public class Ruangan implements Placeable {
             length = objek.getPanjang();
         }
 
-        Point kananBawah = new Point(koordinatObjek.getX() + length - 1, koordinatObjek.getY() + width - 1);
+        Point kananBawah = new Point(koordinatObjek.getX() + length, koordinatObjek.getY() - width);
         Posisi posisi = new Posisi(koordinatObjek, kananBawah);
 
         if (checkEmptyPosisi(posisi)) { // posisi kosong (tersedia)
@@ -149,7 +149,31 @@ public class Ruangan implements Placeable {
             addListObjek(objek, posisi);
             objek.setPosisi(posisi);
             inventory.removeInventory(objek);
-            System.out.println("Barang berhasil diletakkan!");
+            System.out.println("Object " + objek.getNamaObjek() + " berhasil diletakkan!");
+        } else {
+            System.out.println("Tidak bisa meletakkan barang.");
+        }
+    }
+
+    public void addObject1(Non_Makanan objek, Point koordinatObjek, boolean isRotated, Inventory inventory) {
+        int width, length;
+
+        if (isRotated) { // panjang dan lebar (dimensi) default objek ditukar
+            width = objek.getPanjang();
+            length = objek.getLebar();
+        } else {
+            width = objek.getLebar();
+            length = objek.getPanjang();
+        }
+
+        Point kananBawah = new Point(koordinatObjek.getX() + length, koordinatObjek.getY() - width);
+        Posisi posisi = new Posisi(koordinatObjek, kananBawah);
+
+        if (checkEmptyPosisi(posisi)) { // posisi kosong (tersedia)
+            matriks.setMatriks(koordinatObjek, kananBawah, false);
+            addListObjek(objek, posisi);
+            objek.setPosisi(posisi);
+            System.out.println("Object " + objek.getNamaObjek() + " berhasil diletakkan untuk pertama kali!");
         } else {
             System.out.println("Tidak bisa meletakkan barang.");
         }

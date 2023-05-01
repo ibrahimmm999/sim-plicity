@@ -56,12 +56,12 @@ public class World {
                     sim.setRumahSim(rumah);
                     sim.setRuanganSim(rumah.getRuangan("Ruang 1"));
                     sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
-                    sim.getRuanganSim().addObject(new SingleBed(), new Point(0, 0), false, sim.getInventory());
-                    sim.getRuanganSim().addObject(new Toilet(), new Point(4, 0), false, sim.getInventory());
-                    sim.getRuanganSim().addObject(new KomporGas(), new Point(0, 1), false, sim.getInventory());
-                    sim.getRuanganSim().addObject(new Jam(), new Point(3, 1), false, sim.getInventory());
-                    // sim.getRuanganSim().addObject(new MejaKursi(), new Point(2, 3), false,
-                    // sim.getInventory());
+                    sim.getRuanganSim().addObject1(new SingleBed(), new Point(0, 1), false, sim.getInventory());
+                    sim.getRuanganSim().addObject1(new Toilet(), new Point(4, 1), false, sim.getInventory());
+                    sim.getRuanganSim().addObject1(new KomporGas(), new Point(0, 3), false, sim.getInventory());
+                    sim.getRuanganSim().addObject1(new Jam(), new Point(5, 1), false, sim.getInventory());
+                    sim.getRuanganSim().addObject1(new MejaKursi(), new Point(1, 4), false,
+                            sim.getInventory());
                     sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
                     listRumah.add(rumah); // add rumah to listRumah
                     break;
@@ -113,11 +113,12 @@ public class World {
                     rumah = new Rumah(new Point(x, y), sim);
                     sim.setRumahSim(rumah);
                     sim.setRuanganSim(rumah.getRuangan("Ruang 1"));
-                    sim.getRuanganSim().addObject(new SingleBed(), new Point(0, 1), false, sim.getInventory());
-                    sim.getRuanganSim().addObject(new Toilet(), new Point(4, 1), false, sim.getInventory());
-                    sim.getRuanganSim().addObject(new KomporGas(), new Point(0, 3), false, sim.getInventory());
-                    sim.getRuanganSim().addObject(new Jam(), new Point(5, 1), false, sim.getInventory());
-                    sim.getRuanganSim().addObject(new MejaKursi(), new Point(1, 4), false, sim.getInventory());
+                    sim.getRuanganSim().addObject1(new SingleBed(), new Point(0, 1), false, sim.getInventory());
+                    sim.getRuanganSim().addObject1(new Toilet(), new Point(4, 1), false, sim.getInventory());
+                    sim.getRuanganSim().addObject1(new KomporGas(), new Point(0, 3), false, sim.getInventory());
+                    sim.getRuanganSim().addObject1(new Jam(), new Point(5, 1), false, sim.getInventory());
+                    sim.getRuanganSim().addObject1(new MejaKursi(), new Point(1, 4), false,
+                            sim.getInventory());
                     sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
                     listRumah.add(rumah); // add rumah to listRumah
                     break;
