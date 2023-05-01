@@ -608,7 +608,28 @@ public class Sim {
         }
     }
 
-    public void lihatWaktu() {
+    public void lihatWaktu(Ruangan ruangan, Sim sim, World world) {
+        Jam jam = null;
+        Object object = sim.getObjekDipakai();
+
+        if (object instanceof Jam) {
+            jam = (Jam) object;
+        } else if (object instanceof String && ((String) object).contains("Jam")) {
+            Map<String, Non_Makanan> listObjek = ruangan.getListObjek();
+            for (Map.Entry<String, Non_Makanan> entry : listObjek.entrySet()) {
+                Non_Makanan objek = entry.getValue();
+                if (objek instanceof Jam) {
+                    jam = (Jam) objek;
+                    break;
+                }
+            }
+        }
+
+        if (jam != null) {
+            System.out.println("Sisa waktu di hari ini : " + world.getTime().getSisaWaktu() + " detik");
+        } else {
+            System.out.println("Sim tidak sedang menggunakan jam untuk melihat waktu");
+        }
         // blm tau nerapin2 waktu2 nya gmn
         // Waktu currentTime = new Waktu(8, 0, 0); // asumsi waktu saat ini adalah jam 8
         // pagi
@@ -790,7 +811,7 @@ public class Sim {
                     System.out.println("Klik enter 2x");
                 }
             } else {
-                System.out.println("Sudah selesai kerja, klik enter");
+                System.out.println("Sudah selesai membersihkan toilet");
             }
             this.mood += 5;
         } else {

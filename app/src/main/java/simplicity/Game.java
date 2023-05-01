@@ -370,8 +370,8 @@ public class Game {
 
         } else if (aksi.equals("8")) {
             Object objekDipakai = sim.getObjekDipakai();
-            if (objekDipakai != null && objekDipakai.equals("Jam")) {
-                sim.lihatWaktu();
+            if (objekDipakai != null && ((String) objekDipakai).contains("Jam")) {
+                sim.lihatWaktu(world.getCurrentSim().getRuanganSim(), world.getCurrentSim(), world);
             } else {
                 System.out.println("Silahkan pergi ke object 'Jam' untuk lihat waktu!");
             }

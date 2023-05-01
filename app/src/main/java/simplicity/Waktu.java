@@ -89,7 +89,6 @@ public class Waktu {
     }
 
     public int getSisaWaktu() {
-        getHari();
         return hariKe * 720 - totalDetik;
     }
 
