@@ -616,52 +616,42 @@ public class Sim {
         }
 
         if (sim.getRumahSim() != this.getRumahSim()) {
-            System.out.println("Sim tidak berada di rumah yang sama");
+            System.out.println("Sim sedang berada di rumah sim lain");
             return;
         }
 
-        if (sim.getPosisiSim() != this.getPosisiSim()) {
-            System.out.println("Sim tidak berada di posisi yang sama");
-            return;
+        if (sim.getRuanganSim() != this.getRuanganSim()) {
+            System.out.println("Sim sedang berada di rumah sim lain");
         }
 
         System.out.println("Sim socialize dengan " + sim.getNamaLengkap());
     }
 
-    public void beresinKamarMandi(Ruangan ruangan) {
-        // Cari toilet
+    public void beresinKamarMandi(Ruangan ruangan, Sim sim) {
         Toilet toilet = null;
-        for (Map.Entry<String, Non_Makanan> entry : ruangan.getListObjek().entrySet()) {
-            Objek objek = entry.getValue();
-            if (objek instanceof MejaKursi) {
-                toilet = (Toilet) objek;
-                break;
+        Object object = sim.getObjekDipakai();
+
+        if (object instanceof Toilet) {
+            toilet = (Toilet) object;
+        } else if (object instanceof String && ((String) object).contains("Toilet")) {
+            Map<String, Non_Makanan> listObjek = ruangan.getListObjek();
+            for (Map.Entry<String, Non_Makanan> entry : listObjek.entrySet()) {
+                Non_Makanan objek = entry.getValue();
+                if (objek instanceof Toilet) {
+                    toilet = (Toilet) objek;
+                    break;
+                }
             }
         }
 
-        if (toilet == null) { // jika toilet tidak ditemukan, tampilkan pesan kesalahan
-            System.out.println("Tidak ada toilet dalam ruangan ini");
-            return;
+        if (toilet != null) {
+            String posisiToilet = toilet.getPosisi().cetakPosisi();
+            System.out.println("Sim membersihkan toilet pada posisi " + posisiToilet);
+            this.kekenyangan -= 10;
+            this.mood += 5;
+        } else {
+            System.out.println("Sim tidak sedang berada di Toilet untuk membersihkan Toilet");
         }
-
-        if (toilet.isOccupied()) { // jika toilet sedang digunakan, tampilkan pesan kesalahan
-            System.out.println("Toilet sedang digunakan");
-            return;
-        }
-
-        // membersihkan toilet dan menandai toilet sebagai sedang digunakan
-        toilet.setIsOccupied(true);
-
-        // menunggu selama 10 detik
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // menandai toilet sebagai tersedia kembali dan mengurangi kekenyangan sebesar 5
-        toilet.setIsOccupied(false);
-        kekenyangan -= 5;
     }
 
     public void belajar(Ruangan ruangan, Sim sim) {
