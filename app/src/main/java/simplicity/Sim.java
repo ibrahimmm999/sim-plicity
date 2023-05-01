@@ -652,8 +652,10 @@ public class Sim {
             }
         }
         if (mejaKursi != null) {
-            Posisi posisiMejaKursi = mejaKursi.getPosisi();
+            String posisiMejaKursi = mejaKursi.getPosisi().cetakPosisi();
             System.out.println("Sim belajar di meja kursi pada posisi " + posisiMejaKursi);
+            this.kekenyangan -= 10;
+            this.mood += 5;
         } else {
             System.out.println("Sim tidak menemukan meja kursi di ruangan ini untuk belajar");
         }

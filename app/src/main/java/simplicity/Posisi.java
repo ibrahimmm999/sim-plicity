@@ -15,8 +15,8 @@ public class Posisi {
         }
     }
 
-    public void cetakPosisi() {
-        System.out.println("(" + kiriAtas.getX() + ", " + kiriAtas.getY() + "); (" + kananBawah.getX() + ", "
+    public String cetakPosisi() {
+        return ("(" + kiriAtas.getX() + ", " + kiriAtas.getY() + ") dan (" + kananBawah.getX() + ", "
                 + kananBawah.getY() + ")");
     }
 
