@@ -182,4 +182,19 @@ public class World {
     public ArrayList<Rumah> getListRumah() {
         return this.listRumah;
     }
+
+    public void removeSimDanRumah(Sim sim) {
+        for (Rumah rumah : listRumah) {
+            if (rumah.getPemilikRumah().getNamaLengkap().equals(sim.getNamaLengkap())) {
+                listRumah.remove(rumah);
+                listSim.remove(sim);
+                System.out.println("Sim berhasil dihapus");
+                if (listSim.size() <= 0) {
+                    System.out.println("Tidak ada Sim yang tersisa!");
+                    throw new RuntimeException("GAME OVER");
+                }
+            }
+        }
+
+    }
 }

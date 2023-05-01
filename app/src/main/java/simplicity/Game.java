@@ -221,10 +221,11 @@ public class Game {
                 System.out.println("Berhasil mengganti Sim ke " + world.getCurrentSim().getNamaLengkap());
             } else {
                 System.out.println("Tidak ada Sim yang tersedia!");
+                throw new RuntimeException("GAME OVER");
             }
         } catch (NoSuchElementException e) {
             System.out.println("Input salah, silakan coba lagi.");
-            scanner.nextLine();
+            // scanner.nextLine();
         }
     }
 
@@ -286,7 +287,7 @@ public class Game {
         }
 
         else if (aksi.equals("2")) {
-            sim.olahraga();
+            sim.olahraga(world);
             scanner.nextLine();
         }
 
@@ -362,7 +363,7 @@ public class Game {
         } else if (aksi.equals("7")) {
             Object objekDipakai = sim.getObjekDipakai();
             if (objekDipakai != null && objekDipakai.equals("Toilet")) {
-                sim.buangAir(sim.getRuanganSim());
+                sim.buangAir(sim.getRuanganSim(), world);
             } else {
                 System.out.println("Silahkan pergi ke objek 'Toilet' terlebih dahulu!");
             }
@@ -381,14 +382,14 @@ public class Game {
         }
 
         else if (aksi.equals("10")) {
-            sim.meditasi();
+            sim.meditasi(world);
         }
 
         else if (aksi.equals("11")) {
             Object objekDipakai = sim.getObjekDipakai();
             if (objekDipakai != null && (objekDipakai.equals("Kasur Single") || objekDipakai.equals("Kasur Queen Size")
                     || objekDipakai.equals("Kasur King Size"))) {
-                sim.rapihinKasur(objekDipakai);
+                sim.rapihinKasur(objekDipakai, world);
             } else {
                 System.out.println("Silahkan pergi ke objek 'Kasur' terlebih dahulu!");
             }
@@ -417,7 +418,7 @@ public class Game {
         }
 
         else if (aksi.equals("13")) {
-            sim.beresinKamarMandi(sim.getRuanganSim(), world.getCurrentSim());
+            sim.beresinKamarMandi(sim.getRuanganSim(), world.getCurrentSim(), world);
         }
 
         else if (aksi.equals("14")) {
