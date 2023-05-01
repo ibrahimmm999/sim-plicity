@@ -2,6 +2,8 @@ package simplicity;
 
 import java.util.Scanner;
 import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 
 public class Game {
@@ -151,6 +153,30 @@ public class Game {
                     System.out.println("Input tidak sesuai!");
                 }
             } else if (idx.equals("2")) {
+                Ruangan ruangan = sim.getRuanganSim();
+                HashMap<String, Non_Makanan> kumpulanObjek = ruangan.getListObjek();
+                ArrayList<String> kumpulanNamaObjek = new ArrayList<>();
+                for (Entry<String, Non_Makanan> entry : kumpulanObjek.entrySet()) {
+                    kumpulanNamaObjek.add(entry.getValue().getNamaObjek());
+                }
+                while (true) {
+                    System.out.print("Masukkan nama barang yang ingin dipindah : ");
+                    int x, y;
+                    String namaBarang = scanner.nextLine();
+                    if (kumpulanNamaObjek.contains(namaBarang)) {
+                        System.out.println("Barang mau dipindahkan ke koordinat ");
+                        System.out.println("titik X : ");
+                        x = scanner.nextInt();
+                        System.out.println("titik Y : ");
+                        y = scanner.nextInt();
+                        Point kiriAtas = new Point(x, y);
+                        sim.getRuanganSim().moveObject(kumpulanObjek.get(namaBarang).getPosisi(), kiriAtas,
+                                isPlaying, sim.getInventory());
+                        break;
+                    } else {
+                        System.out.println("Barang tidak ditemukan");
+                    }
+                }
 
             } else {
                 System.out.println("Masukkan nomor yang sesuai");
