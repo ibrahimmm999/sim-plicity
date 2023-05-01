@@ -116,30 +116,28 @@ public class Game {
                 System.out.print("Pilih nomor : ");
                 nomorBarang = scanner.next();
                 if (nomorBarang.equals("1")) {
-                    System.out.println("- Kasur Single ( harga: 50 )");
-                    System.out.println("- Kasur Queen Size ( harga: 100 )");
-                    System.out.println("- Kasur King Size ( harga: 150 )");
-                    System.out.println("- Toilet ( harga: 50 )");
-                    System.out.println("- Kompor Gas ( harga: 100 )");
-                    System.out.println("- Kompor Listrik ( harga: 200 )");
-                    System.out.println("- Meja dan Kursi ( harga: 50 )");
+                    System.out.println("1. Kasur Single ( harga: 50 )");
+                    System.out.println("2. Kasur Queen Size ( harga: 100 )");
+                    System.out.println("3. Kasur King Size ( harga: 150 )");
+                    System.out.println("4. Toilet ( harga: 50 )");
+                    System.out.println("5. Kompor Gas ( harga: 100 )");
+                    System.out.println("6. Kompor Listrik ( harga: 200 )");
+                    System.out.println("7. Meja dan Kursi ( harga: 50 )");
                     System.out.print("Masukkan nama barang yang ingin dibeli : ");
                     String namaBarang = scanner.next();
-                    if (namaBarang.equals("Kasur Single")) {
+                    if (namaBarang.equals("1")) {
                         sim.beliBarang(new SingleBed());
-                    } else if (namaBarang.equals("Kasur Queen Size")) {
+                    } else if (namaBarang.equals("2")) {
                         sim.beliBarang(new QueenSizeBed());
-                    } else if (namaBarang.equals("Kasur Queen Size")) {
-                        sim.beliBarang(new QueenSizeBed());
-                    } else if (namaBarang.equals("Kasur King Size")) {
+                    } else if (namaBarang.equals("3")) {
                         sim.beliBarang(new KingSizeBed());
-                    } else if (namaBarang.equals("Toilet")) {
+                    } else if (namaBarang.equals("4")) {
                         sim.beliBarang(new Toilet());
-                    } else if (namaBarang.equals("Kompor Gas")) {
+                    } else if (namaBarang.equals("5")) {
                         sim.beliBarang(new KomporGas());
-                    } else if (namaBarang.equals("Kompor Listrik")) {
+                    } else if (namaBarang.equals("6")) {
                         sim.beliBarang(new KomporListrik());
-                    } else if (namaBarang.equals("Meja dan Kursi")) {
+                    } else if (namaBarang.equals("7")) {
                         sim.beliBarang(new MejaKursi());
                     } else {
                         System.out.println("Barang tidak tersedia");
