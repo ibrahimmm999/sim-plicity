@@ -17,7 +17,7 @@ public class Rumah {
         this.pemilik = pemilik;
         daftarNamaRuangan = new ArrayList<String>();
         daftarRuangan = new ArrayList<Ruangan>();
-        Ruangan ruang1 = new Ruangan("Ruang 1", new Posisi(new Point(0, 6), new Point(6, 0)));
+        Ruangan ruang1 = new Ruangan("Ruang 1", new Posisi(new Point(0, 0), new Point(5, 0)));
         daftarRuangan.add(ruang1);
         // MASIH KURANG NAMBAHIN BARANG DEFAULT (liat flow permainan di docs)
     }
@@ -45,6 +45,13 @@ public class Rumah {
             }
         }
         return null;
+    }
+    
+    public void cetakDaftarNamaRuangan() {
+        for (int i = 0; i < daftarNamaRuangan.size(); i++) {
+            System.out.print((i + 1) + ". ");
+            System.out.println(daftarNamaRuangan.get(i));
+        }
     }
 
     public void addRuangan() {

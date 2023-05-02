@@ -6,7 +6,7 @@ public class Posisi {
     private Point kananBawah;
 
     public Posisi(Point kiriAtas, Point kananBawah) throws IllegalArgumentException {
-        if (kiriAtas.getX() <= kananBawah.getX() && kiriAtas.getY() >= kananBawah.getY()) {
+        if (kiriAtas.getX() <= kananBawah.getX() && kiriAtas.getY() <= kananBawah.getY()) {
             this.kiriAtas = kiriAtas;
             this.kananBawah = kananBawah;
         } else {

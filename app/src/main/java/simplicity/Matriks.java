@@ -51,6 +51,31 @@ public class Matriks {
             }
         }
     }
+    
+    public boolean setDenahRumah(Point kiriAtas, int kodeRuangan) {
+        // return true jika denah rumah berhasil dibuat, false jika denah gagal dibuat
+        int x, y, x1, y1;
+        boolean empty = true;
+        x1 = kiriAtas.getX();
+        y1 = kiriAtas.getY();
+        
+        // cek seluruh bagian yang ingin di-cover belum memiliki kode ruangan tertentu
+        for (y = y1; y <= (y1 + 5); y++) {
+            for (x = x1; x <= (x1 + 5); x++) {
+                if (matriks[y][x] != 0) {
+                    empty = false;
+                }
+            }
+        } 
+        if (empty == true) {
+            for (y = y1; y <= (y1 + 5); y++) {
+                for (x = x1; x <= (x1 + 5); x++) {
+                    matriks[y][x] = kodeRuangan;
+                }
+            }    
+        }
+        return empty;   
+    }
 
     public boolean checkAvailability(Point kiriAtas, Point kananBawah) {
         // return true apabila available
