@@ -22,6 +22,7 @@ public class Sim {
     private Rumah rumahSim;
     private Ruangan ruanganSim;
     private HashMap<String, Integer> activities;
+    private int waktuTerakhirSimTidur;
 
     public Sim(String namaLengkap) {
         this.namaLengkap = namaLengkap;
@@ -34,6 +35,7 @@ public class Sim {
         inventory = new Inventory();
         this.status = "idle";
         activities = new HashMap<String, Integer>();
+        waktuTerakhirSimTidur = 0;
     }
 
     public void printStatus() {
@@ -156,7 +158,7 @@ public class Sim {
         return kesehatan;
     }
 
-    public void setKesehatan() {
+    public void setKesehatan(int kesehatan) {
         if (this.kesehatan + kesehatan > 100) {
             this.kesehatan = 100;
         } else if (this.kesehatan + kesehatan < 0) {
@@ -298,6 +300,7 @@ public class Sim {
         QueenSizeBed queenSizeBed = null;
         KingSizeBed kingSizeBed = null;
         Object object = sim.getObjekDipakai();
+        int durasiTidur;
 
         if (object instanceof SingleBed) {
             singleBed = (SingleBed) object;
@@ -325,8 +328,19 @@ public class Sim {
         if (singleBed != null || queenSizeBed != null || kingSizeBed != null) {
             if (singleBed != null) {
                 Scanner scanner = new Scanner(System.in);
-                System.out.print("Masukkan berapa lama sim tidur : ");
-                int durasiTidur = scanner.nextInt();
+                while (true) {
+                    try {
+                        System.out.print("Masukkan berapa lama sim tidur : ");
+                        durasiTidur = scanner.nextInt();
+                        if (durasiTidur % 4 == 0) {
+                            break;
+                        } else {
+                            System.out.println("Masukkan durasi tidur kelipatan 4");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Masukkan durasi tidur kelipatan 4");
+                    }
+                }
                 String posisi = singleBed.getPosisi().cetakPosisi();
                 System.out.println("Sim sedang tidur pada posisi " + posisi);
                 System.out.println("Sim sedang Tidur di Single Bed....");
@@ -334,8 +348,19 @@ public class Sim {
                 world.getTime().updateWaktu(durasiTidur);
             } else if (queenSizeBed != null) {
                 Scanner scanner = new Scanner(System.in);
-                System.out.print("Masukkan berapa lama sim tidur : ");
-                int durasiTidur = scanner.nextInt();
+                while (true) {
+                    try {
+                        System.out.print("Masukkan berapa lama sim tidur : ");
+                        durasiTidur = scanner.nextInt();
+                        if (durasiTidur % 4 == 0) {
+                            break;
+                        } else {
+                            System.out.println("Masukkan durasi tidur kelipatan 4");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Masukkan durasi tidur kelipatan 4");
+                    }
+                }
                 String posisi = queenSizeBed.getPosisi().cetakPosisi();
                 System.out.println("Sim sedang tidur pada posisi " + posisi);
                 System.out.println("Sim sedang Tidur di Queen Size Bed....");
@@ -343,16 +368,28 @@ public class Sim {
                 world.getTime().updateWaktu(durasiTidur);
             } else if (kingSizeBed != null) {
                 Scanner scanner = new Scanner(System.in);
-                System.out.print("Masukkan berapa lama sim tidur : ");
-                int durasiTidur = scanner.nextInt();
+                while (true) {
+                    try {
+                        System.out.print("Masukkan berapa lama sim tidur dalam menit : ");
+                        durasiTidur = scanner.nextInt();
+                        if (durasiTidur % 4 == 0) {
+                            break;
+                        } else {
+                            System.out.println("Masukkan durasi tidur kelipatan 4");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Masukkan durasi tidur kelipatan 4");
+                    }
+                }
+                durasiTidur *= 60;
                 String posisi = kingSizeBed.getPosisi().cetakPosisi();
                 System.out.println("Sim sedang tidur pada posisi " + posisi);
                 System.out.println("Sim sedang Tidur di Queen Size Bed....");
                 world.getTime().delayWaktu(durasiTidur);
                 world.getTime().updateWaktu(durasiTidur);
+                setMood(durasiTidur * 30 / 240);
+                setKesehatan(durasiTidur * 20 / 240);
             }
-
-            this.kekenyangan -= 10;
             if (!(cekKekenyangan())) {
                 world.removeSimDanRumah(this);
                 Game.changeSim();
@@ -363,7 +400,6 @@ public class Sim {
                 System.out.println("Sudah selesai Tidur");
                 setStatus("idle");
             }
-            this.mood += 5;
         } else {
             System.out.println("Sim tidak sedang berada di Kasur mana pun Tidur di Kasur");
         }
