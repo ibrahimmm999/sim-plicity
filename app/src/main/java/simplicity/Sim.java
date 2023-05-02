@@ -217,7 +217,7 @@ public class Sim {
             System.out.print("Masukkan durasi kerja dalam satuan detik (kelipatan 120) : ");
             Scanner scanner = new Scanner(System.in);
             int durasi = scanner.nextInt();
-            if (durasi % 120 == 0) {
+            if (durasi % 120 == 0 && durasi > 0) {
                 System.out.println("Sim sedang bekerjaaaa....");
                 setStatus("kerja");
                 for (int i = 0; i < durasi; i++) {
@@ -272,7 +272,7 @@ public class Sim {
             System.out.print("Masukkan durasi olahraga dalam satuan detik (kelipatan 20) : ");
             Scanner scanner = new Scanner(System.in);
             int durasi = scanner.nextInt();
-            if (durasi % 20 == 0) {
+            if (durasi % 20 == 0 && durasi > 0) {
                 System.out.println("Sim sedang olahraga....");
                 setStatus("olahraga");
                 world.getTime().delayWaktu(durasi);
@@ -335,7 +335,7 @@ public class Sim {
                     try {
                         System.out.print("Masukkan berapa lama sim tidur (dalam menit) : ");
                         durasiTidur = scanner.nextInt();
-                        if (durasiTidur % 4 == 0) {
+                        if (durasiTidur % 4 == 0 && durasiTidur > 0) {
                             break;
                         } else {
                             System.out.println("Masukkan durasi tidur kelipatan 4 menit");

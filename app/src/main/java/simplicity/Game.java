@@ -378,7 +378,7 @@ public class Game {
 
         } else if (aksi.equals("7")) {
             Object objekDipakai = sim.getObjekDipakai();
-            if (objekDipakai != null && objekDipakai.equals("Toilet")) {
+            if (objekDipakai != null && ((String) objekDipakai).contains("Toilet")) {
                 sim.buangAir(sim.getRuanganSim(), world);
             } else {
                 System.out.println("Silahkan pergi ke objek 'Toilet' terlebih dahulu!");
