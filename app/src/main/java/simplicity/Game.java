@@ -444,6 +444,7 @@ public class Game {
     }
 
     public static void startGame() {
+        banner();
         boolean a = false;
         String command;
         world.createSIM1();
@@ -532,4 +533,18 @@ public class Game {
             System.out.println("Masukkan input yang sesuai");
         }
     }
+
+    public static void banner() {
+        System.out.print("\n");
+        System.out.println("█████████████████████████████████████████████████████████████");
+        System.out.println("█▄─█▀▀▀█─▄█▄─▄▄─█▄─▄███─▄▄▄─█─▄▄─█▄─▀█▀─▄█▄─▄▄─███─▄─▄─█─▄▄─█");
+        System.out.println("██─█─█─█─███─▄█▀██─██▀█─███▀█─██─██─█▄█─███─▄█▀█████─███─██─█");
+        System.out.println("▀▀▄▄▄▀▄▄▄▀▀▄▄▄▄▄▀▄▄▄▄▄▀▄▄▄▄▄▀▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▄▄▀▀▀▀▄▄▄▀▀▄▄▄▄▀");
+        System.out.println("████████████████████████████████████████████████████████████████");
+        System.out.println("█─▄▄▄▄█▄─▄█▄─▀█▀─▄█▀▀▀▀▀██▄─▄▄─█▄─▄███▄─▄█─▄▄▄─█▄─▄█─▄─▄─█▄─█─▄█");
+        System.out.println("█▄▄▄▄─██─███─█▄█─██████████─▄▄▄██─██▀██─██─███▀██─████─████▄─▄██");
+        System.out.println("▀▄▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▀▀▀▀▀▀▀▀▄▄▄▀▀▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▄▀▄▄▄▀▀▄▄▄▀▀▀▄▄▄▀▀");
+        System.out.print("\n");
+    }
+
 }

@@ -141,7 +141,7 @@ public class Ruangan implements Placeable {
             length = objek.getPanjang();
         }
 
-        Point kananBawah = new Point(koordinatObjek.getX() + length, koordinatObjek.getY() - width);
+        Point kananBawah = new Point(koordinatObjek.getX() + length - 1, koordinatObjek.getY() + width - 1);
         Posisi posisi = new Posisi(koordinatObjek, kananBawah);
 
         if (checkEmptyPosisi(posisi)) { // posisi kosong (tersedia)
@@ -155,7 +155,7 @@ public class Ruangan implements Placeable {
         }
     }
 
-    public void addObject1(Non_Makanan objek, Point koordinatObjek, boolean isRotated, Inventory inventory) {
+    public void addObject1(Non_Makanan objek, Point koordinatObjek, boolean isRotated) {
         int width, length;
 
         if (isRotated) { // panjang dan lebar (dimensi) default objek ditukar
@@ -166,7 +166,7 @@ public class Ruangan implements Placeable {
             length = objek.getPanjang();
         }
 
-        Point kananBawah = new Point(koordinatObjek.getX() + length, koordinatObjek.getY() - width);
+        Point kananBawah = new Point(koordinatObjek.getX() + length - 1, koordinatObjek.getY() + width - 1);
         Posisi posisi = new Posisi(koordinatObjek, kananBawah);
 
         if (checkEmptyPosisi(posisi)) { // posisi kosong (tersedia)
