@@ -46,6 +46,13 @@ public class Rumah {
         }
         return null;
     }
+    
+    public void cetakDaftarNamaRuangan() {
+        for (int i = 0; i < daftarNamaRuangan.size(); i++) {
+            System.out.print((i + 1) + ". ");
+            System.out.println(daftarNamaRuangan.get(i));
+        }
+    }
 
     public void addRuangan() {
         Scanner scanner = new Scanner(System.in);
