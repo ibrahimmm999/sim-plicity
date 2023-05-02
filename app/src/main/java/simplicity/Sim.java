@@ -21,6 +21,7 @@ public class Sim {
     private Posisi posisiSim;
     private Rumah rumahSim;
     private Ruangan ruanganSim;
+    private HashMap<String, Integer> activities;
 
     public Sim(String namaLengkap) {
         this.namaLengkap = namaLengkap;
@@ -32,6 +33,7 @@ public class Sim {
         this.waktuKerjaSim = 0;
         inventory = new Inventory();
         this.status = "idle";
+        activities = new HashMap<String, Integer>();
     }
 
     public void printStatus() {
@@ -49,16 +51,15 @@ public class Sim {
         if (inventory.size() > 0) {
             for (Map.Entry<Object, Integer> entry : inventory.entrySet()) {
                 Object object = entry.getKey();
-                int quantity = entry.getValue();
                 if (object instanceof Masakan) {
                     Masakan masakan = (Masakan) object;
-                    System.out.println(masakan.getNamaObjek() + " (" + quantity + ")");
+                    System.out.println(masakan.getNamaObjek());
                 } else if (object instanceof Bahan_Makanan) {
                     Bahan_Makanan bahan = (Bahan_Makanan) object;
-                    System.out.println(bahan.getNamaObjek() + " (" + quantity + ")");
+                    System.out.println(bahan.getNamaObjek());
                 } else if (object instanceof Non_Makanan) {
                     Non_Makanan non_makanan = (Non_Makanan) object;
-                    System.out.println(non_makanan.getNamaObjek() + " (" + quantity + ")");
+                    System.out.println(non_makanan.getNamaObjek());
                 }
             }
         } else {
@@ -81,6 +82,10 @@ public class Sim {
 
     public Rumah getRumahSim() {
         return rumahSim;
+    }
+
+    public HashMap<String, Integer> getActivities() {
+        return activities;
     }
 
     public Object getObjekDipakai() {
@@ -523,15 +528,20 @@ public class Sim {
                     "Anda telah membeli " + bahan.getNamaObjek() + " seharga " + bahan.getHarga()
                             + " dengan durasi pengiriman " + durasi + " detik.");
         }
+
         Thread thread = new Thread(new Runnable() {
             public void run() {
+                Thread.currentThread().setName("pembelian barang " + barang.getNamaObjek());
+                String codeKey = "pembelian barang" + barang.getNamaObjek()
+                        + (durasi * (System.currentTimeMillis() + random.nextInt()));
+                activities.put(codeKey, durasi);
                 if (barang instanceof Non_Makanan) {
                     Non_Makanan nm = (Non_Makanan) barang;
-                    Random random = new Random();
                     try {
                         for (int i = 0; i < durasi; i++) {
                             Thread.sleep(1000);
                             world.getTime().updateWaktu(1);
+                            activities.replace(codeKey, activities.get(codeKey) - 1);
                         }
                         world.getCurrentSim().getInventory().addInventory(nm);
                     } catch (InterruptedException e) {
@@ -539,20 +549,20 @@ public class Sim {
                     }
                 } else if (barang instanceof Bahan_Makanan) {
                     Bahan_Makanan bahan = (Bahan_Makanan) barang;
-                    Random random = new Random();
-                    int durasi = random.nextInt(30) + 1;
                     try {
                         for (int i = 0; i < durasi; i++) {
                             Thread.sleep(1000);
                             world.getTime().updateWaktu(1);
+                            activities.replace(codeKey, activities.get(codeKey) - 1);
                         }
                         world.getCurrentSim().getInventory().addInventory(bahan);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-                System.out.println("\nBarang yang dibeli sudah sampai\n");
+                // System.out.println("\n" + printWaktu(codeKey) + " sudah sampai\n");
                 world.getCurrentSim().setStatus("idle");
+                activities.remove(codeKey);
             }
         });
         thread.start();
@@ -633,6 +643,16 @@ public class Sim {
         }
     }
 
+    public String printWaktu(String string) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < string.length(); i++) {
+            if (!(string.codePointAt(i) >= 48 && string.codePointAt(i) <= 57)) {
+                result.append(string.charAt(i));
+            }
+        }
+        return result.toString();
+    }
+
     public void lihatWaktu(Ruangan ruangan, Sim sim, World world) {
         Jam jam = null;
         Object object = sim.getObjekDipakai();
@@ -652,6 +672,12 @@ public class Sim {
 
         if (jam != null) {
             System.out.println("Sisa waktu di hari ini : " + world.getTime().getSisaWaktu() + " detik");
+            if (activities.size() > 0) {
+                for (Map.Entry<String, Integer> entry : activities.entrySet()) {
+                    System.out.println("Sisa waktu " + printWaktu(entry.getKey()) + ": " + entry.getValue() + " detik");
+
+                }
+            }
         } else {
             System.out.println("Sim tidak sedang menggunakan jam untuk melihat waktu");
         }
