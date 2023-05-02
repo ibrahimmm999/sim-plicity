@@ -92,7 +92,6 @@ public class Rumah {
                 scanner.nextLine();
             }
         }
-        scanner.close();
     }
 
     public void removeRuangan() {
