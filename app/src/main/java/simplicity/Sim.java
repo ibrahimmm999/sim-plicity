@@ -381,29 +381,36 @@ public class Sim {
                 System.out.println("Masukan nomor yang benar");
             }
         }
-        ArrayList<Bahan_Makanan> bahanDibutuhkan = masakan.getBahan();
         boolean semuaBahanTersedia = cekBahanMasak(masakan, sim);
-        // for (Bahan_Makanan bahan : bahanDibutuhkan) {
-        // if (!inventory.contains(bahan)) {
-        // semuaBahanTersedia = false;
-        // break;
-        // }
-        // }
 
         if (semuaBahanTersedia) {
-            for (Bahan_Makanan bahan : bahanDibutuhkan) {
-                inventory.removeInventory(bahan);
-            }
             System.out.println("Memasak " + masakan.getNamaObjek() + "...");
             waktuKerjaSim = (int) (1.5 * masakan.getValueKekenyangan());
             world.getTime().delayWaktu(waktuKerjaSim);
             world.getTime().updateWaktu(waktuKerjaSim);
             mood += 10;
-
-            // masakan.setIsAvailable(false);
             inventory.addInventory(masakan);
+            HashMap<Object, Integer> mapCek = new HashMap<Object, Integer>();
+            mapCek = sim.getInventory().getInventory();
+            ArrayList<String> listCek = new ArrayList<String>();
+            ArrayList<Object> listObjek = new ArrayList<Object>();
+            ArrayList<String> listCekInventory = new ArrayList<String>();
+            for (int i = 0; i < masakan.getBahan().size(); i++) {
+                listCek.add(masakan.getBahan().get(i).getNamaObjek());
+            }
             System.out.println("Masak sudah selesai, masakan masuk inventory");
-
+            for (Map.Entry<Object, Integer> entry : mapCek.entrySet()) {
+                Objek objek = (Objek) entry.getKey();
+                listCekInventory.add(objek.getNamaObjek());
+                listObjek.add(entry.getKey());
+            }
+            for (int i = 0; i < listCekInventory.size(); i++) {
+                if (listCek.contains(listCekInventory.get(i))) {
+                    // System.out.println("HEHEH");
+                    sim.getInventory().getInventory().remove((Object) listObjek.get(i));
+                    listCek.remove(listCekInventory.get(i));
+                }
+            }
         } else {
             System.out.println("Bahan makanan tidak cukup!");
         }
@@ -417,22 +424,14 @@ public class Sim {
             Objek objek = (Objek) entry.getKey();
             listInventorySim.add(objek.getNamaObjek());
         }
-        for (int i = 0; i < listInventorySim.size(); i++) {
-            System.out.println("DAFTAR LIST INVENTORY SIM");
-            System.out.println(listInventorySim.get(i));
-        }
         for (int i = 0; i < masakan.getBahan().size(); i++) {
             listCek.add(masakan.getBahan().get(i).getNamaObjek());
-            System.out.println("DAFTAR LIST CEK");
-            System.out.println(listCek.get(i));
         }
         for (int i = 0; i < listInventorySim.size(); i++) {
             if (listCek.contains(listInventorySim.get(i))) {
-                System.out.println("SAMA");
                 listCek.remove(listInventorySim.get(i));
             }
         }
-        System.out.println("PANJANG LISTCEK =" + listCek.size());
         if (listCek.size() > 0) {
             return false;
         } else {
