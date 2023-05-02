@@ -341,6 +341,7 @@ public class Sim {
                         System.out.println("Masukkan durasi tidur kelipatan 4");
                     }
                 }
+                durasiTidur *= 60;
                 String posisi = singleBed.getPosisi().cetakPosisi();
                 System.out.println("Sim sedang tidur pada posisi " + posisi);
                 System.out.println("Sim sedang Tidur di Single Bed....");
@@ -361,6 +362,7 @@ public class Sim {
                         System.out.println("Masukkan durasi tidur kelipatan 4");
                     }
                 }
+                durasiTidur *= 60;
                 String posisi = queenSizeBed.getPosisi().cetakPosisi();
                 System.out.println("Sim sedang tidur pada posisi " + posisi);
                 System.out.println("Sim sedang Tidur di Queen Size Bed....");
