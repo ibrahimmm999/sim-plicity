@@ -236,7 +236,7 @@ public class Game {
                     System.out.println(idx + ". " + sim.getNamaLengkap());
                     idx++;
                 }
-                
+
                 while (true) {
                     System.out.print("Silahkan pilih nomor sim : ");
                     int simDipilih = scanner.nextInt();
