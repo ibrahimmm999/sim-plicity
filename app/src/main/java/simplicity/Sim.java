@@ -950,7 +950,7 @@ public class Sim {
                     System.out.println("Klik enter 2x");
                 }
             } else {
-                System.out.println("Sudah selesai meditasi, klik enter");
+                System.out.println("Sudah selesai meditasi");
                 setStatus("idle");
             }
 
