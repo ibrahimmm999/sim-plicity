@@ -293,20 +293,80 @@ public class Sim {
         }
     }
 
-    public void tidur(World world) {
-        Scanner scanner = new Scanner(System.in);
-        int durasi = scanner.nextInt();
-        // EFEK TIDUR
-        setStatus("tidur");
-        System.out.println("Sim sedang tidur....");
-        world.getTime().delayWaktu(durasi);
-        mood += (30 * (durasi / 4));
-        kesehatan += (20 * (durasi / 4));
-        setStatus("idle");
-        world.getTime().updateWaktu(durasi);
-        System.out.println("Sim sudah bangooon");
-        scanner.close();
-        // EFEK TIDAK TIDUR NYA BELOM DIBUAT
+    public void tidur(Ruangan ruangan, Sim sim, World world) {
+        SingleBed singleBed = null;
+        QueenSizeBed queenSizeBed = null;
+        KingSizeBed kingSizeBed = null;
+        Object object = sim.getObjekDipakai();
+
+        if (object instanceof SingleBed) {
+            singleBed = (SingleBed) object;
+        } else if (object instanceof QueenSizeBed) {
+            queenSizeBed = (QueenSizeBed) object;
+        } else if (object instanceof KingSizeBed) {
+            kingSizeBed = (KingSizeBed) object;
+        } else if (object instanceof String && ((String) object).contains("Kasur")) {
+            Map<String, Non_Makanan> listObjek = ruangan.getListObjek();
+            for (Map.Entry<String, Non_Makanan> entry : listObjek.entrySet()) {
+                Non_Makanan objek = entry.getValue();
+                if (objek instanceof SingleBed) {
+                    singleBed = (SingleBed) objek;
+                    break;
+                } else if (object instanceof QueenSizeBed) {
+                    queenSizeBed = (QueenSizeBed) object;
+                    break;
+                } else if (object instanceof KingSizeBed) {
+                    kingSizeBed = (KingSizeBed) object;
+                    break;
+                }
+            }
+        }
+
+        if (singleBed != null || queenSizeBed != null || kingSizeBed != null) {
+            if (singleBed != null) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.print("Masukkan berapa lama sim tidur : ");
+                int durasiTidur = scanner.nextInt();
+                String posisi = singleBed.getPosisi().cetakPosisi();
+                System.out.println("Sim merapikan Single Bed pada posisi " + posisi);
+                System.out.println("Sim sedang merapikan Single Bed....");
+                world.getTime().delayWaktu(durasiTidur);
+                world.getTime().updateWaktu(durasiTidur);
+            } else if (queenSizeBed != null) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.print("Masukkan berapa lama sim tidur : ");
+                int durasiTidur = scanner.nextInt();
+                String posisi = queenSizeBed.getPosisi().cetakPosisi();
+                System.out.println("Sim merapikan Queen Size Bed pada posisi " + posisi);
+                System.out.println("Sim sedang merapikan Queen Size Bed....");
+                world.getTime().delayWaktu(durasiTidur);
+                world.getTime().updateWaktu(durasiTidur);
+            } else if (kingSizeBed != null) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.print("Masukkan berapa lama sim tidur : ");
+                int durasiTidur = scanner.nextInt();
+                String posisi = kingSizeBed.getPosisi().cetakPosisi();
+                System.out.println("Sim merapikan Queen Size Bed pada posisi " + posisi);
+                System.out.println("Sim sedang merapikan Queen Size Bed....");
+                world.getTime().delayWaktu(durasiTidur);
+                world.getTime().updateWaktu(durasiTidur);
+            }
+
+            this.kekenyangan -= 10;
+            if (!(cekKekenyangan())) {
+                world.removeSimDanRumah(this);
+                Game.changeSim();
+                if (world.getListSim().size() > 0) {
+                    System.out.println("Klik enter 2x");
+                }
+            } else {
+                System.out.println("Sudah selesai Tidur");
+                setStatus("idle");
+            }
+            this.mood += 5;
+        } else {
+            System.out.println("Sim tidak sedang berada di Kasur mana pun untuk merapikan Kasur");
+        }
     }
 
     public void makan() {
