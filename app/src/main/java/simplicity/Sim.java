@@ -330,15 +330,15 @@ public class Sim {
                 Scanner scanner = new Scanner(System.in);
                 while (true) {
                     try {
-                        System.out.print("Masukkan berapa lama sim tidur : ");
+                        System.out.print("Masukkan berapa lama sim tidur (dalam menit) : ");
                         durasiTidur = scanner.nextInt();
                         if (durasiTidur % 4 == 0) {
                             break;
                         } else {
-                            System.out.println("Masukkan durasi tidur kelipatan 4");
+                            System.out.println("Masukkan durasi tidur kelipatan 4 menit");
                         }
                     } catch (Exception e) {
-                        System.out.println("Masukkan durasi tidur kelipatan 4");
+                        System.out.println("Masukkan durasi tidur kelipatan 4 menit");
                     }
                 }
                 durasiTidur *= 60;
@@ -347,6 +347,8 @@ public class Sim {
                 System.out.println("Sim sedang Tidur di Single Bed....");
                 world.getTime().delayWaktu(durasiTidur);
                 world.getTime().updateWaktu(durasiTidur);
+                setMood(durasiTidur * 30 / 240);
+                setKesehatan(durasiTidur * 20 / 240);
             } else if (queenSizeBed != null) {
                 Scanner scanner = new Scanner(System.in);
                 while (true) {
@@ -368,6 +370,8 @@ public class Sim {
                 System.out.println("Sim sedang Tidur di Queen Size Bed....");
                 world.getTime().delayWaktu(durasiTidur);
                 world.getTime().updateWaktu(durasiTidur);
+                setMood(durasiTidur * 30 / 240);
+                setKesehatan(durasiTidur * 20 / 240);
             } else if (kingSizeBed != null) {
                 Scanner scanner = new Scanner(System.in);
                 while (true) {
@@ -410,57 +414,69 @@ public class Sim {
 
     public void cekEfekTidakTidur(World world) {
         int cekWaktu = world.getTime().getTotalDetik() - waktuTerakhirSimTidur;
-        if (cekWaktu > 600 || cekWaktu % 600 == 0) {
+        if (((cekWaktu > 600 || cekWaktu % 600 == 0) && cekWaktu > 0)) {
+            System.out.println("Sim telah tidak tidur selama 10 menit");
             waktuTerakhirSimTidur = world.getTime().getTotalDetik();
             setKesehatan(-5);
             setMood(-5);
         }
     }
 
-    public void makan() {
+    public void makan(World world) {
+        Masakan masakan;
+        int kenyang;
         Scanner scanner = new Scanner(System.in);
-        try {
-            if (inventory == null) {
-                inventory = new Inventory(); // inisialisasi inventory jika belum ada
+        System.out.print("Masukkan nomor masakan yang ingin dimakan : ");
+        String object = scanner.nextLine();
+        if (object.equals("1") || object.equals("2") || object.equals("3") || object.equals("4")
+                || object.equals("5")) {
+            if (object.equals("1")) {
+                object = "Nasi Ayam";
+            } else if (object.equals("2")) {
+                object = "Nasi Kari";
+
+            } else if (object.equals("3")) {
+                object = "Susu Kacang";
+
+            } else if (object.equals("4")) {
+                object = "Tumis Sayur";
+
+            } else if (object.equals("5")) {
+                object = "Bistik";
             }
-            inventory.listMasakan();
-            inventory.listBahanMakanan();
-            System.out.print("Masukkan object yang ingin dimakan : ");
-            Object object = scanner.nextLine();
-            if (object instanceof Masakan || object instanceof Bahan_Makanan) {
-                if (inventory.getInventory().containsKey(object) && inventory.getInventory().get(object) > 0) {
-                    if (object instanceof Masakan) {
-                        kekenyangan += ((Masakan) object).getValueKekenyangan();
-                    } else {
-                        kekenyangan += ((Bahan_Makanan) object).getValueKekenyangan();
-                    }
-                    cekKekenyangan();
-                    mood += 5;
-                    cekMood();
-                    inventory.removeInventory(object);
-                    if (object instanceof Masakan) {
-                        System.out.println(namaLengkap + " berhasil makan " + ((Masakan) object).getNamaObjek() + "!");
-                    } else {
-                        System.out
-                                .println(namaLengkap + " berhasil makan " + ((Bahan_Makanan) object).getNamaObjek()
-                                        + "!");
-                    }
-                } else {
-                    if (object instanceof Masakan) {
-                        System.out.println(
-                                namaLengkap + " tidak memiliki " + ((Masakan) object).getNamaObjek()
-                                        + " dalam inventory!");
-                    } else {
-                        System.out.println(namaLengkap + " tidak memiliki " + ((Bahan_Makanan) object).getNamaObjek()
-                                + " dalam inventory!");
+            masakan = new Masakan(object);
+            kenyang = masakan.getValueKekenyangan();
+            ArrayList<Object> listObjek = new ArrayList<Object>();
+            ArrayList<String> listStringInventory = new ArrayList<>();
+            for (Map.Entry<Object, Integer> entry : inventory.getInventory().entrySet()) {
+                Objek objek = (Objek) entry.getKey();
+                listStringInventory.add(objek.getNamaObjek());
+                listObjek.add(entry.getKey());
+            }
+
+            if (listStringInventory.contains(object)) {
+                for (int i = 0; i < listStringInventory.size(); i++) {
+                    if (listStringInventory.get(i).equals(object)) {
+                        // System.out.println("HEHEH");
+                        inventory.getInventory().remove((Object) listObjek.get(i));
+                        break;
                     }
                 }
+                System.out.println("Sim sedang makan");
+                for (int i = 0; i < 30; i++) {
+                    world.getTime().delayWaktu(1);
+                    world.getTime().updateWaktu(1);
+                    System.out.print("nyam...");
+                }
+                System.out.println("\nSim sudah selesai makan");
+                setKekenyangan(kenyang);
             } else {
-                System.out.println("Object cannot be eaten.");
+                System.out.println("Makanan tidak tersedia di inventory, silahkan masak dulu");
             }
-        } catch (NoSuchElementException e) {
-            System.out.println("Input salah, silakan coba lagi.");
-            scanner.nextLine();
+
+        } else {
+            System.out.println("Masakan tidak ditemukan");
+
         }
     }
 
@@ -834,7 +850,8 @@ public class Sim {
         }
 
         if (jam != null) {
-            System.out.println("Sisa waktu di hari ini : " + world.getTime().getSisaWaktu() + " detik");
+            System.out.println("Hari ke : " + world.getTime().getHari() + ", Sisa waktu di hari ini : "
+                    + world.getTime().getSisaWaktu() + " detik");
             if (activities.size() > 0) {
                 for (Map.Entry<String, Integer> entry : activities.entrySet()) {
                     System.out.println("Sisa waktu " + printWaktu(entry.getKey()) + ": " + entry.getValue() + " detik");

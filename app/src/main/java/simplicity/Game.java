@@ -327,22 +327,13 @@ public class Game {
         }
 
         else if (aksi.equals("4")) {
-            System.out.println("Daftar makanan yang merupakan Bahan Makanan : ");
-            System.out.println("1. Nasi");
-            System.out.println("2. Kentang");
-            System.out.println("3. Ayam");
-            System.out.println("4. Sapi");
-            System.out.println("5. Wortel");
-            System.out.println("6. Bayam");
-            System.out.println("7. Kacang");
-            System.out.println("8. Susu");
             System.out.println("Daftar makanan yang merupakan Hasil Masakan: ");
             System.out.println("1. Nasi Ayam");
             System.out.println("2. Nasi Kari");
             System.out.println("3. Susu Kacang");
             System.out.println("4. Tumis Sayur");
             System.out.println("5. Bistik");
-            sim.makan();
+            sim.makan(world);
             scanner.nextLine();
         }
 
