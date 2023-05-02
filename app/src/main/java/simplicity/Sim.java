@@ -398,22 +398,33 @@ public class Sim {
         }
     }
 
-    public void berkunjung(Rumah now, Rumah tujuan) {
+    public void berkunjung(Rumah now, Rumah tujuan, World world) {
         int waktuTempuh;
         // this.getRumah() maksudnya buat rumah sim yang sedang dimainkan
         if (now.getPemilikRumah().getNamaLengkap().equals(tujuan.getPemilikRumah().getNamaLengkap())) {
             waktuTempuh = 0;
+            System.out.println("Sim sudah berada di rumah tersebut!");
         } else {
             // getRumah yang disini maksudnya rumah nya si sim yg dimainkan
             // kurang tau gmn buatnya jadi aku buat this.getRumah() aja dulu
             waktuTempuh = (int) Math
                     .round(Math.sqrt(Math.pow(tujuan.getKoordinat().getX() - now.getKoordinat().getX(), 2)
                             + Math.pow(tujuan.getKoordinat().getY() - now.getKoordinat().getY(), 2)));
+            System.out.println("Sim dalam perjalanan....");
+            world.getTime().delayWaktu(waktuTempuh);
+            System.out.println("Sim sudah sampai");
+            world.getTime().updateWaktu(waktuTempuh);
             tujuan.masukRumah(now, tujuan.getKoordinat());
+            setRumahSim(tujuan);
+            setRuanganSim(tujuan.getRuangan("Ruang 1"));
+            setStatus("idle");
+
+            // this.setMood(waktuTempuh / 3); // Mood meningkat sebesar 10 untuk setiap 30
+            // detik
+            // this.setKekenyangan(waktuTempuh / 3); // Kekenyangan menurun sebesar 10 untuk
+            // setiap 30
         }
-        this.setMood(waktuTempuh / 3); // Mood meningkat sebesar 10 untuk setiap 30 detik
-        this.setKekenyangan(waktuTempuh / 3); // Kekenyangan menurun sebesar 10 untuk setiap 30
-                                              // detik
+        // detik
     }
 
     public void buangAir(Ruangan ruangan, World world) {
@@ -816,22 +827,30 @@ public class Sim {
         }
     }
 
-    public void socialize(Sim sim) {
-        if (sim == this) {
+    public void socialize(Sim sim, World world) {
+        if (sim.getNamaLengkap().equals(this.getNamaLengkap())) {
             System.out.println("Sim tidak bisa socialize dengan dirinya sendiri");
-            return;
+        } else {
+            if (sim.getRumahSim().getPemilikRumah().equals(this.getRumahSim().getPemilikRumah())) {
+                if (sim.getRuanganSim().getNamaRuangan().equals(this.getRuanganSim().getNamaRuangan())) {
+                    System.out.println("Sim socialize dengan " + sim.getNamaLengkap());
+                    sim.setStatus("socialize");
+                    this.setStatus("socialize");
+                    System.out.println("Kedua SIM sedang ngobrol...");
+                    world.getTime().delayWaktu(10);
+                    world.getTime().updateWaktu(10);
+                    System.out.println("Udah selesai ngobrol");
+                    sim.setStatus("idle");
+                    this.setStatus("idle");
+                    // EFEK NYA APA
+                } else {
+                    System.out.println("Sim tidak berada di ruangan yang sama");
+                }
+            } else {
+                System.out.println("Sim tidak berada di rumah yang sama");
+            }
         }
 
-        if (sim.getRumahSim() != this.getRumahSim()) {
-            System.out.println("Sim sedang berada di rumah sim lain");
-            return;
-        }
-
-        if (sim.getRuanganSim() != this.getRuanganSim()) {
-            System.out.println("Sim sedang berada di rumah sim lain");
-        }
-
-        System.out.println("Sim socialize dengan " + sim.getNamaLengkap());
     }
 
     public void beresinKamarMandi(Ruangan ruangan, Sim sim, World world) {

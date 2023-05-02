@@ -366,7 +366,7 @@ public class Game {
                     break;
                 }
             }
-            sim.berkunjung(sim.getRumahSim(), world.getListRumah().get(simDikunjungi - 1));
+            sim.berkunjung(sim.getRumahSim(), world.getListRumah().get(simDikunjungi - 1), world);
 
         } else if (aksi.equals("7")) {
             Object objekDipakai = sim.getObjekDipakai();
@@ -419,7 +419,7 @@ public class Game {
                 }
             }
             if (simSocialize > 0 && simSocialize <= world.getListSim().size()) {
-                sim.socialize(world.getListSim().get(simSocialize - 1));
+                sim.socialize(world.getListSim().get(simSocialize - 1), world);
             } else {
                 System.out.println("Nomor Sim yang dipilih tidak valid.");
             }
