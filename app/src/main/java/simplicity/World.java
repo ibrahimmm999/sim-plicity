@@ -111,6 +111,8 @@ public class World {
                 if (checkKoordinatAvailability(x, y)) {
                     rumah = new Rumah(new Point(x, y), sim);
                     sim.setRumahSim(rumah);
+                    sim.setRuanganSim(rumah.getRuangan("Ruang 1"));
+                    sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
                     sim.getRuanganSim().addObject1(new SingleBed(), new Point(0, 0), false);
                     sim.getRuanganSim().addObject1(new Toilet(), new Point(4, 0), false);
                     sim.getRuanganSim().addObject1(new KomporGas(), new Point(0, 5), false);
