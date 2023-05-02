@@ -112,7 +112,7 @@ public class Game {
             idx = scanner.nextLine();
             if (idx.equals("1")) {
                 System.out.println("\n1. Non Makanan");
-                System.out.println("\n2. Bahan Makanan :");
+                System.out.println("2. Bahan Makanan\n");
                 System.out.print("Pilih nomor : ");
                 nomorBarang = scanner.nextLine();
                 if (nomorBarang.equals("1")) {
@@ -150,22 +150,43 @@ public class Game {
                         System.out.println("Barang tidak tersedia");
                     }
                 } else if (nomorBarang.equals("2")) {
-                    System.out.println("- Nasi ( harga: 5 )");
-                    System.out.println("- Kentang ( harga: 3 )");
-                    System.out.println("- Ayam ( harga: 10 )");
-                    System.out.println("- Sapi ( harga: 12 )");
-                    System.out.println("- Wortel ( harga: 3 )");
-                    System.out.println("- Bayam ( harga: 3 )");
-                    System.out.println("- Kacang ( harga: 2 )");
-                    System.out.println("- Susu ( harga: 2 )");
-                    String namaBarang = scanner.next();
-                    if (namaBarang.equals("Nasi") || namaBarang.equals("Ayam") || namaBarang.equals("Wortel")
-                            || namaBarang.equals("Kentang") || namaBarang.equals("Sapi") || namaBarang.equals("Bayam")
-                            || namaBarang.equals("Susu") || namaBarang.equals("Kacang")) {
-                        sim.beliBarang(new Bahan_Makanan(namaBarang), world);
+                    System.out.println("1. Nasi ( harga: 5 )");
+                    System.out.println("2. Kentang ( harga: 3 )");
+                    System.out.println("3. Ayam ( harga: 10 )");
+                    System.out.println("4. Sapi ( harga: 12 )");
+                    System.out.println("5. Wortel ( harga: 3 )");
+                    System.out.println("6. Bayam ( harga: 3 )");
+                    System.out.println("7. Kacang ( harga: 2 )");
+                    System.out.println("8. Susu ( harga: 2 )");
+                    System.out.print("\nPiliih nomor yang tersedia : ");
+                    String namaBarang = scanner.nextLine();
+                    if (namaBarang.equals("1")) {
+                        sim.beliBarang(new Bahan_Makanan("Nasi"), world);
+                        break;
+                    } else if (namaBarang.equals("2")) {
+                        sim.beliBarang(new Bahan_Makanan("Kentang"), world);
+                        break;
+                    } else if (namaBarang.equals("3")) {
+                        sim.beliBarang(new Bahan_Makanan("Ayam"), world);
+                        break;
+                    } else if (namaBarang.equals("4")) {
+                        sim.beliBarang(new Bahan_Makanan("Sapi"), world);
+                        break;
+                    } else if (namaBarang.equals("5")) {
+                        sim.beliBarang(new Bahan_Makanan("Wortel"), world);
+                        break;
+                    } else if (namaBarang.equals("6")) {
+                        sim.beliBarang(new Bahan_Makanan("Bayam"), world);
+                        break;
+                    } else if (namaBarang.equals("7")) {
+                        sim.beliBarang(new Bahan_Makanan("Kacang"), world);
+                        break;
+                    } else if (namaBarang.equals("8")) {
+                        sim.beliBarang(new Bahan_Makanan("Susu"), world);
                         break;
                     } else {
                         System.out.println("Barang tidak tersedia");
+                        break;
                     }
                 } else {
                     System.out.println("Input tidak sesuai!");
@@ -262,6 +283,7 @@ public class Game {
             if (sim.getRuanganSim().getListObjek().containsKey(objek)) {
                 sim.setObjekDipakai(objek);
                 System.out.println("Sim " + sim.getNamaLengkap() + " menggunakan " + sim.getObjekDipakai());
+                System.out.println(sim.getObjekDipakai().toString());
                 objekDitemukan = true;
             } else {
                 System.out.println("Objek tidak ditemukan");
@@ -337,18 +359,19 @@ public class Game {
 
         else if (aksi.equals("5")) {
             if (sim.getObjekDipakai() != null
-                    && (sim.getObjekDipakai().equals("Kompor Gas") || sim.getObjekDipakai().equals("Kompor Listrik"))) {
+                    && (((String) sim.getObjekDipakai()).contains("Kompor Gas")
+                            || ((String) sim.getObjekDipakai()).contains("Kompor Listrik"))) {
                 System.out.println("1. Nasi Ayam");
                 System.out.println("2. Nasi Kari");
                 System.out.println("3. Susu Kacang");
                 System.out.println("4. Tumis Sayur");
                 System.out.println("5. Bistik");
-                sim.memasak();
+                sim.memasak(world, world.getCurrentSim());
                 // STEP BERIKUTNYA
             } else {
                 System.out.println("Silahkan pergi ke objek 'Kompor' terlebih dahulu!");
             }
-            scanner.nextLine();
+            // scanner.nextLine();
         }
 
         else if (aksi.equals("6")) {
@@ -452,6 +475,7 @@ public class Game {
         try {
             while (!a) {
                 try {
+                    // System.out.println("=== MENU AWAL ====");
                     System.out.print("Masukkan nomor perintah : ");
                     command = scanner.nextLine();
                     switch (command) {
@@ -459,6 +483,7 @@ public class Game {
                             showMenu();
                             while (isPlaying) {
                                 try {
+                                    System.out.println("\n=== MENU UTAMA ====");
                                     System.out.print("Masukkan nomor perintah : ");
                                     command = scanner.nextLine();
                                     switch (command) {
