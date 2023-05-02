@@ -386,7 +386,7 @@ public class Game {
         }
 
         else if (aksi.equals("9")) {
-            sim.berdoa(sim.getRuanganSim());
+            sim.berdoa(sim.getRuanganSim(), world);
         }
 
         else if (aksi.equals("10")) {
@@ -430,11 +430,11 @@ public class Game {
         }
 
         else if (aksi.equals("14")) {
-            sim.belajar(sim.getRuanganSim(), world.getCurrentSim());
+            sim.belajar(sim.getRuanganSim(), world.getCurrentSim(), world);
         }
 
         else if (aksi.equals("15")) {
-            sim.ngegame(sim.getRuanganSim(), world.getCurrentSim());
+            sim.ngegame(sim.getRuanganSim(), world.getCurrentSim(), world);
         }
 
         else {

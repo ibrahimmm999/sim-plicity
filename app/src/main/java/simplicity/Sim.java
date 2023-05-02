@@ -435,6 +435,9 @@ public class Sim {
                 if (toilet.getIsAvailable() && toilet.isOccupied()) {
                     toilet.setIsAvailable(false);
                     toilet.setIsOccupied(false);
+                    System.out.println("Sim sedang eek....");
+                    world.getTime().delayWaktu(2);
+                    world.getTime().updateWaktu(2);
                     kekenyangan -= 20;
                     mood += 10;
                     if (!(cekKekenyangan())) {
@@ -692,44 +695,10 @@ public class Sim {
         } else {
             System.out.println("Sim tidak sedang menggunakan jam untuk melihat waktu");
         }
-        // blm tau nerapin2 waktu2 nya gmn
-        // Waktu currentTime = new Waktu(8, 0, 0); // asumsi waktu saat ini adalah jam 8
-        // pagi
-        // Waktu totalAvailableTime = new Waktu(16, 0, 0); // asumsi waktu yang tersedia
-        // dari jam 8 pagi sampai jam 12
-        // // malam
-        // Waktu remainingTime = new Waktu(totalAvailableTime.convert() -
-        // currentTime.convert()); // hitung waktu yang
-        // // masih tersedia
 
-        // // tampilkan sisa waktu pada hari tersebut
-        // System.out.println("Sisa waktu hari ini: " + remainingTime.getDay() + " hari,
-        // " + remainingTime.getHour()
-        // + " jam, " + remainingTime.getMinute() + " menit, " +
-        // remainingTime.getSecond() + " detik");
-
-        // // hitung waktu yang dibutuhkan untuk setiap tindakan yang bisa ditinggalkan
-        // dan
-        // // kurangi dengan sisa waktu yang masih ada
-        // Waktu upgradeTime = new Waktu(0, 30, 0); // asumsi waktu yang dibutuhkan
-        // untuk upgrade rumah adalah 30 menit
-        // Waktu remainingUpgradeTime = new Waktu(remainingTime.convert() -
-        // upgradeTime.convert()); // hitung waktu yang
-        // // masih tersedia untuk
-        // // upgrade rumah
-
-        // // tampilkan sisa waktu yang masih ada untuk upgrade rumah
-        // System.out.println("Sisa waktu untuk upgrade rumah: "
-        // + remainingUpgradeTime.get + " menit, " + remainingUpgradeTime.getSecond() +
-        // " detik");
-
-        // // lanjutkan dengan menghitung waktu untuk tindakan-tindakan lainnya yang
-        // bisa
-        // // ditinggalkan
-        // // ...
     }
 
-    public void berdoa(Ruangan ruangan) {
+    public void berdoa(Ruangan ruangan, World world) {
         MejaKursi mejaKursi = null;
         for (Map.Entry<String, Non_Makanan> entry : ruangan.getListObjek().entrySet()) {
             Objek objek = entry.getValue();
@@ -741,6 +710,10 @@ public class Sim {
         if (mejaKursi != null) {
             Posisi posisiMejaKursi = mejaKursi.getPosisi();
             System.out.println("Sim berdoa di meja kursi pada posisi " + posisiMejaKursi);
+            System.out.println("Sim sedang merapihkan kasur....");
+            world.getTime().delayWaktu(2);
+            world.getTime().updateWaktu(2);
+            setStatus("idle");
         } else {
             System.out.println("Sim tidak menemukan meja kursi di ruangan ini");
         }
@@ -759,11 +732,9 @@ public class Sim {
                 return;
             }
             kekenyangan -= 5;
-            try {
-                Thread.sleep(20000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            System.out.println("Sim sedang merapihkan kasur....");
+            world.getTime().delayWaktu(2);
+            world.getTime().updateWaktu(2);
             if (!(cekMood())) {
                 // MATI
                 world.removeSimDanRumah(this);
@@ -785,6 +756,7 @@ public class Sim {
                 }
             } else {
                 System.out.println("Sudah selesai kerja, klik enter");
+                setStatus("idle");
             }
         } else {
             System.out.println("SIM kekurangan energi untuk merapikan " + object);
@@ -793,8 +765,11 @@ public class Sim {
 
     public void meditasi(World world) {
         if (kekenyangan >= 5) {
-            System.out.println("SIM meditasi");
-            kekenyangan -= 5;
+            System.out.println("SIM sedang meditasi...");
+            setKekenyangan(-5);
+            setMood(5);
+            world.getTime().delayWaktu(10);
+            world.getTime().updateWaktu(10);
             if (!(cekMood())) {
                 // MATI
                 world.removeSimDanRumah(this);
@@ -815,13 +790,10 @@ public class Sim {
                     System.out.println("Klik enter 2x");
                 }
             } else {
-                System.out.println("Sudah selesai kerja, klik enter");
+                System.out.println("Sudah selesai meditasi, klik enter");
+                setStatus("idle");
             }
-            try {
-                Thread.sleep(20000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
         } else {
             System.out.println("SIM kekurangan energi untuk meditasi");
         }
@@ -842,7 +814,9 @@ public class Sim {
                     System.out.println("Udah selesai ngobrol");
                     sim.setStatus("idle");
                     this.setStatus("idle");
-                    // EFEK NYA APA
+                    sim.setMood(5);
+                    this.setMood(5);
+
                 } else {
                     System.out.println("Sim tidak berada di ruangan yang sama");
                 }
@@ -873,6 +847,10 @@ public class Sim {
         if (toilet != null) {
             String posisiToilet = toilet.getPosisi().cetakPosisi();
             System.out.println("Sim membersihkan toilet pada posisi " + posisiToilet);
+            System.out.println("Sim sedang membersihkan toilet....");
+            world.getTime().delayWaktu(10);
+            world.getTime().updateWaktu(10);
+
             this.kekenyangan -= 10;
             if (!(cekKekenyangan())) {
                 world.removeSimDanRumah(this);
@@ -882,6 +860,7 @@ public class Sim {
                 }
             } else {
                 System.out.println("Sudah selesai membersihkan toilet");
+                setStatus("idle");
             }
             this.mood += 5;
         } else {
@@ -889,7 +868,7 @@ public class Sim {
         }
     }
 
-    public void belajar(Ruangan ruangan, Sim sim) {
+    public void belajar(Ruangan ruangan, Sim sim, World world) {
         MejaKursi mejaKursi = null;
         Object object = sim.getObjekDipakai();
 
@@ -909,14 +888,19 @@ public class Sim {
         if (mejaKursi != null) {
             String posisiMejaKursi = mejaKursi.getPosisi().cetakPosisi();
             System.out.println("Sim belajar di meja kursi pada posisi " + posisiMejaKursi);
+            System.out.println("Sim sedang belajar....");
+            world.getTime().delayWaktu(10);
+            world.getTime().updateWaktu(10);
             this.kekenyangan -= 10;
             this.mood += 5;
+            System.out.println("Sim sudah selesai belajar");
+            setStatus("idle");
         } else {
             System.out.println("Sim tidak sedang berada di Meja Kursi untuk belajar");
         }
     }
 
-    public void ngegame(Ruangan ruangan, Sim sim) {
+    public void ngegame(Ruangan ruangan, Sim sim, World world) {
         MejaKursi mejaKursi = null;
         Object object = sim.getObjekDipakai();
 
@@ -936,6 +920,11 @@ public class Sim {
         if (mejaKursi != null) {
             String posisiMejaKursi = mejaKursi.getPosisi().cetakPosisi();
             System.out.println("Sim bermain game di meja kursi pada posisi " + posisiMejaKursi);
+            System.out.println("Sim sedang belajar....");
+            world.getTime().delayWaktu(10);
+            world.getTime().updateWaktu(10);
+            setStatus("idle");
+            System.out.println("Sim sudah selesai main game");
         } else {
             System.out.println("Sim tidak menemukan meja kursi di ruangan ini untuk bermain game");
         }
