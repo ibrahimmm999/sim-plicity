@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 public class Sim {
     private String namaLengkap;
@@ -221,7 +220,12 @@ public class Sim {
             if (durasi % 120 == 0) {
                 System.out.println("Sim sedang bekerjaaaa....");
                 setStatus("kerja");
-                world.getTime().delayWaktu(durasi);
+                for (int i = 0; i < durasi; i++) {
+                    world.getTime().delayWaktu(1);
+                    world.getTime().updateWaktu(1);
+                    System.out.print("kerja...");
+                }
+                System.out.print("\n");
                 setKekenyangan(-(10 * (durasi / 30)));
                 setMood(-(10 * (durasi / 30)));
                 waktuKerjaSim += durasi;
@@ -232,7 +236,6 @@ public class Sim {
                 } else {
                     System.out.println("sim sudah bekerja selama " + waktuKerjaSim + " detik.");
                 }
-                world.getTime().updateWaktu(durasi);
                 // CEK MATI
                 if (!(cekMood())) {
                     // MATI
@@ -345,8 +348,12 @@ public class Sim {
                 String posisi = singleBed.getPosisi().cetakPosisi();
                 System.out.println("Sim sedang tidur pada posisi " + posisi);
                 System.out.println("Sim sedang Tidur di Single Bed....");
-                world.getTime().delayWaktu(durasiTidur);
-                world.getTime().updateWaktu(durasiTidur);
+                for (int i = 0; i < durasiTidur; i++) {
+                    System.out.print("zzz...");
+                    world.getTime().delayWaktu(1);
+                    world.getTime().updateWaktu(1);
+                }
+                System.out.print("\n");
                 setMood(durasiTidur * 30 / 240);
                 setKesehatan(durasiTidur * 20 / 240);
             } else if (queenSizeBed != null) {
@@ -506,13 +513,17 @@ public class Sim {
             }
         }
         boolean semuaBahanTersedia = cekBahanMasak(masakan, sim);
-
+        int durasiMasak;
         if (semuaBahanTersedia) {
             System.out.println("Memasak " + masakan.getNamaObjek() + "...");
-            waktuKerjaSim = (int) (1.5 * masakan.getValueKekenyangan());
-            world.getTime().delayWaktu(waktuKerjaSim);
-            world.getTime().updateWaktu(waktuKerjaSim);
-            mood += 10;
+            durasiMasak = (int) (1.5 * masakan.getValueKekenyangan());
+            for (int i = 0; i < durasiMasak; i++) {
+                world.getTime().delayWaktu(1);
+                world.getTime().updateWaktu(1);
+                System.out.print("sreng...");
+            }
+            System.out.print("\n");
+            setMood(10);
             inventory.addInventory(masakan);
             HashMap<Object, Integer> mapCek = new HashMap<Object, Integer>();
             mapCek = sim.getInventory().getInventory();

@@ -42,7 +42,8 @@ public class Game {
         System.out.println("10. go to object");
         System.out.println("11. action");
         System.out.println("12. help");
-        System.out.println("13. exit");
+        System.out.println("13. ganti kerja");
+        System.out.println("14. exit");
     }
 
     public static void help() {
@@ -327,14 +328,18 @@ public class Game {
         }
 
         else if (aksi.equals("4")) {
-            System.out.println("Daftar makanan yang merupakan Hasil Masakan: ");
-            System.out.println("1. Nasi Ayam");
-            System.out.println("2. Nasi Kari");
-            System.out.println("3. Susu Kacang");
-            System.out.println("4. Tumis Sayur");
-            System.out.println("5. Bistik");
-            sim.makan(world);
-            scanner.nextLine();
+            if (sim.getObjekDipakai() != null && ((String) sim.getObjekDipakai()).contains("Meja dan Kursi")) {
+                System.out.println("Daftar makanan yang merupakan Hasil Masakan: ");
+                System.out.println("1. Nasi Ayam");
+                System.out.println("2. Nasi Kari");
+                System.out.println("3. Susu Kacang");
+                System.out.println("4. Tumis Sayur");
+                System.out.println("5. Bistik");
+                sim.makan(world);
+                scanner.nextLine();
+            } else {
+                System.out.println("Silahkan pergi ke objek 'Meja dan Kursi' terlebih dahulu!");
+            }
         }
 
         else if (aksi.equals("5")) {
@@ -506,6 +511,9 @@ public class Game {
                                             help();
                                             break;
                                         case "13":
+                                            // help();
+                                            break;
+                                        case "14":
                                             System.out.println("Keluar dari permainan");
                                             isPlaying = false;
                                             a = true;
