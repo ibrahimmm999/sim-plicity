@@ -1044,9 +1044,10 @@ public class Sim {
         if (mejaKursi != null) {
             String posisiMejaKursi = mejaKursi.getPosisi().cetakPosisi();
             System.out.println("Sim bermain game di meja kursi pada posisi " + posisiMejaKursi);
-            System.out.println("Sim sedang belajar....");
+            System.out.println("Sim sedang ngegame....");
             world.getTime().delayWaktu(10);
             world.getTime().updateWaktu(10);
+            this.mood += 5;
             setStatus("idle");
             System.out.println("Sim sudah selesai main game");
         } else {
