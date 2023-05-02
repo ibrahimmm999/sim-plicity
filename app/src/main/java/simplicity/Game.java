@@ -418,13 +418,7 @@ public class Game {
         }
 
         else if (aksi.equals("11")) {
-            Object objekDipakai = sim.getObjekDipakai();
-            if (objekDipakai != null && (objekDipakai.equals("Kasur Single") || objekDipakai.equals("Kasur Queen Size")
-                    || objekDipakai.equals("Kasur King Size"))) {
-                sim.rapihinKasur(objekDipakai, world);
-            } else {
-                System.out.println("Silahkan pergi ke objek 'Kasur' terlebih dahulu!");
-            }
+            sim.rapihinKasur(sim.getRuanganSim(), world.getCurrentSim(), world);
         }
 
         else if (aksi.equals("12")) {
