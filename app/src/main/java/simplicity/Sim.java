@@ -390,6 +390,7 @@ public class Sim {
                 setMood(durasiTidur * 30 / 240);
                 setKesehatan(durasiTidur * 20 / 240);
             }
+            waktuTerakhirSimTidur = world.getTime().getTotalDetik();
             if (!(cekKekenyangan())) {
                 world.removeSimDanRumah(this);
                 Game.changeSim();
@@ -402,6 +403,15 @@ public class Sim {
             }
         } else {
             System.out.println("Sim tidak sedang berada di Kasur mana pun Tidur di Kasur");
+        }
+    }
+
+    public void cekEfekTidakTidur(World world) {
+        int cekWaktu = world.getTime().getTotalDetik() - waktuTerakhirSimTidur;
+        if (cekWaktu > 600 || cekWaktu % 600 == 0) {
+            waktuTerakhirSimTidur = world.getTime().getTotalDetik();
+            setKesehatan(-5);
+            setMood(-5);
         }
     }
 

@@ -482,27 +482,34 @@ public class Game {
                                             break;
                                         case "4":
                                             upgradeHouse();
+                                            world.getCurrentSim().cekEfekTidakTidur(world);
                                             break;
                                         case "5":
                                             moveRoom();
                                             break;
                                         case "6":
                                             editRoom();
+                                            world.getCurrentSim().cekEfekTidakTidur(world);
                                             break;
                                         case "7":
                                             addSim();
+                                            world.getCurrentSim().cekEfekTidakTidur(world);
                                             break;
                                         case "8":
                                             changeSim();
+                                            world.getCurrentSim().cekEfekTidakTidur(world);
                                             break;
                                         case "9":
                                             listObject();
+                                            world.getCurrentSim().cekEfekTidakTidur(world);
                                             break;
                                         case "10":
                                             goToObject();
+                                            world.getCurrentSim().cekEfekTidakTidur(world);
                                             break;
                                         case "11":
                                             action();
+                                            world.getCurrentSim().cekEfekTidakTidur(world);
                                             break;
                                         case "12":
                                             help();
