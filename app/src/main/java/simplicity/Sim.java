@@ -328,8 +328,8 @@ public class Sim {
                 System.out.print("Masukkan berapa lama sim tidur : ");
                 int durasiTidur = scanner.nextInt();
                 String posisi = singleBed.getPosisi().cetakPosisi();
-                System.out.println("Sim merapikan Single Bed pada posisi " + posisi);
-                System.out.println("Sim sedang merapikan Single Bed....");
+                System.out.println("Sim sedang tidur pada posisi " + posisi);
+                System.out.println("Sim sedang Tidur di Single Bed....");
                 world.getTime().delayWaktu(durasiTidur);
                 world.getTime().updateWaktu(durasiTidur);
             } else if (queenSizeBed != null) {
@@ -337,8 +337,8 @@ public class Sim {
                 System.out.print("Masukkan berapa lama sim tidur : ");
                 int durasiTidur = scanner.nextInt();
                 String posisi = queenSizeBed.getPosisi().cetakPosisi();
-                System.out.println("Sim merapikan Queen Size Bed pada posisi " + posisi);
-                System.out.println("Sim sedang merapikan Queen Size Bed....");
+                System.out.println("Sim sedang tidur pada posisi " + posisi);
+                System.out.println("Sim sedang Tidur di Queen Size Bed....");
                 world.getTime().delayWaktu(durasiTidur);
                 world.getTime().updateWaktu(durasiTidur);
             } else if (kingSizeBed != null) {
@@ -346,8 +346,8 @@ public class Sim {
                 System.out.print("Masukkan berapa lama sim tidur : ");
                 int durasiTidur = scanner.nextInt();
                 String posisi = kingSizeBed.getPosisi().cetakPosisi();
-                System.out.println("Sim merapikan Queen Size Bed pada posisi " + posisi);
-                System.out.println("Sim sedang merapikan Queen Size Bed....");
+                System.out.println("Sim sedang tidur pada posisi " + posisi);
+                System.out.println("Sim sedang Tidur di Queen Size Bed....");
                 world.getTime().delayWaktu(durasiTidur);
                 world.getTime().updateWaktu(durasiTidur);
             }
@@ -365,7 +365,7 @@ public class Sim {
             }
             this.mood += 5;
         } else {
-            System.out.println("Sim tidak sedang berada di Kasur mana pun untuk merapikan Kasur");
+            System.out.println("Sim tidak sedang berada di Kasur mana pun Tidur di Kasur");
         }
     }
 
