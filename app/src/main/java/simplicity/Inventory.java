@@ -117,7 +117,8 @@ public class Inventory {
             if (objek instanceof Non_Makanan) {
                 int currentQuantity = inventory.get(objek);
                 if (currentQuantity > 0) {
-                    System.out.println(((Bahan_Makanan) objek).getNamaObjek() + " - " + currentQuantity);
+                    System.out.println(objek);
+                    System.out.println(((Non_Makanan) objek).getNamaObjek() + " - " + currentQuantity);
                 }
             }
         }

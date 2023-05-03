@@ -126,6 +126,7 @@ public class Game {
                     System.out.println("5. Kompor Gas ( harga: 100 )");
                     System.out.println("6. Kompor Listrik ( harga: 200 )");
                     System.out.println("7. Meja dan Kursi ( harga: 50 )");
+                    System.out.println("8. Jam ( harga: 10)");
                     System.out.print("Masukkan nama barang yang ingin dibeli : ");
                     String namaBarang = scanner.nextLine();
                     if (namaBarang.equals("1")) {
@@ -148,6 +149,9 @@ public class Game {
                         break;
                     } else if (namaBarang.equals("7")) {
                         sim.beliBarang(new MejaKursi(), world);
+                        break;
+                    } else if (namaBarang.equals("7")) {
+                        sim.beliBarang(new Jam(), world);
                         break;
                     } else {
                         System.out.println("Barang tidak tersedia");
@@ -263,31 +267,80 @@ public class Game {
 
             } else if (idx.equals("3")) {
                 if (sim.getInventory().getInventory().size() > 0) {
-                    sim.getInventory().listBarang();
+                    HashMap<String, Integer> inventoryTemp = new HashMap<String, Integer>();
+                    for (Entry<Object, Integer> entry : sim.getInventory().getInventory().entrySet()) {
+                        if (entry.getKey() instanceof Non_Makanan) {
+                            Objek objek = (Objek) entry.getKey();
+                            if (inventoryTemp.containsKey(objek.getNamaObjek())) {
+                                inventoryTemp.replace(objek.getNamaObjek(),
+                                        inventoryTemp.get(objek.getNamaObjek()) + 1);
+                            } else {
+                                inventoryTemp.put(objek.getNamaObjek(), 1);
+                            }
+                        }
+                    }
+                    for (String objek : inventoryTemp.keySet()) {
+                        int currentQuantity = inventoryTemp.get(objek);
+                        System.out.println(objek + " - " + currentQuantity);
+                    }
                     boolean objekDitemukan = false;
-                    // Sim sim = world.getCurrentSim();
                     Object objek;
+                    /*
+                     * Masakan masakan = new Masakan(object);
+                     * kenyang = masakan.getValueKekenyangan();
+                     * ArrayList<Object> listObjek = new ArrayList<Object>();
+                     * ArrayList<String> listStringInventory = new ArrayList<>();
+                     * for (Map.Entry<Object, Integer> entry : inventory.getInventory().entrySet())
+                     * {
+                     * Objek objek = (Objek) entry.getKey();
+                     * listStringInventory.add(objek.getNamaObjek());
+                     * listObjek.add(entry.getKey());
+                     * }
+                     * 
+                     * if (listStringInventory.contains(object)) {
+                     * for (int i = 0; i < listStringInventory.size(); i++) {
+                     * if (listStringInventory.get(i).equals(object)) {
+                     * // System.out.println("HEHEH");
+                     * inventory.getInventory().remove((Object) listObjek.get(i));
+                     * break;
+                     * }
+                     * }
+                     * System.out.println("Sim sedang makan");
+                     * for (int i = 0; i < 30; i++) {
+                     * world.getTime().delayWaktu(1);
+                     * world.getTime().updateWaktu(1);
+                     * System.out.print("nyam...");
+                     * }
+                     * System.out.println("\nSim sudah selesai makan");
+                     * setKekenyangan(kenyang);
+                     * } else {
+                     * System.out.println("Makanan tidak tersedia di inventory, silahkan masak dulu"
+                     * );
+                     * }
+                     */
                     while (!objekDitemukan) {
-
-                        System.out.print("\n");
-                        System.out.println("Format Input : [Nama Objek][Koordinat Objek]");
-                        System.out.println("Contoh : Jam(1,4)");
-                        System.out.print("\n");
                         System.out.print("Pilih objek : ");
                         objek = scanner.nextLine();
-                        if (sim.getRuanganSim().getListObjek().containsKey(objek)) {
+                        if (inventoryTemp.containsKey(objek)) {
                             try {
                                 System.out.println("Barang mau dipasang ke koordinat: ");
-                                System.out.println("titik X : ");
+                                System.out.print("titik X : ");
                                 int x = scanner.nextInt();
-                                System.out.println("titik Y : ");
+                                System.out.print("\ntitik Y : ");
                                 int y = scanner.nextInt();
-                                Point kiriAtas = new Point(x, y);
-                                sim.getRuanganSim().moveObject(
-                                        sim.getRuanganSim().getListObjek().get(objek).getPosisi(),
-                                        kiriAtas,
-                                        isPlaying, sim.getInventory());
-
+                                // Non_Makanan barangDipilih
+                                Non_Makanan objekDipilih;
+                                for (Entry<Object, Integer> entry : sim.getInventory().getInventory().entrySet()) {
+                                    if (entry.getKey() instanceof Non_Makanan) {
+                                        objekDipilih = (Non_Makanan) entry.getKey();
+                                        if (objekDipilih.getNamaObjek().equals(objek)) {
+                                            sim.getRuanganSim().addObject(objekDipilih, new Point(x, y), false,
+                                                    sim.getInventory());
+                                            break;
+                                        } else {
+                                        }
+                                    }
+                                }
                                 objekDitemukan = true;
                             } catch (Exception e) {
                                 // TODO: handle exception
