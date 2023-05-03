@@ -761,7 +761,7 @@ public class Sim {
 
         // tambahkan ruangan baru pada rumah
         // ini blm ada rumah
-        rumah.addRuangan();
+        rumah.addRuanganX();
 
         // kurangi uang sim sesuai biaya upgrade
         uang -= biayaUpgrade;
