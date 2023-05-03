@@ -24,6 +24,7 @@ public class Sim {
     private int waktuTerakhirSimTidur;
     private int waktuTerakhirSimMakan;
     private int durasiSimBerkunjung;
+    private boolean cekBelumEEKsetelahMakan;
 
     public Sim(String namaLengkap) {
         this.namaLengkap = namaLengkap;
@@ -39,6 +40,7 @@ public class Sim {
         waktuTerakhirSimTidur = 0;
         waktuTerakhirSimMakan = 0;
         durasiSimBerkunjung = 0;
+        cekBelumEEKsetelahMakan = false;
     }
 
     public void printStatus() {
@@ -530,6 +532,10 @@ public class Sim {
                     System.out.print("nyam...");
                 }
                 System.out.println("\nSim sudah selesai makan");
+                if (!cekBelumEEKsetelahMakan) {
+                    waktuTerakhirSimMakan = world.getTime().getTotalDetik();
+                    cekBelumEEKsetelahMakan = true;
+                }
                 setKekenyangan(kenyang);
             } else {
                 System.out.println("Makanan tidak tersedia di inventory, silahkan masak dulu");
@@ -579,8 +585,11 @@ public class Sim {
                     world.getTime().updateWaktu(1);
                     System.out.print("nyam...");
                 }
-                waktuTerakhirSimMakan = world.getTime().getTotalDetik();
                 System.out.println("\nSim sudah selesai makan");
+                if (!cekBelumEEKsetelahMakan) {
+                    waktuTerakhirSimMakan = world.getTime().getTotalDetik();
+                    cekBelumEEKsetelahMakan = true;
+                }
                 setKekenyangan(kenyang);
             } else {
                 System.out.println("Makanan tidak tersedia di inventory");
@@ -733,7 +742,7 @@ public class Sim {
         int cekWaktu = world.getTime().getTotalDetik() - waktuTerakhirSimMakan;
         if (((cekWaktu > 240 || cekWaktu % 240 == 0) && cekWaktu > 0)) {
             System.out.println("Sim terkena efek tidak buang air");
-            waktuTerakhirSimMakan = world.getTime().getTotalDetik();
+            // waktuTerakhirSimMakan = world.getTime().getTotalDetik();
             setKesehatan(-5);
             setMood(-5);
         }
@@ -777,6 +786,7 @@ public class Sim {
             }
         } else {
             System.out.println("\nSim sudah selesai eek");
+            cekBelumEEKsetelahMakan = false;
             setStatus("idle");
         }
 
