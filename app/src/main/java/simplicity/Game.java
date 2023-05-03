@@ -83,6 +83,7 @@ public class Game {
         System.out.println("Pilihan ruangan : ");
         for (Ruangan ruangan : sim.getRumahSim().getListRuangan()) {
             System.out.println(i + ". " + ruangan.getNamaRuangan());
+            i++;
         }
         while (true) {
             try {
