@@ -329,14 +329,23 @@ public class Game {
 
         else if (aksi.equals("4")) {
             if (sim.getObjekDipakai() != null && ((String) sim.getObjekDipakai()).contains("Meja dan Kursi")) {
-                System.out.println("Daftar makanan yang merupakan Hasil Masakan: ");
+                System.out.println("Daftar makanan yang dapat dimakan: ");
                 System.out.println("1. Nasi Ayam");
                 System.out.println("2. Nasi Kari");
                 System.out.println("3. Susu Kacang");
                 System.out.println("4. Tumis Sayur");
                 System.out.println("5. Bistik");
+                System.out.println("6. Nasi");
+                System.out.println("7. Kentang");
+                System.out.println("8. Ayam");
+                System.out.println("9. Sapi");
+                System.out.println("10. Wortel");
+                System.out.println("11. Bayam");
+                System.out.println("12. Kacang");
+                System.out.println("13. Susu");
+
                 sim.makan(world);
-                scanner.nextLine();
+                // scanner.nextLine();
             } else {
                 System.out.println("Silahkan pergi ke objek 'Meja dan Kursi' terlebih dahulu!");
             }

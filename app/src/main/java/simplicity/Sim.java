@@ -276,9 +276,9 @@ public class Sim {
                 System.out.println("Sim sedang olahraga....");
                 setStatus("olahraga");
                 world.getTime().delayWaktu(durasi);
-                kekenyangan -= (5 * (durasi / 20));
-                kesehatan += (5 * (durasi / 20));
-                mood += (10 * (durasi / 20));
+                setKekenyangan(-(5 * (durasi / 20)));
+                setKesehatan(5 * (durasi / 20));
+                setMood(10 * (durasi / 20));
                 // CEK MATI
                 if (!(cekKekenyangan())) {
                     world.removeSimDanRumah(this);
@@ -430,7 +430,6 @@ public class Sim {
     }
 
     public void makan(World world) {
-        Masakan masakan;
         int kenyang;
         Scanner scanner = new Scanner(System.in);
         System.out.print("Masukkan nomor masakan yang ingin dimakan : ");
@@ -441,17 +440,14 @@ public class Sim {
                 object = "Nasi Ayam";
             } else if (object.equals("2")) {
                 object = "Nasi Kari";
-
             } else if (object.equals("3")) {
                 object = "Susu Kacang";
-
             } else if (object.equals("4")) {
                 object = "Tumis Sayur";
-
             } else if (object.equals("5")) {
                 object = "Bistik";
             }
-            masakan = new Masakan(object);
+            Masakan masakan = new Masakan(object);
             kenyang = masakan.getValueKekenyangan();
             ArrayList<Object> listObjek = new ArrayList<Object>();
             ArrayList<String> listStringInventory = new ArrayList<>();
@@ -481,6 +477,55 @@ public class Sim {
                 System.out.println("Makanan tidak tersedia di inventory, silahkan masak dulu");
             }
 
+        } else if (object.equals("6") || object.equals("7") || object.equals("8")
+                || object.equals("9") || object.equals("10") || object.equals("11") || object.equals("12")
+                || object.equals("13")) {
+            if (object.equals("6")) {
+                object = "Nasi";
+            } else if (object.equals("7")) {
+                object = "Kentang";
+            } else if (object.equals("8")) {
+                object = "Ayam";
+            } else if (object.equals("9")) {
+                object = "Sapi";
+            } else if (object.equals("10")) {
+                object = "Wortel";
+            } else if (object.equals("11")) {
+                object = "Bayam";
+            } else if (object.equals("12")) {
+                object = "Kacang";
+            } else if (object.equals("13")) {
+                object = "Susu";
+            }
+            Bahan_Makanan makanan = new Bahan_Makanan(object);
+            kenyang = makanan.getValueKekenyangan();
+            ArrayList<Object> listObjek = new ArrayList<Object>();
+            ArrayList<String> listStringInventory = new ArrayList<>();
+            for (Map.Entry<Object, Integer> entry : inventory.getInventory().entrySet()) {
+                Objek objek = (Objek) entry.getKey();
+                listStringInventory.add(objek.getNamaObjek());
+                listObjek.add(entry.getKey());
+            }
+
+            if (listStringInventory.contains(object)) {
+                for (int i = 0; i < listStringInventory.size(); i++) {
+                    if (listStringInventory.get(i).equals(object)) {
+                        // System.out.println("HEHEH");
+                        inventory.getInventory().remove((Object) listObjek.get(i));
+                        break;
+                    }
+                }
+                System.out.println("Sim sedang makan");
+                for (int i = 0; i < 30; i++) {
+                    world.getTime().delayWaktu(1);
+                    world.getTime().updateWaktu(1);
+                    System.out.print("nyam...");
+                }
+                System.out.println("\nSim sudah selesai makan");
+                setKekenyangan(kenyang);
+            } else {
+                System.out.println("Makanan tidak tersedia di inventory");
+            }
         } else {
             System.out.println("Masakan tidak ditemukan");
 
@@ -614,8 +659,10 @@ public class Sim {
                     System.out.println("Sim sedang eek....");
                     world.getTime().delayWaktu(2);
                     world.getTime().updateWaktu(2);
-                    kekenyangan -= 20;
-                    mood += 10;
+                    // kekenyangan -= 20;
+                    // mood += 10;
+                    setKekenyangan(-20);
+                    setMood(10);
                     if (!(cekKekenyangan())) {
                         world.removeSimDanRumah(this);
                         Game.changeSim();
@@ -633,8 +680,8 @@ public class Sim {
         }
         if (!berhasilBuangAir) {
             if (waktuKerjaSim - pekerjaan.getWaktuKerja() >= 4) {
-                kesehatan -= 5;
-                mood -= 5;
+                setKesehatan(-5);
+                setMood(-5);
                 if (!(cekMood())) {
                     // MATI
                     world.removeSimDanRumah(this);
@@ -946,7 +993,7 @@ public class Sim {
                 world.getTime().updateWaktu(10);
             }
 
-            this.kekenyangan -= 10;
+            setKekenyangan(-10);
             if (!(cekKekenyangan())) {
                 world.removeSimDanRumah(this);
                 Game.changeSim();
@@ -957,7 +1004,7 @@ public class Sim {
                 System.out.println("Sudah selesai Merapikan Kasur");
                 setStatus("idle");
             }
-            this.mood += 5;
+            setMood(5);
         } else {
             System.out.println("Sim tidak sedang berada di Kasur mana pun untuk merapikan Kasur");
         }
@@ -1051,7 +1098,7 @@ public class Sim {
             world.getTime().delayWaktu(10);
             world.getTime().updateWaktu(10);
 
-            this.kekenyangan -= 10;
+            setKekenyangan(-10);
             if (!(cekKekenyangan())) {
                 world.removeSimDanRumah(this);
                 Game.changeSim();
@@ -1062,7 +1109,7 @@ public class Sim {
                 System.out.println("Sudah selesai membersihkan toilet");
                 setStatus("idle");
             }
-            this.mood += 5;
+            setMood(5);
         } else {
             System.out.println("Sim tidak sedang berada di Toilet untuk membersihkan Toilet");
         }
@@ -1091,8 +1138,8 @@ public class Sim {
             System.out.println("Sim sedang belajar....");
             world.getTime().delayWaktu(10);
             world.getTime().updateWaktu(10);
-            this.kekenyangan -= 10;
-            this.mood += 5;
+            setKekenyangan(-10);
+            setMood(5);
             System.out.println("Sim sudah selesai belajar");
             setStatus("idle");
         } else {
@@ -1123,7 +1170,7 @@ public class Sim {
             System.out.println("Sim sedang ngegame....");
             world.getTime().delayWaktu(10);
             world.getTime().updateWaktu(10);
-            this.mood += 5;
+            setMood(5);
             setStatus("idle");
             System.out.println("Sim sudah selesai main game");
         } else {
