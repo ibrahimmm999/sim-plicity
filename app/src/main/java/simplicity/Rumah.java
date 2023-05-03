@@ -10,15 +10,19 @@ public class Rumah {
     private ArrayList<String> daftarNamaRuangan;
     private ArrayList<Ruangan> daftarRuangan;
     private Sim pemilik;
+    private Matriks matriks;
 
     public Rumah(Point koordinat, Sim pemilik) {
         // this.namaRumah = namaRumah;
         this.koordinat = koordinat;
         this.pemilik = pemilik;
+        matriks = new Matriks(98, 98);
         daftarNamaRuangan = new ArrayList<String>();
         daftarRuangan = new ArrayList<Ruangan>();
         Ruangan ruang1 = new Ruangan("Ruang 1", new Posisi(new Point(0, 0), new Point(5, 0)));
+        boolean bool = matriks.setDenahRumah(new Point(48,48), 1);
         daftarRuangan.add(ruang1);
+        daftarNamaRuangan.add("Ruang 1");
         // MASIH KURANG NAMBAHIN BARANG DEFAULT (liat flow permainan di docs)
     }
 
@@ -28,6 +32,10 @@ public class Rumah {
 
     public Point getKoordinat() {
         return koordinat;
+    }
+    
+    public Matriks getMatriks() {
+        return matriks;
     }
 
     public ArrayList<String> getdaftarNamaRuangan() {
