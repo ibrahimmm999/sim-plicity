@@ -40,7 +40,7 @@ public class Sim {
         waktuTerakhirSimMakan = 0;
         durasiSimBerkunjung = 0;
     }
-    
+
     public void printStatus() {
         System.out.println("Nama Lengkap: " + namaLengkap);
         System.out.println("Pekerjaan: " + pekerjaan.getNamaPekerjaan());
@@ -52,23 +52,54 @@ public class Sim {
     }
 
     public void printInventory() {
+
         HashMap<Object, Integer> inventory = this.inventory.getInventory();
         if (inventory.size() > 0) {
-            int i = 1;
-            for (Map.Entry<Object, Integer> entry : inventory.entrySet()) {
-                Object object = entry.getKey();
-                String name = "";
-                if (object instanceof Masakan) {
-                    Masakan masakan = (Masakan) object;
-                    name = masakan.getNamaObjek();
-                } else if (object instanceof Bahan_Makanan) {
-                    Bahan_Makanan bahan = (Bahan_Makanan) object;
-                    name = bahan.getNamaObjek();
-                } else if (object instanceof Non_Makanan) {
-                    Non_Makanan non_makanan = (Non_Makanan) object;
-                    name = non_makanan.getNamaObjek();
+            // int i = 1;
+            // for (Map.Entry<Object, Integer> entry : inventory.entrySet()) {
+            // Object object = entry.getKey();
+            // String name = "";
+            // if (object instanceof Masakan) {
+            // Masakan masakan = (Masakan) object;
+            // name = masakan.getNamaObjek();
+            // } else if (object instanceof Bahan_Makanan) {
+            // Bahan_Makanan bahan = (Bahan_Makanan) object;
+            // name = bahan.getNamaObjek();
+            // } else if (object instanceof Non_Makanan) {
+            // Non_Makanan non_makanan = (Non_Makanan) object;
+            // name = non_makanan.getNamaObjek();
+            // }
+            // System.out.println(i + ". " + name);
+            // i++;
+            // }
+            HashMap<String, Integer> inventoryTemp = new HashMap<String, Integer>();
+            for (Map.Entry<Object, Integer> entry : getInventory().getInventory().entrySet()) {
+                Objek objek = (Objek) entry.getKey();
+                String kategori;
+                if (objek.getClass().getSimpleName().equals("Bahan_Makanan")) {
+                    kategori = "Bahan Makanan";
+                } else if (objek.getClass().getSuperclass().getSimpleName().equals("Non_Makanan")) {
+                    kategori = "Non Makanan";
+                } else {
+                    kategori = "Masakan";
                 }
-                System.out.println(i + ". " + name);
+                if (inventoryTemp.containsKey(objek.getNamaObjek() + " - " + kategori)) {
+                    inventoryTemp.replace(
+                            objek.getNamaObjek() + " - " + kategori,
+                            inventoryTemp.get(
+                                    objek.getNamaObjek() + " - " + kategori)
+                                    + 1);
+                } else {
+                    inventoryTemp.put(objek.getNamaObjek() + " - " + kategori,
+                            1);
+                }
+
+            }
+            System.out.println("Your Inventory:");
+            int i = 1;
+            for (String objek : inventoryTemp.keySet()) {
+                int currentQuantity = inventoryTemp.get(objek);
+                System.out.println(i + ". " + objek + " ( jumlah: " + currentQuantity + " )");
                 i++;
             }
         } else {
@@ -622,7 +653,6 @@ public class Sim {
         } else {
             System.out.println("Bahan makanan tidak cukup!");
         }
-        scanner.nextLine();
     }
 
     public boolean cekBahanMasak(Masakan masakan, Sim sim) {
