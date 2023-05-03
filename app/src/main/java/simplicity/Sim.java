@@ -40,7 +40,7 @@ public class Sim {
         waktuTerakhirSimMakan = 0;
         durasiSimBerkunjung = 0;
     }
-
+    
     public void printStatus() {
         System.out.println("Nama Lengkap: " + namaLengkap);
         System.out.println("Pekerjaan: " + pekerjaan.getNamaPekerjaan());
@@ -54,23 +54,26 @@ public class Sim {
     public void printInventory() {
         HashMap<Object, Integer> inventory = this.inventory.getInventory();
         if (inventory.size() > 0) {
+            int i = 1;
             for (Map.Entry<Object, Integer> entry : inventory.entrySet()) {
                 Object object = entry.getKey();
+                String name = "";
                 if (object instanceof Masakan) {
                     Masakan masakan = (Masakan) object;
-                    System.out.println(masakan.getNamaObjek());
+                    name = masakan.getNamaObjek();
                 } else if (object instanceof Bahan_Makanan) {
                     Bahan_Makanan bahan = (Bahan_Makanan) object;
-                    System.out.println(bahan.getNamaObjek());
+                    name = bahan.getNamaObjek();
                 } else if (object instanceof Non_Makanan) {
                     Non_Makanan non_makanan = (Non_Makanan) object;
-                    System.out.println(non_makanan.getNamaObjek());
+                    name = non_makanan.getNamaObjek();
                 }
+                System.out.println(i + ". " + name);
+                i++;
             }
         } else {
             System.out.println("Inventory kosong");
         }
-
     }
 
     // pekerjaan harusnya dimasukin ke array dulu
@@ -786,6 +789,7 @@ public class Sim {
 
             // kurangi uang sim
             uang -= nm.getHarga();
+            inventory.addInventory(barang);
             // tambahkan objek ke inventory
             System.out.println("Anda telah membeli " + nm.getNamaObjek() + " seharga " + nm.getHarga()
                     + " dengan durasi pengiriman " + durasi + " detik.");
@@ -797,6 +801,7 @@ public class Sim {
             }
             // kurangi uang sim
             uang -= bahan.getHarga();
+            inventory.addInventory(barang);
             // tambahkan objek ke inventory
             System.out.println(
                     "Anda telah membeli " + bahan.getNamaObjek() + " seharga " + bahan.getHarga()
