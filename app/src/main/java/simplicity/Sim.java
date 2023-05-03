@@ -622,7 +622,6 @@ public class Sim {
         } else {
             System.out.println("Bahan makanan tidak cukup!");
         }
-        scanner.nextLine();
     }
 
     public boolean cekBahanMasak(Masakan masakan, Sim sim) {
