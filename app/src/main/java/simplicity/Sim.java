@@ -22,6 +22,7 @@ public class Sim {
     private Ruangan ruanganSim;
     private HashMap<String, Integer> activities;
     private int waktuTerakhirSimTidur;
+    private int waktuTerakhirSimMakan;
 
     public Sim(String namaLengkap) {
         this.namaLengkap = namaLengkap;
@@ -35,6 +36,7 @@ public class Sim {
         this.status = "idle";
         activities = new HashMap<String, Integer>();
         waktuTerakhirSimTidur = 0;
+        waktuTerakhirSimMakan = 0;
     }
 
     public void printStatus() {
@@ -182,7 +184,7 @@ public class Sim {
     public boolean cekMood() {
         if (mood <= 0) {
             // tindakan mati karna depresi
-            System.out.println("Sim ini sudah mati karena depresi.");
+            System.out.println("\nSim ini sudah mati karena depresi.");
             return false; // mati
 
         } else {
@@ -194,7 +196,7 @@ public class Sim {
     public boolean cekKesehatan() {
         if (kesehatan <= 0) {
             // tindakan mati karna sakit
-            System.out.println("Sim ini sudah mati karena sakit.");
+            System.out.println("\nSim ini sudah mati karena sakit.");
             return false;
 
         }
@@ -205,7 +207,7 @@ public class Sim {
     public boolean cekKekenyangan() {
         if (kekenyangan <= 0) {
             // tindakan mati karna kelaparan
-            System.out.println("Sim ini sudah mati karena kelaparan.");
+            System.out.println("\nSim ini sudah mati karena kelaparan.");
             return false;
         }
         return true;
@@ -427,6 +429,26 @@ public class Sim {
             setKesehatan(-5);
             setMood(-5);
         }
+        if (!(cekMood())) {
+            // MATI
+            world.removeSimDanRumah(this);
+            Game.changeSim();
+            if (world.getListSim().size() > 0) {
+                System.out.println("Klik enter 2x");
+            }
+        } else if (!(cekKesehatan())) {
+            world.removeSimDanRumah(this);
+            Game.changeSim();
+            if (world.getListSim().size() > 0) {
+                System.out.println("Klik enter 2x");
+            }
+        } else if (!(cekKekenyangan())) {
+            world.removeSimDanRumah(this);
+            Game.changeSim();
+            if (world.getListSim().size() > 0) {
+                System.out.println("Klik enter 2x");
+            }
+        }
     }
 
     public void makan(World world) {
@@ -521,6 +543,7 @@ public class Sim {
                     world.getTime().updateWaktu(1);
                     System.out.print("nyam...");
                 }
+                waktuTerakhirSimMakan = world.getTime().getTotalDetik();
                 System.out.println("\nSim sudah selesai makan");
                 setKekenyangan(kenyang);
             } else {
@@ -634,82 +657,90 @@ public class Sim {
             System.out.println("Sim dalam perjalanan....");
             world.getTime().delayWaktu(waktuTempuh);
             System.out.println("Sim sudah sampai");
+            setObjekDipakai((String) "");
             world.getTime().updateWaktu(waktuTempuh);
+            if (waktuTempuh >= 30) {
+                setMood(10 * waktuTempuh / 30);
+                setKekenyangan(-(10 * waktuTempuh / 30));
+            }
             tujuan.masukRumah(now, tujuan.getKoordinat());
             setRumahSim(tujuan);
             setRuanganSim(tujuan.getRuangan("Ruang 1"));
             setStatus("idle");
-
-            // this.setMood(waktuTempuh / 3); // Mood meningkat sebesar 10 untuk setiap 30
-            // detik
-            // this.setKekenyangan(waktuTempuh / 3); // Kekenyangan menurun sebesar 10 untuk
-            // setiap 30
+            if (!(cekMood())) {
+                // MATI
+                world.removeSimDanRumah(this);
+                Game.changeSim();
+                if (world.getListSim().size() > 0) {
+                    System.out.println("Klik enter 2x");
+                }
+            } else if (!(cekKesehatan())) {
+                world.removeSimDanRumah(this);
+                Game.changeSim();
+                if (world.getListSim().size() > 0) {
+                    System.out.println("Klik enter 2x");
+                }
+            } else if (!(cekKekenyangan())) {
+                world.removeSimDanRumah(this);
+                Game.changeSim();
+                if (world.getListSim().size() > 0) {
+                    System.out.println("Klik enter 2x");
+                }
+            }
         }
-        // detik
     }
 
-    public void buangAir(Ruangan ruangan, World world) {
-        boolean berhasilBuangAir = false;
-        for (Non_Makanan objek : ruangan.getListObjek().values()) {
-            if (objek instanceof Toilet) {
-                Toilet toilet = (Toilet) objek;
-                if (toilet.getIsAvailable() && toilet.isOccupied()) {
-                    toilet.setIsAvailable(false);
-                    toilet.setIsOccupied(false);
-                    System.out.println("Sim sedang eek....");
-                    world.getTime().delayWaktu(2);
-                    world.getTime().updateWaktu(2);
-                    // kekenyangan -= 20;
-                    // mood += 10;
-                    setKekenyangan(-20);
-                    setMood(10);
-                    if (!(cekKekenyangan())) {
-                        world.removeSimDanRumah(this);
-                        Game.changeSim();
-                        if (world.getListSim().size() > 0) {
-                            System.out.println("Klik enter 2x");
-                        }
-                    } else {
-                        System.out.println("Sudah selesai kerja, klik enter");
-                    }
-                    berhasilBuangAir = true;
-                    System.out.println(namaLengkap + " berhasil buang air di " + toilet.getNamaObjek());
-                    break;
-                }
+    public void cekEfekTidakBuangAir(World world) {
+        int cekWaktu = world.getTime().getTotalDetik() - waktuTerakhirSimMakan;
+        if (((cekWaktu > 240 || cekWaktu % 240 == 0) && cekWaktu > 0)) {
+            System.out.println("Sim terkena efek tidak buang air");
+            waktuTerakhirSimMakan = world.getTime().getTotalDetik();
+            setKesehatan(-5);
+            setMood(-5);
+        }
+        if (!(cekMood())) {
+            // MATI
+            world.removeSimDanRumah(this);
+            Game.changeSim();
+            if (world.getListSim().size() > 0) {
+                System.out.println("Klik enter 2x");
+            }
+        } else if (!(cekKesehatan())) {
+            world.removeSimDanRumah(this);
+            Game.changeSim();
+            if (world.getListSim().size() > 0) {
+                System.out.println("Klik enter 2x");
+            }
+        } else if (!(cekKekenyangan())) {
+            world.removeSimDanRumah(this);
+            Game.changeSim();
+            if (world.getListSim().size() > 0) {
+                System.out.println("Klik enter 2x");
             }
         }
-        if (!berhasilBuangAir) {
-            if (waktuKerjaSim - pekerjaan.getWaktuKerja() >= 4) {
-                setKesehatan(-5);
-                setMood(-5);
-                if (!(cekMood())) {
-                    // MATI
-                    world.removeSimDanRumah(this);
-                    Game.changeSim();
-                    if (world.getListSim().size() > 0) {
-                        System.out.println("Klik enter 2x");
-                    }
-                } else if (!(cekKesehatan())) {
-                    world.removeSimDanRumah(this);
-                    Game.changeSim();
-                    if (world.getListSim().size() > 0) {
-                        System.out.println("Klik enter 2x");
-                    }
-                } else if (!(cekKekenyangan())) {
-                    world.removeSimDanRumah(this);
-                    Game.changeSim();
-                    if (world.getListSim().size() > 0) {
-                        System.out.println("Klik enter 2x");
-                    }
-                } else {
-                    System.out.println("Sudah selesai kerja, klik enter");
-                }
-                System.out.println(namaLengkap + " tidak berhasil buang air dan mengalami kesehatan dan mood menurun");
-            } else {
-                System.out.println(
-                        namaLengkap + " tidak berhasil buang air dan masih terlalu cepat untuk mengalami efek negatif");
-            }
+
+    }
+
+    public void buangAir(World world) {
+        System.out.println("Sim sedang eek");
+        for (int i = 0; i < 10; i++) {
+            System.out.print("plung...");
+            world.getTime().delayWaktu(1);
+            world.getTime().updateWaktu(1);
         }
+        setKekenyangan(-20);
+        setMood(10);
+        if (!(cekKekenyangan())) {
+            world.removeSimDanRumah(this);
+            Game.changeSim();
+            if (world.getListSim().size() > 0) {
+                System.out.println("\nKlik enter");
+            }
+        } else {
+            System.out.println("\nSim sudah selesai eek");
+            setStatus("idle");
+        }
+
     }
 
     public void upgradeRumah(Rumah rumah) {
@@ -993,6 +1024,7 @@ public class Sim {
                 world.getTime().updateWaktu(10);
             }
 
+            setMood(5);
             setKekenyangan(-10);
             if (!(cekKekenyangan())) {
                 world.removeSimDanRumah(this);
@@ -1004,7 +1036,6 @@ public class Sim {
                 System.out.println("Sudah selesai Merapikan Kasur");
                 setStatus("idle");
             }
-            setMood(5);
         } else {
             System.out.println("Sim tidak sedang berada di Kasur mana pun untuk merapikan Kasur");
         }
@@ -1140,8 +1171,29 @@ public class Sim {
             world.getTime().updateWaktu(10);
             setKekenyangan(-10);
             setMood(5);
-            System.out.println("Sim sudah selesai belajar");
-            setStatus("idle");
+            if (!(cekMood())) {
+                // MATI
+                world.removeSimDanRumah(this);
+                Game.changeSim();
+                if (world.getListSim().size() > 0) {
+                    System.out.println("Klik enter 2x");
+                }
+            } else if (!(cekKesehatan())) {
+                world.removeSimDanRumah(this);
+                Game.changeSim();
+                if (world.getListSim().size() > 0) {
+                    System.out.println("Klik enter 2x");
+                }
+            } else if (!(cekKekenyangan())) {
+                world.removeSimDanRumah(this);
+                Game.changeSim();
+                if (world.getListSim().size() > 0) {
+                    System.out.println("Klik enter 2x");
+                }
+            } else {
+                System.out.println("Sim sudah selesai belajar");
+                setStatus("idle");
+            }
         } else {
             System.out.println("Sim tidak sedang berada di Meja Kursi untuk belajar");
         }

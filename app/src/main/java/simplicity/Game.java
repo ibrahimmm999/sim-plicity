@@ -108,7 +108,7 @@ public class Game {
         while (true) {
             System.out.println("Aksi yang tersedia :");
             System.out.println("1. Membeli barang");
-            System.out.println("2. Install barang");
+            System.out.println("2. Pindah barang");
             System.out.print("Pilih nomor :  ");
             idx = scanner.nextLine();
             if (idx.equals("1")) {
@@ -198,6 +198,7 @@ public class Game {
                 ArrayList<String> kumpulanNamaObjek = new ArrayList<>();
                 for (Entry<String, Non_Makanan> entry : kumpulanObjek.entrySet()) {
                     kumpulanNamaObjek.add(entry.getValue().getNamaObjek());
+                    System.out.println(entry.getValue().getNamaObjek());
                 }
                 while (true) {
                     System.out.print("Masukkan nama barang yang ingin dipindah : ");
@@ -252,7 +253,10 @@ public class Game {
                 System.out.println("Berhasil mengganti Sim ke " + world.getCurrentSim().getNamaLengkap());
             } else {
                 System.out.println("Tidak ada Sim yang tersedia!");
-                throw new RuntimeException("GAME OVER");
+                // throw new RuntimeException("GAME OVER");
+                System.out.println(">>>> GAME OVER <<<<");
+                System.out.println("Keluar dari game...");
+                System.exit(1);
             }
         } catch (NoSuchElementException e) {
             System.out.println("Input salah, silakan coba lagi.");
@@ -388,7 +392,7 @@ public class Game {
         } else if (aksi.equals("7")) {
             Object objekDipakai = sim.getObjekDipakai();
             if (objekDipakai != null && ((String) objekDipakai).contains("Toilet")) {
-                sim.buangAir(sim.getRuanganSim(), world);
+                sim.buangAir(world);
             } else {
                 System.out.println("Silahkan pergi ke objek 'Toilet' terlebih dahulu!");
             }
@@ -488,6 +492,7 @@ public class Game {
                                         case "4":
                                             upgradeHouse();
                                             world.getCurrentSim().cekEfekTidakTidur(world);
+                                            world.getCurrentSim().cekEfekTidakBuangAir(world);
                                             break;
                                         case "5":
                                             moveRoom();
@@ -495,26 +500,32 @@ public class Game {
                                         case "6":
                                             editRoom();
                                             world.getCurrentSim().cekEfekTidakTidur(world);
+                                            world.getCurrentSim().cekEfekTidakBuangAir(world);
                                             break;
                                         case "7":
                                             addSim();
                                             world.getCurrentSim().cekEfekTidakTidur(world);
+                                            world.getCurrentSim().cekEfekTidakBuangAir(world);
                                             break;
                                         case "8":
                                             changeSim();
                                             world.getCurrentSim().cekEfekTidakTidur(world);
+                                            world.getCurrentSim().cekEfekTidakBuangAir(world);
                                             break;
                                         case "9":
                                             listObject();
                                             world.getCurrentSim().cekEfekTidakTidur(world);
+                                            world.getCurrentSim().cekEfekTidakBuangAir(world);
                                             break;
                                         case "10":
                                             goToObject();
                                             world.getCurrentSim().cekEfekTidakTidur(world);
+                                            world.getCurrentSim().cekEfekTidakBuangAir(world);
                                             break;
                                         case "11":
                                             action();
                                             world.getCurrentSim().cekEfekTidakTidur(world);
+                                            world.getCurrentSim().cekEfekTidakBuangAir(world);
                                             break;
                                         case "12":
                                             help();

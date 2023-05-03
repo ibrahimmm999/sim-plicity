@@ -190,7 +190,10 @@ public class World {
                 System.out.println("Sim berhasil dihapus");
                 if (listSim.size() <= 0) {
                     System.out.println("Tidak ada Sim yang tersisa!");
-                    throw new RuntimeException("GAME OVER");
+                    // throw new RuntimeException("GAME OVER");
+                    System.out.println(">>>> GAME OVER <<<<");
+                    System.out.println("Keluar dari game...");
+                    System.exit(1);
                 }
             }
         }
