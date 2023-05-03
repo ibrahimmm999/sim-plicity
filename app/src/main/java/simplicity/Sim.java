@@ -28,7 +28,7 @@ public class Sim {
     public Sim(String namaLengkap) {
         this.namaLengkap = namaLengkap;
         this.pekerjaan = getRandomPekerjaan();
-        this.uang = 100;
+        this.uang = 1000000;
         this.kekenyangan = 80;
         this.mood = 80;
         this.kesehatan = 80;

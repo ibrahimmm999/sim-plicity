@@ -20,7 +20,7 @@ public class Rumah {
         daftarNamaRuangan = new ArrayList<String>();
         daftarRuangan = new ArrayList<Ruangan>();
         Ruangan ruang1 = new Ruangan("Ruang 1", new Posisi(new Point(0, 0), new Point(5, 0)));
-        boolean bool = matriks.setDenahRumah(new Point(48,48), 1);
+        boolean bool = matriks.setDenahRumah(new Point(48, 48), 1);
         daftarRuangan.add(ruang1);
         daftarNamaRuangan.add("Ruang 1");
         // MASIH KURANG NAMBAHIN BARANG DEFAULT (liat flow permainan di docs)
@@ -33,7 +33,7 @@ public class Rumah {
     public Point getKoordinat() {
         return koordinat;
     }
-    
+
     public Matriks getMatriks() {
         return matriks;
     }
@@ -54,7 +54,7 @@ public class Rumah {
         }
         return null;
     }
-    
+
     public void cetakDaftarNamaRuangan() {
         for (int i = 0; i < daftarNamaRuangan.size(); i++) {
             System.out.print((i + 1) + ". ");
@@ -75,9 +75,11 @@ public class Rumah {
                 if (daftarNamaRuangan.contains(ruanganPatokan)) {
                     break;
                 } else { // ruangan patokan bukan merupakan ruangan dalam rumah
-                    System.out.println("Harap masukkan nama ruangan patokan yang berada dalam rumah--nama yang berada pada daftar ruangan");
+                    System.out.println(
+                            "Harap masukkan nama ruangan patokan yang berada dalam rumah--nama yang berada pada daftar ruangan");
                 }
-                // System.out.print("Masukkan sisi yang ingin diekspansi (Atas/Bawah/Kanan/Kiri): ");
+                // System.out.print("Masukkan sisi yang ingin diekspansi
+                // (Atas/Bawah/Kanan/Kiri): ");
 
             } catch (NoSuchElementException e) {
                 System.out.println("Input salah, silahkan coba lagi.");
@@ -86,81 +88,55 @@ public class Rumah {
         }
 
         while (true) {
-            try {
-                System.out.print("Masukkan sisi yang ingin diekspansi (Atas/Bawah/Kanan/Kiri): ");
-                String sisiEkspansi = sc.nextLine();
+            System.out.print("Masukkan sisi yang ingin diekspansi (Atas/Bawah/Kanan/Kiri): ");
+            String sisiEkspansi = sc.nextLine();
 
-                if (sisiEkspansi == "Atas" || sisiEkspansi == "Bawah" || sisiEkspansi == "Kanan" || sisiEkspansi == "Kiri") {
-                    boolean berhasilEkspansi = false;
-                    Ruangan ruangPenanda = daftarRuangan.get(daftarNamaRuangan.indexOf(ruanganPatokan));
-                    Point titikRuangPenanda = ruangPenanda.getPosisi().getKiriAtas();
-                    int x = titikRuangPenanda.getX();
-                    int y = titikRuangPenanda.getY();
+            if (sisiEkspansi.equals("Atas") || sisiEkspansi.equals("Bawah") || sisiEkspansi.equals("Kanan")
+                    || sisiEkspansi.equals("Kiri")) {
+                boolean berhasilEkspansi = false;
+                Ruangan ruangPenanda = daftarRuangan.get(daftarNamaRuangan.indexOf(ruanganPatokan));
+                Point titikRuangPenanda = ruangPenanda.getPosisi().getKiriAtas();
+                int x = titikRuangPenanda.getX();
+                int y = titikRuangPenanda.getY();
 
-                    if (sisiEkspansi == "Atas") {
-                        kiriAtas = new Point(x, (y - 6));
-                    } else if (sisiEkspansi == "Bawah") {
-                        kiriAtas = new Point(x, (y + 6));
-                    } else if (sisiEkspansi == "Kanan") {
-                        kiriAtas = new Point((x + 6), y);
-                    } else { // sisiEkspansi == "Kiri"
-                        kiriAtas = new Point((x - 6), y);
-                    }
-                    berhasilEkspansi = matriks.setDenahRumah(kiriAtas, (daftarNamaRuangan.size() + 1));
-                    if(berhasilEkspansi) {
-                        break;
-                    } else {
+                if (sisiEkspansi.equals("Atas")) {
+                    kiriAtas = new Point(x, (y - 6));
+                } else if (sisiEkspansi.equals("Bawah")) {
+                    kiriAtas = new Point(x, (y + 6));
+                } else if (sisiEkspansi.equals("Kanan")) {
+                    kiriAtas = new Point((x + 6), y);
+                } else { // sisiEkspansi == "Kiri"
+                    kiriAtas = new Point((x - 6), y);
+                }
+                berhasilEkspansi = matriks.setDenahRumah(kiriAtas, (daftarNamaRuangan.size() + 1));
+                if (berhasilEkspansi) {
+                    break;
+                } else {
                     System.out.println("Harap masukkan sisi ekspansi yang valid");
-                    }
                 }
-            } catch (NoSuchElementException e) {
-                System.out.println("Input salah, silakan coba lagi.");
-                sc.nextLine();
+
             }
         }
 
         while (true) {
-            try {
-                System.out.print("Masukkan nama ruangan baru yang ingin ditambahkan: ");
-                String ruanganBaru = sc.nextLine();
+            System.out.print("Masukkan nama ruangan baru yang ingin ditambahkan: ");
+            String ruanganBaru = sc.nextLine();
 
-                if (!(daftarNamaRuangan.contains(ruanganBaru))) {
-                    Posisi posisiRuangBaru = new Posisi(kiriAtas, new Point((kiriAtas.getX() + 5), (kiriAtas.getY() + 5)));
-                    Ruangan ruangBaru = new Ruangan(ruanganBaru, posisiRuangBaru);
-                    daftarRuangan.add(ruangBaru);
-                    daftarNamaRuangan.add(ruanganBaru);
-                    System.out.println("Ruangan berhasil ditambahkan.");
-                    break;
-                } else {
-                    System.out.println("Upgrade gagal dilakukan karena sudah ada ruangan pada sisi tersebut. Mohon pilih sisi ekspansi lain.");
-                }
-            } catch (NoSuchElementException e) {
-                System.out.println("Input salah, silakan coba lagi");
-                sc.nextLine();
+            if (!(daftarNamaRuangan.contains(ruanganBaru))) {
+                Posisi posisiRuangBaru = new Posisi(kiriAtas,
+                        new Point((kiriAtas.getX() + 5), (kiriAtas.getY() + 5)));
+                Ruangan ruangBaru = new Ruangan(ruanganBaru, posisiRuangBaru);
+                daftarRuangan.add(ruangBaru);
+                daftarNamaRuangan.add(ruanganBaru);
+                System.out.println("Ruangan berhasil ditambahkan.");
+                break;
+            } else {
+                System.out.println(
+                        "Upgrade gagal dilakukan karena sudah ada ruangan pada sisi tersebut. Mohon pilih sisi ekspansi lain.");
             }
-        }
-        
 
-        while (true) {
-            try {
-                System.out.print("Masukkan nama ruangan baru yang ingin ditambahkan: ");
-                String ruanganBaru = sc.nextLine();
-
-                if (!(daftarNamaRuangan.contains(ruanganBaru))) {
-                    Posisi posisiRuangBaru = new Posisi(kiriAtas, new Point((kiriAtas.getX() + 5), (kiriAtas.getY() + 5)));
-                    Ruangan ruangBaru = new Ruangan(ruanganBaru, posisiRuangBaru);
-                    daftarRuangan.add(ruangBaru);
-                    daftarNamaRuangan.add(ruanganBaru);
-                    System.out.println("Ruangan berhasil ditambahkan.");
-                    break;
-                } else {
-                    System.out.println("Upgrade gagal dilakukan karena sudah ada ruangan pada sisi tersebut. Mohon pilih sisi ekspansi lain.");
-                }
-            } catch (NoSuchElementException e) {
-                System.out.println("Input salah, silakan coba lagi");
-                sc.nextLine();
-            }
         }
+
     }
 
     public void addRuangan() {

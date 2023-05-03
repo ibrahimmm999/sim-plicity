@@ -112,4 +112,15 @@ public class Inventory {
         }
     }
 
+    public void listBarang() {
+        for (Object objek : inventory.keySet()) {
+            if (objek instanceof Non_Makanan) {
+                int currentQuantity = inventory.get(objek);
+                if (currentQuantity > 0) {
+                    System.out.println(((Bahan_Makanan) objek).getNamaObjek() + " - " + currentQuantity);
+                }
+            }
+        }
+    }
+
 }

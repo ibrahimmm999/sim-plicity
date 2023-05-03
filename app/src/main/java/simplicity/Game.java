@@ -109,6 +109,7 @@ public class Game {
             System.out.println("Aksi yang tersedia :");
             System.out.println("1. Membeli barang");
             System.out.println("2. Pindah barang");
+            System.out.println("3. Pasang barang");
             System.out.print("Pilih nomor :  ");
             idx = scanner.nextLine();
             if (idx.equals("1")) {
@@ -149,6 +150,7 @@ public class Game {
                         break;
                     } else {
                         System.out.println("Barang tidak tersedia");
+                        break;
                     }
                 } else if (nomorBarang.equals("2")) {
                     System.out.println("1. Nasi ( harga: 5 )");
@@ -191,36 +193,123 @@ public class Game {
                     }
                 } else {
                     System.out.println("Input tidak sesuai!");
+                    break;
                 }
             } else if (idx.equals("2")) {
-                Ruangan ruangan = sim.getRuanganSim();
-                HashMap<String, Non_Makanan> kumpulanObjek = ruangan.getListObjek();
-                ArrayList<String> kumpulanNamaObjek = new ArrayList<>();
-                for (Entry<String, Non_Makanan> entry : kumpulanObjek.entrySet()) {
-                    kumpulanNamaObjek.add(entry.getValue().getNamaObjek());
-                    System.out.println(entry.getValue().getNamaObjek());
-                }
-                while (true) {
-                    System.out.print("Masukkan nama barang yang ingin dipindah : ");
-                    int x, y;
-                    String namaBarang = scanner.nextLine();
-                    if (kumpulanNamaObjek.contains(namaBarang)) {
-                        System.out.println("Barang mau dipindahkan ke koordinat ");
-                        System.out.println("titik X : ");
-                        x = scanner.nextInt();
-                        System.out.println("titik Y : ");
-                        y = scanner.nextInt();
-                        Point kiriAtas = new Point(x, y);
-                        sim.getRuanganSim().moveObject(kumpulanObjek.get(namaBarang).getPosisi(), kiriAtas,
-                                isPlaying, sim.getInventory());
-                        break;
+                // Ruangan ruangan = sim.getRuanganSim();
+                // HashMap<String, Non_Makanan> kumpulanObjek = ruangan.getListObjek();
+                // ArrayList<String> kumpulanNamaObjek = new ArrayList<>();
+                // for (Entry<String, Non_Makanan> entry : kumpulanObjek.entrySet()) {
+                // kumpulanNamaObjek.add(entry.getValue().getNamaObjek());
+                // }
+                // ruangan.printListObjek();
+                // while (true) {
+                // System.out.print("Masukkan nama barang yang ingin dipindah : ");
+                // int x, y;
+                // String namaBarang = scanner.nextLine();
+                // if (kumpulanNamaObjek.contains(namaBarang)) {
+                // System.out.println("Barang mau dipindahkan ke koordinat ");
+                // System.out.println("titik X : ");
+                // x = scanner.nextInt();
+                // System.out.println("titik Y : ");
+                // y = scanner.nextInt();
+                // Point kiriAtas = new Point(x, y);
+                // sim.getRuanganSim().moveObject(kumpulanObjek.get(namaBarang).getPosisi(),
+                // kiriAtas,
+                // isPlaying, sim.getInventory());
+                // break;
+                // } else {
+                // System.out.println("Barang tidak ditemukan");
+                // }
+                // }
+                boolean objekDitemukan = false;
+                // Sim sim = world.getCurrentSim();
+                Object objek;
+                while (!objekDitemukan) {
+                    sim.getRuanganSim().printListObjek();
+                    System.out.print("\n");
+                    System.out.println("Format Input : [Nama Objek][Koordinat Objek]");
+                    System.out.println("Contoh : Jam(1,4)");
+                    System.out.print("\n");
+                    System.out.print("Pilih objek : ");
+                    objek = scanner.nextLine();
+                    if (sim.getRuanganSim().getListObjek().containsKey(objek)) {
+                        try {
+                            System.out.println("Barang mau dipindahkan ke koordinat ");
+                            System.out.println("titik X : ");
+                            int x = scanner.nextInt();
+                            System.out.println("titik Y : ");
+                            int y = scanner.nextInt();
+                            Point kiriAtas = new Point(x, y);
+                            sim.getRuanganSim().moveObject(sim.getRuanganSim().getListObjek().get(objek).getPosisi(),
+                                    kiriAtas,
+                                    isPlaying, sim.getInventory());
+
+                            objekDitemukan = true;
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                            System.out.println("Hadeeeeeh...Input koordinat salah\nBarang gagal dipindahkan");
+                            break;
+                        }
+
                     } else {
-                        System.out.println("Barang tidak ditemukan");
+                        System.out.println("Objek tidak ditemukan");
+                        break;
                     }
                 }
+                scanner.nextLine();
+                break;
 
+            } else if (idx.equals("3")) {
+                if (sim.getInventory().getInventory().size() > 0) {
+                    sim.getInventory().listBarang();
+                    boolean objekDitemukan = false;
+                    // Sim sim = world.getCurrentSim();
+                    Object objek;
+                    while (!objekDitemukan) {
+
+                        System.out.print("\n");
+                        System.out.println("Format Input : [Nama Objek][Koordinat Objek]");
+                        System.out.println("Contoh : Jam(1,4)");
+                        System.out.print("\n");
+                        System.out.print("Pilih objek : ");
+                        objek = scanner.nextLine();
+                        if (sim.getRuanganSim().getListObjek().containsKey(objek)) {
+                            try {
+                                System.out.println("Barang mau dipasang ke koordinat: ");
+                                System.out.println("titik X : ");
+                                int x = scanner.nextInt();
+                                System.out.println("titik Y : ");
+                                int y = scanner.nextInt();
+                                Point kiriAtas = new Point(x, y);
+                                sim.getRuanganSim().moveObject(
+                                        sim.getRuanganSim().getListObjek().get(objek).getPosisi(),
+                                        kiriAtas,
+                                        isPlaying, sim.getInventory());
+
+                                objekDitemukan = true;
+                            } catch (Exception e) {
+                                // TODO: handle exception
+                                System.out.println("Hadeeeeeh...Input koordinat salah\nBarang gagal dipasang");
+                                break;
+                            }
+
+                        } else {
+                            System.out.println("Objek tidak ditemukan");
+                            break;
+                        }
+                    }
+                } else {
+                    System.out.println("Inventory kosong");
+                    break;
+                    // scanner.nextLine();
+                }
+
+                scanner.nextLine();
+                break;
             } else {
                 System.out.println("Masukkan nomor yang sesuai");
+                break;
             }
         }
     }
