@@ -150,7 +150,7 @@ public class Game {
                     } else if (namaBarang.equals("7")) {
                         sim.beliBarang(new MejaKursi(), world);
                         break;
-                    } else if (namaBarang.equals("7")) {
+                    } else if (namaBarang.equals("8")) {
                         sim.beliBarang(new Jam(), world);
                         break;
                     } else {
