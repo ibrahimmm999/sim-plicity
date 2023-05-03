@@ -40,6 +40,16 @@ public class Sim {
         waktuTerakhirSimMakan = 0;
         durasiSimBerkunjung = 0;
     }
+    
+    public void printStatus() {
+        System.out.println("Nama Lengkap: " + namaLengkap);
+        System.out.println("Pekerjaan: " + pekerjaan.getNamaPekerjaan());
+        System.out.println("Uang: " + uang);
+        System.out.println("Kekenyangan: " + kekenyangan);
+        System.out.println("Mood: " + mood);
+        System.out.println("Kesehatan: " + kesehatan);
+        System.out.println("Status: " + status);
+    }
 
     public void printInventory() {
         HashMap<Object, Integer> inventory = this.inventory.getInventory();
@@ -779,6 +789,7 @@ public class Sim {
 
             // kurangi uang sim
             uang -= nm.getHarga();
+            inventory.addInventory(barang);
             // tambahkan objek ke inventory
             System.out.println("Anda telah membeli " + nm.getNamaObjek() + " seharga " + nm.getHarga()
                     + " dengan durasi pengiriman " + durasi + " detik.");
@@ -790,6 +801,7 @@ public class Sim {
             }
             // kurangi uang sim
             uang -= bahan.getHarga();
+            inventory.addInventory(barang);
             // tambahkan objek ke inventory
             System.out.println(
                     "Anda telah membeli " + bahan.getNamaObjek() + " seharga " + bahan.getHarga()
