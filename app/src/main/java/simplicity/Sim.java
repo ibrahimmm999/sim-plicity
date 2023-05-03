@@ -23,6 +23,7 @@ public class Sim {
     private HashMap<String, Integer> activities;
     private int waktuTerakhirSimTidur;
     private int waktuTerakhirSimMakan;
+    private int durasiSimBerkunjung;
 
     public Sim(String namaLengkap) {
         this.namaLengkap = namaLengkap;
@@ -37,6 +38,7 @@ public class Sim {
         activities = new HashMap<String, Integer>();
         waktuTerakhirSimTidur = 0;
         waktuTerakhirSimMakan = 0;
+        durasiSimBerkunjung = 0;
     }
 
     public void printStatus() {
@@ -655,13 +657,17 @@ public class Sim {
                     .round(Math.sqrt(Math.pow(tujuan.getKoordinat().getX() - now.getKoordinat().getX(), 2)
                             + Math.pow(tujuan.getKoordinat().getY() - now.getKoordinat().getY(), 2)));
             System.out.println("Sim dalam perjalanan....");
-            world.getTime().delayWaktu(waktuTempuh);
-            System.out.println("Sim sudah sampai");
+            for (int i = 0; i < waktuTempuh; i++) {
+                world.getTime().delayWaktu(1);
+                System.out.print("brum...");
+                world.getTime().updateWaktu(1);
+                durasiSimBerkunjung++;
+            }
+            System.out.println("\nSim sudah sampai");
             setObjekDipakai((String) "");
-            world.getTime().updateWaktu(waktuTempuh);
-            if (waktuTempuh >= 30) {
-                setMood(10 * waktuTempuh / 30);
-                setKekenyangan(-(10 * waktuTempuh / 30));
+            if (durasiSimBerkunjung > 0 && durasiSimBerkunjung % 30 == 0) {
+                setMood(10);
+                setKekenyangan(-10);
             }
             tujuan.masukRumah(now, tujuan.getKoordinat());
             setRumahSim(tujuan);
