@@ -11,7 +11,7 @@ public class Point {
             this.x = x;
             this.y = y;    
         } else {
-            throw new RuntimeException("Baik nilai x maupun y tidak boleh negatif.");
+            System.out.println("Baik nilai x maupun y tidak boleh negatif.");
         }
     }
     
