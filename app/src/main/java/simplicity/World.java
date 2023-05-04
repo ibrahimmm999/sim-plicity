@@ -90,7 +90,8 @@ public class World {
                 scanner.nextLine();
             }
         }
-        System.out.println("Sim berhasil dibuat");
+        System.out.println("Sim " + namaSim + " berhasil dibuat!");
+        System.out.print("\n");
         currentSim = sim;
     }
 
@@ -165,7 +166,8 @@ public class World {
                     scanner.nextLine();
                 }
             }
-            System.out.println("Sim berhasil dibuat");
+            System.out.println("Sim " + namaSim + " berhasil dibuat!");
+            System.out.print("\n");
         } else {
             System.out.println("Tunggu sehari dulu baru bisa add Sim");
         }
