@@ -560,11 +560,23 @@ public class Game {
         }
 
         else if (aksi.equals("10")) {
-            sim.meditasi(world);
+            Object objekDipakai = sim.getObjekDipakai();
+            if (objekDipakai != null && ((String) objekDipakai).contains("Meja dan Kursi")) {
+                sim.meditasi(world);
+            } else {
+                System.out.println("Silahkan pergi ke object 'Meja dan Kursi' untuk meditasi!");
+            }
         }
 
         else if (aksi.equals("11")) {
-            sim.rapihinKasur(sim.getRuanganSim(), world.getCurrentSim(), world);
+            Object objekDipakai = sim.getObjekDipakai();
+            if (objekDipakai != null && (((String) objekDipakai).contains("Kasur Single")
+                    || ((String) objekDipakai).contains("Kasur Queen Size")
+                    || ((String) objekDipakai).contains("Kasur King Size"))) {
+                sim.rapihinKasur(sim.getRuanganSim(), world.getCurrentSim(), world);
+            } else {
+                System.out.println("Silahkan pergi ke object 'Kasur' untuk merapihkan kasur!");
+            }
         }
 
         else if (aksi.equals("12")) {
@@ -590,15 +602,31 @@ public class Game {
         }
 
         else if (aksi.equals("13")) {
-            sim.beresinKamarMandi(sim.getRuanganSim(), world.getCurrentSim(), world);
+            Object objekDipakai = sim.getObjekDipakai();
+            if (objekDipakai != null && ((String) objekDipakai).contains("Toilet")) {
+                sim.beresinKamarMandi(sim.getRuanganSim(), world.getCurrentSim(), world);
+            } else {
+                System.out.println("Silahkan pergi ke object 'Toilet' untuk beresin kamar mandi!");
+            }
         }
 
         else if (aksi.equals("14")) {
-            sim.belajar(sim.getRuanganSim(), world.getCurrentSim(), world);
+            Object objekDipakai = sim.getObjekDipakai();
+            if (objekDipakai != null && ((String) objekDipakai).contains("Meja dan Kursi")) {
+                sim.belajar(sim.getRuanganSim(), world.getCurrentSim(), world);
+            } else {
+                System.out.println("Silahkan pergi ke object 'Meja dan Kursi' untuk belajar!");
+            }
         }
 
         else if (aksi.equals("15")) {
-            sim.ngegame(sim.getRuanganSim(), world.getCurrentSim(), world);
+            Object objekDipakai = sim.getObjekDipakai();
+            if (objekDipakai != null && ((String) objekDipakai).contains("Meja dan Kursi")) {
+                // sim.meditasi(world);
+                sim.ngegame(sim.getRuanganSim(), world.getCurrentSim(), world);
+            } else {
+                System.out.println("Silahkan pergi ke object 'Meja dan Kursi' untuk ngegame!");
+            }
         } else if (aksi.equals("16")) {
             sim.printDaftarPekerjaan();
             System.out.println("Pilih nomor pekerjaan : ");
