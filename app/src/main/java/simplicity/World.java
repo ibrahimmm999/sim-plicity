@@ -87,66 +87,71 @@ public class World {
     }
 
     public void createSIMNext() {
-        Scanner scanner = new Scanner(System.in);
-        Rumah rumah;
-        String namaSim;
-        Sim sim;
-        while (true) {
-            try {
-                System.out.print("Masukkan nama SIM: ");
-                namaSim = scanner.nextLine();
-                if (checkSimAvailability(namaSim)) {
-                    sim = new Sim(namaSim);
-                    listSim.add(sim);
-                    break;
-                } else {
-                    System.out.println("Nama SIM sudah terpakai!");
-                }
-            } catch (NoSuchElementException e) {
-                System.out.println("Input salah, silakan coba lagi.");
-                scanner.nextLine();
-            }
-        }
-        while (true) {
-            try {
-                System.out.println("Masukkan koordinat rumah yang diinginkan:");
-                int x, y;
-                while (true) {
-                    System.out.print("Koordinat X : ");
-                    x = scanner.nextInt();
-                    System.out.print("Koordinat Y : ");
-                    y = scanner.nextInt();
-                    if (x <= 64 && y <= 64) {
-                        break;// clear newline character
+        if (time.getStatusAddSim()) {
+            Scanner scanner = new Scanner(System.in);
+            Rumah rumah;
+            String namaSim;
+            Sim sim;
+            while (true) {
+                try {
+                    System.out.print("Masukkan nama SIM: ");
+                    namaSim = scanner.nextLine();
+                    if (checkSimAvailability(namaSim)) {
+                        sim = new Sim(namaSim);
+                        listSim.add(sim);
+                        break;
                     } else {
-                        System.out.println("Titik x dan y harus < 64");
+                        System.out.println("Nama SIM sudah terpakai!");
                     }
+                } catch (NoSuchElementException e) {
+                    System.out.println("Input salah, silakan coba lagi.");
+                    scanner.nextLine();
                 }
-                if (listRumah == null) {
-                    listRumah = new ArrayList<Rumah>(); // initialize listRumah if null
-                }
-                if (checkKoordinatAvailability(x, y)) {
-                    rumah = new Rumah(new Point(x, y), sim);
-                    sim.setRumahSim(rumah);
-                    sim.setRuanganSim(rumah.getRuangan("Ruang 1"));
-                    sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
-                    sim.getRuanganSim().addObject1(new SingleBed(), new Point(0, 0), false);
-                    sim.getRuanganSim().addObject1(new Toilet(), new Point(4, 0), false);
-                    sim.getRuanganSim().addObject1(new KomporGas(), new Point(0, 5), false);
-                    sim.getRuanganSim().addObject1(new Jam(), new Point(3, 1), false);
-                    sim.getRuanganSim().addObject1(new MejaKursi(), new Point(0, 1), false);
-                    sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
-                    listRumah.add(rumah); // add rumah to listRumah
-                    break;
-                } else {
-                    System.out.println("Koordinat sudah terpakai!");
-                }
-            } catch (NoSuchElementException e) {
-                System.out.println("Input salah, silakan coba lagi.");
-                scanner.nextLine();
             }
+            while (true) {
+                try {
+                    System.out.println("Masukkan koordinat rumah yang diinginkan:");
+                    int x, y;
+                    while (true) {
+                        System.out.print("Koordinat X : ");
+                        x = scanner.nextInt();
+                        System.out.print("Koordinat Y : ");
+                        y = scanner.nextInt();
+                        if (x <= 64 && y <= 64) {
+                            break;// clear newline character
+                        } else {
+                            System.out.println("Titik x dan y harus < 64");
+                        }
+                    }
+                    if (listRumah == null) {
+                        listRumah = new ArrayList<Rumah>(); // initialize listRumah if null
+                    }
+                    if (checkKoordinatAvailability(x, y)) {
+                        rumah = new Rumah(new Point(x, y), sim);
+                        sim.setRumahSim(rumah);
+                        sim.setRuanganSim(rumah.getRuangan("Ruang 1"));
+                        sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
+                        sim.getRuanganSim().addObject1(new SingleBed(), new Point(0, 0), false);
+                        sim.getRuanganSim().addObject1(new Toilet(), new Point(4, 0), false);
+                        sim.getRuanganSim().addObject1(new KomporGas(), new Point(0, 5), false);
+                        sim.getRuanganSim().addObject1(new Jam(), new Point(3, 1), false);
+                        sim.getRuanganSim().addObject1(new MejaKursi(), new Point(0, 1), false);
+                        sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
+                        listRumah.add(rumah); // add rumah to listRumah
+                        break;
+                    } else {
+                        System.out.println("Koordinat sudah terpakai!");
+                    }
+                } catch (NoSuchElementException e) {
+                    System.out.println("Input salah, silakan coba lagi.");
+                    scanner.nextLine();
+                }
+            }
+            System.out.println("Sim berhasil dibuat");
+        } else {
+            System.out.println("Tunggu sehari dulu baru bisa add Sim");
         }
-        System.out.println("Sim berhasil dibuat");
+
     }
 
     public boolean checkSimAvailability(String name) {

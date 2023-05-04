@@ -458,6 +458,7 @@ public class Game {
         System.out.println("13. Beresin kamar mandi");
         System.out.println("14. Belajar");
         System.out.println("15. Ngegame");
+        System.out.println("16. Ganti pekerjaan");
         System.out.print("Silahkan pilih nomor untuk melakukan aksi yang ingin dilakukan : ");
         String aksi = scanner.next();
         if (aksi.equals("1")) {
@@ -593,9 +594,29 @@ public class Game {
 
         else if (aksi.equals("15")) {
             sim.ngegame(sim.getRuanganSim(), world.getCurrentSim(), world);
-        }
-
-        else {
+        } else if (aksi.equals("16")) {
+            sim.printDaftarPekerjaan();
+            System.out.println("Pilih nomor pekerjaan : ");
+            String pilihan = scanner.nextLine();
+            if (pilihan.equals("1")) {
+                pilihan = "Badut Sulap";
+                sim.gantiPekerjaan(Pekerjaan.BADUT_SULAP);
+            } else if (pilihan.equals("2")) {
+                pilihan = "Koki";
+                sim.gantiPekerjaan(Pekerjaan.KOKI);
+            } else if (pilihan.equals("3")) {
+                pilihan = "Polisi";
+                sim.gantiPekerjaan(Pekerjaan.POLISI);
+            } else if (pilihan.equals("4")) {
+                pilihan = "Programmer";
+                sim.gantiPekerjaan(Pekerjaan.PROGRAMMER);
+            } else if (pilihan.equals("5")) {
+                pilihan = "Dokter";
+                sim.gantiPekerjaan(Pekerjaan.DOKTER);
+            } else {
+                System.out.println("Pilih nomor yang benar");
+            }
+        } else {
             System.out.println("Masukkan input yang sesuai");
         }
         scanner.nextLine();
@@ -646,7 +667,11 @@ public class Game {
                                             world.getCurrentSim().cekEfekTidakBuangAir(world);
                                             break;
                                         case "7":
-                                            addSim();
+                                            if (world.getTime().getStatusAddSim()) {
+                                                addSim();
+                                            } else {
+                                                System.out.println("Belum bisa nambah sim");
+                                            }
                                             world.getCurrentSim().cekEfekTidakTidur(world);
                                             world.getCurrentSim().cekEfekTidakBuangAir(world);
                                             break;

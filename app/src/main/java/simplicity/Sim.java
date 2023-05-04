@@ -26,6 +26,7 @@ public class Sim {
     private int durasiSimBerkunjung;
     private int durasiTotalTidur;
     private boolean cekBelumEEKsetelahMakan;
+    private int totalGantiKerja;
 
     public Sim(String namaLengkap) {
         this.namaLengkap = namaLengkap;
@@ -43,6 +44,7 @@ public class Sim {
         durasiSimBerkunjung = 0;
         cekBelumEEKsetelahMakan = false;
         durasiTotalTidur = 0;
+        totalGantiKerja = 0;
     }
 
     public void printStatus() {
@@ -823,7 +825,7 @@ public class Sim {
         rumah.addRuanganX();
 
         // kurangi uang sim sesuai biaya upgrade
-        uang -= biayaUpgrade;
+        setUang(-biayaUpgrade);
 
         // tambahkan waktu upgrade ke waktu total Sim
         // ini blm di update ke waktu yg di world nnt
@@ -844,7 +846,7 @@ public class Sim {
             }
 
             // kurangi uang sim
-            uang -= nm.getHarga();
+            setUang(-(nm.getHarga()));
             inventory.addInventory(barang);
             // tambahkan objek ke inventory
             System.out.println("Anda telah membeli " + nm.getNamaObjek() + " seharga " + nm.getHarga()
@@ -856,7 +858,7 @@ public class Sim {
                 return;
             }
             // kurangi uang sim
-            uang -= bahan.getHarga();
+            setUang(-(bahan.getHarga()));
             inventory.addInventory(barang);
             // tambahkan objek ke inventory
             System.out.println(
@@ -1294,6 +1296,37 @@ public class Sim {
             System.out.println("Sim sudah selesai main game");
         } else {
             System.out.println("Sim tidak menemukan meja kursi di ruangan ini untuk bermain game");
+        }
+    }
+
+    public void printDaftarPekerjaan() {
+        System.out.println("Daftar pekerjaan yang tersedia: ");
+        System.out.println("1. Badut Sulap (Gaji: 15)");
+        System.out.println("2. Koki (Gaji: 30)");
+        System.out.println("3. Polisi (Gaji: 35)");
+        System.out.println("4. Programmer (Gaji: 45)");
+        System.out.println("5. Dokter (Gaji: 50)");
+    }
+
+    public void gantiPekerjaan(Pekerjaan pekerjaan) {
+        if (pekerjaan.getNamaPekerjaan().equals(this.pekerjaan.getNamaPekerjaan())) {
+            System.out.println("Gagal ganti pekerjaan. Itu adalah pekerjaan Sim yang sekarang");
+        } else {
+            if (waktuKerjaSim > 720) {
+                this.pekerjaan = pekerjaan;
+                waktuKerjaSim = 0;
+                setUang(-(pekerjaan.getGaji() / 2));
+            } else {
+                System.out.println("Belum bisa ganti pekerjaan");
+            }
+        }
+    }
+
+    public void setUang(int nominal) {
+        if (uang + nominal < 0) {
+            uang = 0;
+        } else {
+            uang += nominal;
         }
     }
 }
