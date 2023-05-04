@@ -551,7 +551,12 @@ public class Game {
         }
 
         else if (aksi.equals("9")) {
-            sim.berdoa(sim.getRuanganSim(), world);
+            Object objekDipakai = sim.getObjekDipakai();
+            if (objekDipakai != null && ((String) objekDipakai).contains("Meja dan Kursi")) {
+                sim.berdoa(sim.getRuanganSim(), world);
+            } else {
+                System.out.println("Silahkan pergi ke object 'Meja dan Kursi' untuk berdoa!");
+            }
         }
 
         else if (aksi.equals("10")) {

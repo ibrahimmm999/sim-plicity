@@ -1033,8 +1033,8 @@ public class Sim {
         }
         if (mejaKursi != null) {
             Posisi posisiMejaKursi = mejaKursi.getPosisi();
-            System.out.println("Sim berdoa di meja kursi pada posisi " + posisiMejaKursi);
-            System.out.println("Sim sedang merapihkan kasur....");
+            System.out.println("Sim berdoa di meja kursi pada posisi " + posisiMejaKursi.cetakPosisi());
+            System.out.println("Sim sedang berdoa....");
             world.getTime().delayWaktu(2);
             world.getTime().updateWaktu(2);
             setStatus("idle");
