@@ -61,7 +61,10 @@ public class Game {
         Sim sim = world.getCurrentSim();
         String rumah = sim.getRumahSim().getPemilikRumah().getNamaLengkap();
         String ruang = sim.getRuanganSim().getNamaRuangan();
-        System.out.println("Posisi Sim " + sim.getNamaLengkap() + " : { Rumah " + rumah + ", di " + ruang + " }.");
+        System.out.print("\n");
+        System.out.println("Posisi Sim " + sim.getNamaLengkap());
+        System.out.println("Rumah : " + "Rumah " + rumah);
+        System.out.println("Ruang : " + ruang);
     }
 
     public static void viewInventory() {
@@ -676,7 +679,7 @@ public class Game {
                             showMenu();
                             while (isPlaying) {
                                 try {
-                                    System.out.println("\n=== MENU UTAMA ====");
+                                    System.out.println("\n======= MENU UTAMA =======");
                                     System.out.print("Masukkan nomor perintah : ");
                                     command = scanner.nextLine();
                                     switch (command) {
