@@ -48,6 +48,8 @@ public class Sim {
     }
 
     public void printStatus() {
+        System.out.print("\n");
+        System.out.println("Berikut info dari SIM " + namaLengkap + ":");
         System.out.println("Nama Lengkap: " + namaLengkap);
         System.out.println("Pekerjaan: " + pekerjaan.getNamaPekerjaan());
         System.out.println("Uang: " + uang);
