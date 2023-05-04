@@ -28,10 +28,12 @@ public class World {
             try {
                 System.out.print("Masukkan nama SIM: ");
                 namaSim = scanner.nextLine();
-                if (checkSimAvailability(namaSim)) {
+                if (checkSimAvailability(namaSim) && namaSim.split(" ").length > 0 && namaSim.length() > 0) {
                     sim = new Sim(namaSim);
                     listSim.add(sim);
                     break;
+                } else if (namaSim.split(" ").length > 0 || namaSim.length() > 0) {
+                    System.out.println("Nama tidak boleh kosong");
                 } else {
                     System.out.println("Nama SIM sudah terpakai!");
                 }
