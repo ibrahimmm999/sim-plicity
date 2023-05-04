@@ -66,11 +66,19 @@ public class World {
                     sim.setRumahSim(rumah);
                     sim.setRuanganSim(rumah.getRuangan("Ruang 1"));
                     sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
+                    System.out.print("\n");
+                    System.out.println("Generate object Pertama Kalinya untuk SIM yang dibuat :");
+                    System.out.print("- ");
                     sim.getRuanganSim().addObject1(new SingleBed(), new Point(0, 0), false);
+                    System.out.print("- ");
                     sim.getRuanganSim().addObject1(new Toilet(), new Point(4, 0), false);
+                    System.out.print("- ");
                     sim.getRuanganSim().addObject1(new KomporGas(), new Point(0, 5), false);
+                    System.out.print("- ");
                     sim.getRuanganSim().addObject1(new Jam(), new Point(3, 1), false);
+                    System.out.print("- ");
                     sim.getRuanganSim().addObject1(new MejaKursi(), new Point(0, 1), false);
+                    System.out.print("\n");
                     sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
                     listRumah.add(rumah); // add rumah to listRumah
                     break;
@@ -133,11 +141,19 @@ public class World {
                         sim.setRumahSim(rumah);
                         sim.setRuanganSim(rumah.getRuangan("Ruang 1"));
                         sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
+                        System.out.print("\n");
+                        System.out.println("Generate object Pertama Kalinya untuk SIM yang dibuat :");
+                        System.out.print("- ");
                         sim.getRuanganSim().addObject1(new SingleBed(), new Point(0, 0), false);
+                        System.out.print("- ");
                         sim.getRuanganSim().addObject1(new Toilet(), new Point(4, 0), false);
+                        System.out.print("- ");
                         sim.getRuanganSim().addObject1(new KomporGas(), new Point(0, 5), false);
+                        System.out.print("- ");
                         sim.getRuanganSim().addObject1(new Jam(), new Point(3, 1), false);
+                        System.out.print("- ");
                         sim.getRuanganSim().addObject1(new MejaKursi(), new Point(0, 1), false);
+                        System.out.print("\n");
                         sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
                         listRumah.add(rumah); // add rumah to listRumah
                         break;
