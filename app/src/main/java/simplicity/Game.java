@@ -12,23 +12,26 @@ public class Game {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void showMenu2() {
-        System.out.println("=== MENU UTAMA ===");
+        System.out.println("======= MENU UTAMA =======");
         System.out.println("Silakan pilih nomor menu : ");
         System.out.println("1. start");
         System.out.println("2. help");
         System.out.println("3. exit");
+        System.out.print("\n");
     }
 
     public static void help2() {
-        System.out.println("=== MENU UTAMA ===");
+        System.out.println("======= MENU UTAMA =======");
         System.out.println("Silakan pilih nomor menu : ");
         System.out.println("1. start");
         System.out.println("2. help");
         System.out.println("3. exit");
+        System.out.print("\n");
     }
 
     public static void showMenu() {
-        System.out.println("=== MENU ===");
+        System.out.print("\n");
+        System.out.println("=========== MENU ===========");
         System.out.println("Silakan pilih nomor menu : ");
         System.out.println("1. view sim info");
         System.out.println("2. view current location");
