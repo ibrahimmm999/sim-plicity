@@ -24,6 +24,7 @@ public class Sim {
     private int waktuTerakhirSimTidur;
     private int waktuTerakhirSimMakan;
     private int durasiSimBerkunjung;
+    private int durasiTotalTidur;
     private boolean cekBelumEEKsetelahMakan;
 
     public Sim(String namaLengkap) {
@@ -41,6 +42,7 @@ public class Sim {
         waktuTerakhirSimMakan = 0;
         durasiSimBerkunjung = 0;
         cekBelumEEKsetelahMakan = false;
+        durasiTotalTidur = 0;
     }
 
     public void printStatus() {
@@ -369,13 +371,13 @@ public class Sim {
                     try {
                         System.out.print("Masukkan berapa lama sim tidur (dalam menit) : ");
                         durasiTidur = scanner.nextInt();
-                        if (durasiTidur % 4 == 0 && durasiTidur > 0) {
+                        if (durasiTidur >= 3) {
                             break;
                         } else {
-                            System.out.println("Masukkan durasi tidur kelipatan 4 menit");
+                            System.out.println("Masukkan durasi tidur minimal 3 menit");
                         }
                     } catch (Exception e) {
-                        System.out.println("Masukkan durasi tidur kelipatan 4 menit");
+                        System.out.println("Input salah");
                     }
                 }
                 durasiTidur *= 60;
@@ -386,56 +388,74 @@ public class Sim {
                     System.out.print("zzz...");
                     world.getTime().delayWaktu(1);
                     world.getTime().updateWaktu(1);
+                    durasiTotalTidur++;
                 }
                 System.out.print("\n");
-                setMood(durasiTidur * 30 / 240);
-                setKesehatan(durasiTidur * 20 / 240);
+                if (durasiTotalTidur > 0 && durasiTotalTidur % 240 == 0) {
+                    setMood(durasiTidur * 30 / 240);
+                    setKesehatan(durasiTidur * 20 / 240);
+                }
             } else if (queenSizeBed != null) {
                 Scanner scanner = new Scanner(System.in);
                 while (true) {
                     try {
                         System.out.print("Masukkan berapa lama sim tidur : ");
                         durasiTidur = scanner.nextInt();
-                        if (durasiTidur % 4 == 0) {
+                        if (durasiTidur >= 3) {
                             break;
                         } else {
-                            System.out.println("Masukkan durasi tidur kelipatan 4");
+                            System.out.println("Masukkan durasi tidur lebih dari 3 menit");
                         }
                     } catch (Exception e) {
-                        System.out.println("Masukkan durasi tidur kelipatan 4");
+                        System.out.println("Masukkan durasi tidur yang benar");
                     }
                 }
                 durasiTidur *= 60;
                 String posisi = queenSizeBed.getPosisi().cetakPosisi();
                 System.out.println("Sim sedang tidur pada posisi " + posisi);
                 System.out.println("Sim sedang Tidur di Queen Size Bed....");
-                world.getTime().delayWaktu(durasiTidur);
-                world.getTime().updateWaktu(durasiTidur);
-                setMood(durasiTidur * 30 / 240);
-                setKesehatan(durasiTidur * 20 / 240);
+                for (int i = 0; i < durasiTidur; i++) {
+                    System.out.print("zzz...");
+                    world.getTime().delayWaktu(1);
+                    world.getTime().updateWaktu(1);
+                    durasiTotalTidur++;
+                    if (durasiTotalTidur > 0 && durasiTotalTidur % 240 == 0) {
+                        setMood(durasiTidur * 30 / 240);
+                        setKesehatan(durasiTidur * 20 / 240);
+                    }
+                }
+                System.out.print("\n");
+
             } else if (kingSizeBed != null) {
                 Scanner scanner = new Scanner(System.in);
                 while (true) {
                     try {
                         System.out.print("Masukkan berapa lama sim tidur dalam menit : ");
                         durasiTidur = scanner.nextInt();
-                        if (durasiTidur % 4 == 0) {
+                        if (durasiTidur >= 3) {
                             break;
                         } else {
-                            System.out.println("Masukkan durasi tidur kelipatan 4");
+                            System.out.println("Masukkan durasi tidur lebih dari 3 menit");
                         }
                     } catch (Exception e) {
-                        System.out.println("Masukkan durasi tidur kelipatan 4");
+                        System.out.println("Masukkan durasi tidur yang benar");
                     }
                 }
                 durasiTidur *= 60;
                 String posisi = kingSizeBed.getPosisi().cetakPosisi();
                 System.out.println("Sim sedang tidur pada posisi " + posisi);
                 System.out.println("Sim sedang Tidur di Queen Size Bed....");
-                world.getTime().delayWaktu(durasiTidur);
-                world.getTime().updateWaktu(durasiTidur);
-                setMood(durasiTidur * 30 / 240);
-                setKesehatan(durasiTidur * 20 / 240);
+                for (int i = 0; i < durasiTidur; i++) {
+                    System.out.print("zzz...");
+                    world.getTime().delayWaktu(1);
+                    world.getTime().updateWaktu(1);
+                    durasiTotalTidur++;
+                    if (durasiTotalTidur > 0 && durasiTotalTidur % 240 == 0) {
+                        setMood(durasiTidur * 30 / 240);
+                        setKesehatan(durasiTidur * 20 / 240);
+                    }
+                }
+                System.out.print("\n");
             }
             waktuTerakhirSimTidur = world.getTime().getTotalDetik();
             if (!(cekKekenyangan())) {
@@ -733,31 +753,33 @@ public class Sim {
     }
 
     public void cekEfekTidakBuangAir(World world) {
-        int cekWaktu = world.getTime().getTotalDetik() - waktuTerakhirSimMakan;
-        if (((cekWaktu > 240 || cekWaktu % 240 == 0) && cekWaktu > 0)) {
-            System.out.println("Sim terkena efek tidak buang air");
-            // waktuTerakhirSimMakan = world.getTime().getTotalDetik();
-            setKesehatan(-5);
-            setMood(-5);
-        }
-        if (!(cekMood())) {
-            // MATI
-            world.removeSimDanRumah(this);
-            Game.changeSim();
-            if (world.getListSim().size() > 0) {
-                System.out.println("Klik enter 2x");
+        if (waktuTerakhirSimMakan > 0) {
+            int cekWaktu = world.getTime().getTotalDetik() - waktuTerakhirSimMakan;
+            if (((cekWaktu > 240 || cekWaktu % 240 == 0) && cekWaktu > 0)) {
+                System.out.println("Sim terkena efek tidak buang air");
+                // waktuTerakhirSimMakan = world.getTime().getTotalDetik();
+                setKesehatan(-5);
+                setMood(-5);
             }
-        } else if (!(cekKesehatan())) {
-            world.removeSimDanRumah(this);
-            Game.changeSim();
-            if (world.getListSim().size() > 0) {
-                System.out.println("Klik enter 2x");
-            }
-        } else if (!(cekKekenyangan())) {
-            world.removeSimDanRumah(this);
-            Game.changeSim();
-            if (world.getListSim().size() > 0) {
-                System.out.println("Klik enter 2x");
+            if (!(cekMood())) {
+                // MATI
+                world.removeSimDanRumah(this);
+                Game.changeSim();
+                if (world.getListSim().size() > 0) {
+                    System.out.println("Klik enter 2x");
+                }
+            } else if (!(cekKesehatan())) {
+                world.removeSimDanRumah(this);
+                Game.changeSim();
+                if (world.getListSim().size() > 0) {
+                    System.out.println("Klik enter 2x");
+                }
+            } else if (!(cekKekenyangan())) {
+                world.removeSimDanRumah(this);
+                Game.changeSim();
+                if (world.getListSim().size() > 0) {
+                    System.out.println("Klik enter 2x");
+                }
             }
         }
 

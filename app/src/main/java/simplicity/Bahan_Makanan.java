@@ -1,3 +1,4 @@
+
 package simplicity;
 
 public class Bahan_Makanan extends Objek {

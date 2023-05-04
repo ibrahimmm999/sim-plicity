@@ -44,11 +44,19 @@ public class World {
         }
         while (true) {
             try {
-                System.out.println("Masukkan koordinat rumah yang diinginkan:");
-                System.out.print("Koordinat X : ");
-                int x = scanner.nextInt();
-                System.out.print("Koordinat Y : ");
-                int y = scanner.nextInt();
+                int x, y;
+                while (true) {
+                    System.out.println("Masukkan koordinat rumah yang diinginkan:");
+                    System.out.print("Koordinat X : ");
+                    x = scanner.nextInt();
+                    System.out.print("Koordinat Y : ");
+                    y = scanner.nextInt();
+                    if (x <= 64 && y <= 64) {
+                        break;
+                    } else {
+                        System.out.println("Titik tidak bisa lebih dari 64");
+                    }
+                }
                 // scanner.nextLine(); // clear newline character
                 if (listRumah == null) {
                     listRumah = new ArrayList<Rumah>(); // initialize listRumah if null
@@ -102,11 +110,18 @@ public class World {
         while (true) {
             try {
                 System.out.println("Masukkan koordinat rumah yang diinginkan:");
-                System.out.print("Koordinat X : ");
-                int x = scanner.nextInt();
-                System.out.print("Koordinat Y : ");
-                int y = scanner.nextInt();
-                scanner.nextLine(); // clear newline character
+                int x, y;
+                while (true) {
+                    System.out.print("Koordinat X : ");
+                    x = scanner.nextInt();
+                    System.out.print("Koordinat Y : ");
+                    y = scanner.nextInt();
+                    if (x <= 64 && y <= 64) {
+                        break;// clear newline character
+                    } else {
+                        System.out.println("Titik x dan y harus < 64");
+                    }
+                }
                 if (listRumah == null) {
                     listRumah = new ArrayList<Rumah>(); // initialize listRumah if null
                 }

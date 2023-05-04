@@ -206,10 +206,10 @@ public class Ruangan implements Placeable {
         Point kananBawah = new Point(koordinatAkhir.getX() + length - 1, koordinatAkhir.getY() + width - 1);
         Posisi posisiAkhir = new Posisi(koordinatAkhir, kananBawah);
         Non_Makanan objek = listObjek.get(namaObjek);
-        removeObject(posisiAwal, inventory);
 
         if (checkEmptyPosisi(posisiAkhir)) {
             addObject(objek, koordinatAkhir, isRotated, inventory);
+            removeObject(posisiAwal, inventory);
             System.out.println("Barang berhasil dipindah");
         } else {
             addObject(objek, posisiAwal.getKiriAtas(), false, inventory);
