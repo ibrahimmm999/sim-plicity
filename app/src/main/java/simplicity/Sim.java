@@ -57,23 +57,6 @@ public class Sim {
 
         HashMap<Object, Integer> inventory = this.inventory.getInventory();
         if (inventory.size() > 0) {
-            // int i = 1;
-            // for (Map.Entry<Object, Integer> entry : inventory.entrySet()) {
-            // Object object = entry.getKey();
-            // String name = "";
-            // if (object instanceof Masakan) {
-            // Masakan masakan = (Masakan) object;
-            // name = masakan.getNamaObjek();
-            // } else if (object instanceof Bahan_Makanan) {
-            // Bahan_Makanan bahan = (Bahan_Makanan) object;
-            // name = bahan.getNamaObjek();
-            // } else if (object instanceof Non_Makanan) {
-            // Non_Makanan non_makanan = (Non_Makanan) object;
-            // name = non_makanan.getNamaObjek();
-            // }
-            // System.out.println(i + ". " + name);
-            // i++;
-            // }
             HashMap<String, Integer> inventoryTemp = new HashMap<String, Integer>();
             for (Map.Entry<Object, Integer> entry : getInventory().getInventory().entrySet()) {
                 Objek objek = (Objek) entry.getKey();
@@ -254,87 +237,98 @@ public class Sim {
 
     public void kerja(World world) {
         while (true) {
-            System.out.print("Masukkan durasi kerja dalam satuan detik (kelipatan 120) : ");
-            Scanner scanner = new Scanner(System.in);
-            int durasi = scanner.nextInt();
-            if (durasi % 120 == 0 && durasi > 0) {
-                System.out.println("Sim sedang bekerjaaaa....");
-                setStatus("kerja");
-                for (int i = 0; i < durasi; i++) {
-                    world.getTime().delayWaktu(1);
-                    world.getTime().updateWaktu(1);
-                    System.out.print("kerja...");
-                }
-                System.out.print("\n");
-                setKekenyangan(-(10 * (durasi / 30)));
-                setMood(-(10 * (durasi / 30)));
-                waktuKerjaSim += durasi;
-                if (waktuKerjaSim % 240 == 0) {
-                    uang += pekerjaan.getGaji();
-                    System.out.println("Sim mendapatkan uang sebesar " + pekerjaan.getGaji());
-                    System.out.println("Uang sim menjadi : " + uang);
+            try {
+                System.out.print("Masukkan durasi kerja dalam satuan detik (kelipatan 120) : ");
+                Scanner scanner = new Scanner(System.in);
+                int durasi = scanner.nextInt();
+                if (durasi % 120 == 0 && durasi > 0) {
+                    System.out.println("Sim sedang bekerjaaaa....");
+                    setStatus("kerja");
+                    for (int i = 0; i < durasi; i++) {
+                        world.getTime().delayWaktu(1);
+                        world.getTime().updateWaktu(1);
+                        System.out.print("kerja...");
+                    }
+                    System.out.print("\n");
+                    setKekenyangan(-(10 * (durasi / 30)));
+                    setMood(-(10 * (durasi / 30)));
+                    waktuKerjaSim += durasi;
+                    if (waktuKerjaSim % 240 == 0) {
+                        uang += pekerjaan.getGaji();
+                        System.out.println("Sim mendapatkan uang sebesar " + pekerjaan.getGaji());
+                        System.out.println("Uang sim menjadi : " + uang);
+                    } else {
+                        System.out.println("sim sudah bekerja selama " + waktuKerjaSim + " detik.");
+                    }
+                    // CEK MATI
+                    if (!(cekMood())) {
+                        // MATI
+                        world.removeSimDanRumah(this);
+                        Game.changeSim();
+                        if (world.getListSim().size() > 0) {
+                            System.out.println("Klik enter 2x");
+                        }
+                    } else if (!(cekKesehatan())) {
+                        world.removeSimDanRumah(this);
+                        Game.changeSim();
+                        if (world.getListSim().size() > 0) {
+                            System.out.println("Klik enter 2x");
+                        }
+                    } else if (!(cekKekenyangan())) {
+                        world.removeSimDanRumah(this);
+                        Game.changeSim();
+                        if (world.getListSim().size() > 0) {
+                            System.out.println("Klik enter 2x");
+                        }
+                    } else {
+                        System.out.println("Sudah selesai kerja, klik enter");
+                        setStatus("idle");
+                    }
+                    break;
                 } else {
-                    System.out.println("sim sudah bekerja selama " + waktuKerjaSim + " detik.");
+                    System.out.println("Masukkan input yang benar");
                 }
-                // CEK MATI
-                if (!(cekMood())) {
-                    // MATI
-                    world.removeSimDanRumah(this);
-                    Game.changeSim();
-                    if (world.getListSim().size() > 0) {
-                        System.out.println("Klik enter 2x");
-                    }
-                } else if (!(cekKesehatan())) {
-                    world.removeSimDanRumah(this);
-                    Game.changeSim();
-                    if (world.getListSim().size() > 0) {
-                        System.out.println("Klik enter 2x");
-                    }
-                } else if (!(cekKekenyangan())) {
-                    world.removeSimDanRumah(this);
-                    Game.changeSim();
-                    if (world.getListSim().size() > 0) {
-                        System.out.println("Klik enter 2x");
-                    }
-                } else {
-                    System.out.println("Sudah selesai kerja, klik enter");
-                    setStatus("idle");
-                }
-                break;
-            } else {
-                System.out.println("Masukkan input yang benar");
+            } catch (Exception e) {
+                // TODO: handle exception
+                System.out.println("Input durasi salah");
             }
+
         }
     }
 
     public void olahraga(World world) {
         while (true) {
-            System.out.print("Masukkan durasi olahraga dalam satuan detik (kelipatan 20) : ");
-            Scanner scanner = new Scanner(System.in);
-            int durasi = scanner.nextInt();
-            if (durasi % 20 == 0 && durasi > 0) {
-                System.out.println("Sim sedang olahraga....");
-                setStatus("olahraga");
-                world.getTime().delayWaktu(durasi);
-                setKekenyangan(-(5 * (durasi / 20)));
-                setKesehatan(5 * (durasi / 20));
-                setMood(10 * (durasi / 20));
-                // CEK MATI
-                if (!(cekKekenyangan())) {
-                    world.removeSimDanRumah(this);
-                    Game.changeSim();
-                    if (world.getListSim().size() > 0) {
-                        System.out.println("Klik enter 2x");
+            try {
+                System.out.print("Masukkan durasi olahraga dalam satuan detik (kelipatan 20) : ");
+                Scanner scanner = new Scanner(System.in);
+                int durasi = scanner.nextInt();
+                if (durasi % 20 == 0 && durasi > 0) {
+                    System.out.println("Sim sedang olahraga....");
+                    setStatus("olahraga");
+                    world.getTime().delayWaktu(durasi);
+                    setKekenyangan(-(5 * (durasi / 20)));
+                    setKesehatan(5 * (durasi / 20));
+                    setMood(10 * (durasi / 20));
+                    // CEK MATI
+                    if (!(cekKekenyangan())) {
+                        world.removeSimDanRumah(this);
+                        Game.changeSim();
+                        if (world.getListSim().size() > 0) {
+                            System.out.println("Klik enter 2x");
+                        }
+                    } else {
+                        System.out.println("Sudah selesai olahraga, klik enter");
+                        setStatus("idle");
                     }
+                    break;
                 } else {
-                    System.out.println("Sudah selesai olahraga, klik enter");
-                    setStatus("idle");
+                    System.out.println("Masukkan input yang benar");
                 }
-                break;
-            } else {
-                System.out.println("Masukkan input yang benar");
+
+            } catch (Exception e) {
+                // TODO: handle exception
+                System.out.println("Input durasi salah");
             }
-            // scanner.close();
         }
     }
 
