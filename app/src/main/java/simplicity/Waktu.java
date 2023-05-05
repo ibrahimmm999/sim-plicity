@@ -117,4 +117,8 @@ public class Waktu {
             Thread.interrupted();
         }
     }
+
+    public void setAddSim(boolean bool) {
+        addSim = bool;
+    }
 }

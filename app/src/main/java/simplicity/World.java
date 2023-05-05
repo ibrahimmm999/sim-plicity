@@ -167,6 +167,7 @@ public class World {
                 }
             }
             System.out.println("Sim " + namaSim + " berhasil dibuat!");
+            time.setAddSim(false);
             System.out.print("\n");
         } else {
             System.out.println("Tunggu sehari dulu baru bisa add Sim");

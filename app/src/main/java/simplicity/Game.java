@@ -649,19 +649,19 @@ public class Game {
             String pilihan = scanner.nextLine();
             if (pilihan.equals("1")) {
                 pilihan = "Badut Sulap";
-                sim.gantiPekerjaan(Pekerjaan.BADUT_SULAP);
+                sim.gantiPekerjaan(Pekerjaan.BADUT_SULAP, world);
             } else if (pilihan.equals("2")) {
                 pilihan = "Koki";
-                sim.gantiPekerjaan(Pekerjaan.KOKI);
+                sim.gantiPekerjaan(Pekerjaan.KOKI, world);
             } else if (pilihan.equals("3")) {
                 pilihan = "Polisi";
-                sim.gantiPekerjaan(Pekerjaan.POLISI);
+                sim.gantiPekerjaan(Pekerjaan.POLISI, world);
             } else if (pilihan.equals("4")) {
                 pilihan = "Programmer";
-                sim.gantiPekerjaan(Pekerjaan.PROGRAMMER);
+                sim.gantiPekerjaan(Pekerjaan.PROGRAMMER, world);
             } else if (pilihan.equals("5")) {
                 pilihan = "Dokter";
-                sim.gantiPekerjaan(Pekerjaan.DOKTER);
+                sim.gantiPekerjaan(Pekerjaan.DOKTER, world);
             } else {
                 System.out.println("Pilih nomor yang benar");
             }
@@ -718,7 +718,7 @@ public class Game {
                                             if (world.getTime().getStatusAddSim()) {
                                                 addSim();
                                             } else {
-                                                System.out.println("Belum bisa nambah sim");
+                                                System.out.println("Belum bisa nambah sim, tunggu 1 hari dulu");
                                             }
                                             world.getCurrentSim().cekEfekTidakTidur(world);
                                             world.getCurrentSim().cekEfekTidakBuangAir(world);
