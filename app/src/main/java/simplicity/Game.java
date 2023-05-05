@@ -293,10 +293,16 @@ public class Game {
                             }
                         }
                     }
+                    System.out.print("\n");
+                    System.out.println("* Daftar Object Pada Ruangan Saat Ini *");
+                    sim.getRuanganSim().printListObjek();
+                    System.out.print("\n");
+                    System.out.println("Daftar inventory yang dapat dipasang : ");
                     for (String objek : inventoryTemp.keySet()) {
                         int currentQuantity = inventoryTemp.get(objek);
-                        System.out.println(objek + " - " + currentQuantity);
+                        System.out.println(objek + " { Jumlah : " + currentQuantity + "}");
                     }
+                    System.out.print("\n");
                     boolean objekDitemukan = false;
                     Object objek;
                     /*
@@ -337,11 +343,13 @@ public class Game {
                         objek = scanner.nextLine();
                         if (inventoryTemp.containsKey(objek)) {
                             try {
+                                System.out.print("\n");
                                 System.out.println("Barang mau dipasang ke koordinat: ");
                                 System.out.print("titik X : ");
                                 int x = scanner.nextInt();
-                                System.out.print("\ntitik Y : ");
+                                System.out.print("titik Y : ");
                                 int y = scanner.nextInt();
+                                System.out.print("\n");
                                 // Non_Makanan barangDipilih
                                 Non_Makanan objekDipilih;
                                 for (Entry<Object, Integer> entry : sim.getInventory().getInventory().entrySet()) {
@@ -368,6 +376,7 @@ public class Game {
                         }
                     }
                 } else {
+                    System.out.print("\n");
                     System.out.println("Inventory kosong");
                     break;
                     // scanner.nextLine();
