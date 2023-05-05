@@ -85,24 +85,25 @@ public class Game {
         int i = 1;
         int pilihanRuangan;
         Sim sim = world.getCurrentSim();
-        System.out.println("Pilihan ruangan : ");
+        System.out.println("\nPilihan ruangan : ");
         for (Ruangan ruangan : sim.getRumahSim().getListRuangan()) {
             System.out.println(i + ". " + ruangan.getNamaRuangan());
             i++;
         }
         while (true) {
             try {
-                System.out.print("Pilih nomor ruangan yang akan dituju : ");
+                System.out.print("\nPilih nomor ruangan yang akan dituju : ");
                 pilihanRuangan = scanner.nextInt();
                 if (pilihanRuangan <= sim.getRumahSim().getListRuangan().size() && pilihanRuangan > 0) {
                     sim.pindahRuangan(sim.getRuanganSim(), sim.getRumahSim().getListRuangan().get(pilihanRuangan - 1));
                     break;
                 } else {
-                    System.out.println("Masukkan nomor yang sesuai");
+                    System.out.println("\nMasukkan nomor yang sesuai...");
                 }
             } catch (Exception e) {
-                System.out.println("Input tidak sesuai");
+                System.out.println("\nInput tidak sesuai...");
             }
+            scanner.nextLine();
         }
         scanner.nextLine();
     }
@@ -351,18 +352,20 @@ public class Game {
     }
 
     public static void addSim() {
+        System.out.print("\n");
         world.createSIMNext();
     }
 
     public static void changeSim() {
         try {
             if (world.getListSim().size() > 0) {
-                System.out.println("Daftar Sim yang tersedia");
+                System.out.println("\nDaftar Sim yang tersedia");
                 int idx = 1;
                 for (Sim sim : world.getListSim()) {
                     System.out.println(idx + ". " + sim.getNamaLengkap());
                     idx++;
                 }
+                System.out.print("\n");
 
                 while (true) {
                     System.out.print("Silahkan pilih nomor sim : ");
@@ -372,12 +375,13 @@ public class Game {
                         world.setCurrentSim(world.getListSim().get(simDipilih - 1));
                         break;
                     } else {
-                        System.out.println("Pilih nomor yang sesuai!");
+                        System.out.println("\nPilih nomor yang sesuai!");
                     }
                 }
+                System.out.println("\nHOORAY...");
                 System.out.println("Berhasil mengganti Sim ke " + world.getCurrentSim().getNamaLengkap());
             } else {
-                System.out.println("Tidak ada Sim yang tersedia!");
+                System.out.println("\nTidak ada Sim yang tersedia!");
                 // throw new RuntimeException("GAME OVER");
                 System.out.println(">>>> GAME OVER <<<<");
                 System.out.println("Keluar dari game...");
@@ -391,7 +395,7 @@ public class Game {
 
     public static void listObject() {
         Sim sim = world.getCurrentSim();
-        System.out.println("List Objek dalam ruangan : ");
+        System.out.println("\nList Objek dalam ruangan : ");
         int idx = 1;
         for (Objek i : sim.getRuanganSim().getListObjek().values()) {
             System.out.println(idx + ". " + i.getNamaObjek());
@@ -403,6 +407,8 @@ public class Game {
         boolean objekDitemukan = false;
         Sim sim = world.getCurrentSim();
         Object objek;
+        System.out.print("\n");
+        System.out.println("+ Daftar List Object dalan Ruangan +");
         sim.getRuanganSim().printListObjek();
         while (!objekDitemukan) {
             System.out.print("\n");
@@ -414,7 +420,8 @@ public class Game {
             System.out.print("\n");
             if (sim.getRuanganSim().getListObjek().containsKey(objek)) {
                 sim.setObjekDipakai(objek);
-                System.out.println("Sim " + sim.getNamaLengkap() + " menggunakan " + sim.getObjekDipakai());
+                System.out.println("HOORAY...");
+                System.out.println("Sim " + sim.getNamaLengkap() + " berhasil menggunakan " + sim.getObjekDipakai());
                 objekDitemukan = true;
             } else {
                 System.out.println("Objek tidak ditemukan");
@@ -424,7 +431,7 @@ public class Game {
 
     public static void action() {
         Sim sim = world.getCurrentSim();
-        System.out.println("==== Daftar Action : ====");
+        System.out.println("\n==== Daftar Action : ====");
         System.out.println("1. Kerja");
         System.out.println("2. Olahraga");
         System.out.println("3. Tidur");
@@ -440,9 +447,10 @@ public class Game {
         System.out.println("13. Beresin kamar mandi");
         System.out.println("14. Belajar");
         System.out.println("15. Ngegame");
-        System.out.println("16. Ganti pekerjaan");
+        System.out.println("16. Ganti pekerjaan\n");
         System.out.print("Silahkan pilih nomor untuk melakukan aksi yang ingin dilakukan : ");
         String aksi = scanner.next();
+        System.out.print("\n");
         if (aksi.equals("1")) {
             sim.kerja(world);
             scanner.nextLine();
@@ -683,6 +691,7 @@ public class Game {
                                             viewInventory();
                                             break;
                                         case "4":
+                                            System.out.print("\n");
                                             upgradeHouse();
                                             world.getCurrentSim().cekEfekTidakTidur(world);
                                             world.getCurrentSim().cekEfekTidakBuangAir(world);
@@ -742,14 +751,17 @@ public class Game {
                             }
                             break;
                         case "2":
+                            System.out.print("\n");
                             help2();
                             break;
                         case "3":
+                            System.out.print("\n");
                             System.out.println("Keluar dari permainan");
                             a = true;
                             break;
                         default:
                             System.out.println("Masukkan input yang sesuai");
+                            System.out.print("\n");
                             break;
                     }
                 } catch (NoSuchElementException e) {
@@ -774,5 +786,4 @@ public class Game {
         System.out.println("▀▄▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▀▀▀▀▀▀▀▀▄▄▄▀▀▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▄▀▄▄▄▀▀▄▄▄▀▀▀▄▄▄▀▀");
         System.out.print("\n");
     }
-
 }

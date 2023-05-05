@@ -56,6 +56,7 @@ public class Rumah {
     }
 
     public void cetakDaftarNamaRuangan() {
+        System.out.println("Daftar Ruangan pada Rumah Saat Ini : ");
         for (int i = 0; i < daftarNamaRuangan.size(); i++) {
             System.out.print((i + 1) + ". ");
             System.out.println(daftarNamaRuangan.get(i));
@@ -69,14 +70,16 @@ public class Rumah {
         cetakDaftarNamaRuangan();
         while (true) {
             try {
+                System.out.print("\n");
                 System.out.print("Masukkan nama ruangan yang ingin dijadikan sebagai patokan: ");
                 ruanganPatokan = sc.nextLine();
 
                 if (daftarNamaRuangan.contains(ruanganPatokan)) {
                     break;
                 } else { // ruangan patokan bukan merupakan ruangan dalam rumah
+                    System.out.print("\n");
                     System.out.println(
-                            "Harap masukkan nama ruangan patokan yang berada dalam rumah--nama yang berada pada daftar ruangan");
+                            "Harap masukkan nama ruangan patokan yang berada dalam rumah--nama yang berada pada daftar ruangan...");
                 }
                 // System.out.print("Masukkan sisi yang ingin diekspansi
                 // (Atas/Bawah/Kanan/Kiri): ");
@@ -88,7 +91,13 @@ public class Rumah {
         }
 
         while (true) {
-            System.out.print("Masukkan sisi yang ingin diekspansi (Atas/Bawah/Kanan/Kiri): ");
+            System.out.print("\n");
+            System.out.println("Daftar Sisi : ");
+            System.out.println("- Atas");
+            System.out.println("- Bawah");
+            System.out.println("- Kanan");
+            System.out.println("- Kiri\n");
+            System.out.print("Masukkan sisi yang ingin diekspansi : ");
             String sisiEkspansi = sc.nextLine();
 
             if (sisiEkspansi.equals("Atas") || sisiEkspansi.equals("Bawah") || sisiEkspansi.equals("Kanan")
@@ -114,7 +123,8 @@ public class Rumah {
                 } else {
                     System.out.println("Harap masukkan sisi ekspansi yang valid");
                 }
-
+            } else {
+                System.out.println("\nMasukan tidak valid, harap masukkan sisi ekspansi yang valid...");
             }
         }
 
@@ -128,15 +138,15 @@ public class Rumah {
                 Ruangan ruangBaru = new Ruangan(ruanganBaru, posisiRuangBaru);
                 daftarRuangan.add(ruangBaru);
                 daftarNamaRuangan.add(ruanganBaru);
-                System.out.println("Ruangan berhasil ditambahkan.");
+                System.out.print("\n");
+                System.out.println("Hooray...");
+                System.out.println("Rumah berhasil diupgrade dengan tambahan satu ruangan.");
                 break;
             } else {
                 System.out.println(
                         "Upgrade gagal dilakukan karena sudah ada ruangan pada sisi tersebut. Mohon pilih sisi ekspansi lain.");
             }
-
         }
-
     }
 
     public void addRuangan() {
