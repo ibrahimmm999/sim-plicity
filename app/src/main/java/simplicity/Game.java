@@ -242,6 +242,7 @@ public class Game {
                             objekDitemukan = true;
                         } catch (Exception e) {
                             System.out.println("Hadeeeeeh...Input koordinat salah\nBarang gagal dipindahkan");
+                            scanner.nextLine();
                             break;
                         }
 
