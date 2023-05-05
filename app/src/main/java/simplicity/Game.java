@@ -229,15 +229,16 @@ public class Game {
                     if (sim.getRuanganSim().getListObjek().containsKey(objek)) {
                         try {
                             System.out.println("Barang mau dipindahkan ke koordinat ");
-                            System.out.println("titik X : ");
+                            System.out.print("titik X : ");
                             int x = scanner.nextInt();
-                            System.out.println("titik Y : ");
+                            System.out.print("titik Y : ");
                             int y = scanner.nextInt();
                             Point kiriAtas = new Point(x, y);
                             sim.getRuanganSim().moveObject(sim.getRuanganSim().getListObjek().get(objek).getPosisi(),
                                     kiriAtas,
-                                    isPlaying, sim.getInventory());
+                                    false, sim.getInventory());
 
+                            scanner.nextLine();
                             objekDitemukan = true;
                         } catch (Exception e) {
                             System.out.println("Hadeeeeeh...Input koordinat salah\nBarang gagal dipindahkan");
@@ -249,7 +250,6 @@ public class Game {
                         break;
                     }
                 }
-                scanner.nextLine();
                 break;
 
             } else if (idx.equals("3")) {

@@ -19,7 +19,7 @@ public class Rumah {
         matriks = new Matriks(98, 98);
         daftarNamaRuangan = new ArrayList<String>();
         daftarRuangan = new ArrayList<Ruangan>();
-        Ruangan ruang1 = new Ruangan("Ruang 1", new Posisi(new Point(48, 48), new Point(53, 53)));
+        Ruangan ruang1 = new Ruangan("Ruang 1", new Posisi(new Point(0, 0), new Point(5, 0)));
         boolean bool = matriks.setDenahRumah(new Point(48, 48), 1);
         daftarRuangan.add(ruang1);
         daftarNamaRuangan.add("Ruang 1");
