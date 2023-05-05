@@ -253,18 +253,18 @@ public class Sim {
                     if (durasi % 120 == 0 && durasi > 0) {
                         System.out.println("Sim sedang bekerjaaaa....");
                         setStatus("kerja");
-                        for (int i = 0; i < durasi; i++) {
+                        for (int i = 1; i <= durasi; i++) {
                             world.getTime().delayWaktu(1);
                             world.getTime().updateWaktu(1);
                             System.out.print("kerja...");
                             waktuKerjaSim += 1;
-                            if ((i + 1) % 30 == 0) {
+                            if (i % 30 == 0) {
                                 setKekenyangan(-(10));
                                 setMood(-(10));
                             }
                             if (waktuKerjaSim % 240 == 0) {
                                 uang += pekerjaan.getGaji();
-                                System.out.println("Sim mendapatkan uang sebesar " + pekerjaan.getGaji());
+                                System.out.println("\nSim mendapatkan uang sebesar " + pekerjaan.getGaji());
                                 System.out.println("Uang sim menjadi : " + uang);
                             }
                         }
@@ -291,7 +291,7 @@ public class Sim {
                                 System.out.println("Klik enter 2x");
                             }
                         } else {
-                            System.out.println("Sudah selesai kerja, klik enter");
+                            System.out.println("Sudah selesai kerja");
                             setStatus("idle");
                         }
                         break;
@@ -304,8 +304,9 @@ public class Sim {
                 }
 
             }
+        } else {
+            System.out.println("Sim baru saja ganti pekerjaan, Tunggu 1 hari dulu baru bisa kerja lagi");
         }
-        System.out.println("Sim baru saja ganti pekerjaan, Tunggu 1 hari dulu baru bisa kerja lagi");
 
     }
 
@@ -860,7 +861,6 @@ public class Sim {
 
             // kurangi uang sim
             setUang(-(nm.getHarga()));
-            inventory.addInventory(barang);
             // tambahkan objek ke inventory
             System.out.print("\n");
             System.out.println("HOORAY...");
@@ -874,7 +874,6 @@ public class Sim {
             }
             // kurangi uang sim
             setUang(-(bahan.getHarga()));
-            inventory.addInventory(barang);
             // tambahkan objek ke inventory
             System.out.print("\n");
             System.out.println("HOORAY...");

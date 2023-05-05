@@ -148,6 +148,7 @@ public class Ruangan implements Placeable {
             matriks.setMatriks(koordinatObjek, kananBawah, false);
             addListObjek(objek, posisi);
             objek.setPosisi(posisi);
+
             inventory.removeInventory(objek);
             System.out.println("Object " + objek.getNamaObjek() + " berhasil diletakkan!");
         } else {
