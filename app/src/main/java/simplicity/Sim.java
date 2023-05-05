@@ -861,6 +861,8 @@ public class Sim {
             setUang(-(nm.getHarga()));
             inventory.addInventory(barang);
             // tambahkan objek ke inventory
+            System.out.print("\n");
+            System.out.println("HOORAY...");
             System.out.println("Anda telah membeli " + nm.getNamaObjek() + " seharga " + nm.getHarga()
                     + " dengan durasi pengiriman " + durasi + " detik.");
         } else if (barang instanceof Bahan_Makanan) {
@@ -873,6 +875,8 @@ public class Sim {
             setUang(-(bahan.getHarga()));
             inventory.addInventory(barang);
             // tambahkan objek ke inventory
+            System.out.print("\n");
+            System.out.println("HOORAY...");
             System.out.println(
                     "Anda telah membeli " + bahan.getNamaObjek() + " seharga " + bahan.getHarga()
                             + " dengan durasi pengiriman " + durasi + " detik.");
