@@ -117,6 +117,7 @@ public class Game {
             System.out.println("1. Membeli barang");
             System.out.println("2. Pindah barang");
             System.out.println("3. Pasang barang");
+            System.out.println("4. Remove barang");
             System.out.print("\n");
             System.out.print("Pilih nomor :  ");
             idx = scanner.nextLine();
@@ -215,34 +216,7 @@ public class Game {
                     break;
                 }
             } else if (idx.equals("2")) {
-                // Ruangan ruangan = sim.getRuanganSim();
-                // HashMap<String, Non_Makanan> kumpulanObjek = ruangan.getListObjek();
-                // ArrayList<String> kumpulanNamaObjek = new ArrayList<>();
-                // for (Entry<String, Non_Makanan> entry : kumpulanObjek.entrySet()) {
-                // kumpulanNamaObjek.add(entry.getValue().getNamaObjek());
-                // }
-                // ruangan.printListObjek();
-                // while (true) {
-                // System.out.print("Masukkan nama barang yang ingin dipindah : ");
-                // int x, y;
-                // String namaBarang = scanner.nextLine();
-                // if (kumpulanNamaObjek.contains(namaBarang)) {
-                // System.out.println("Barang mau dipindahkan ke koordinat ");
-                // System.out.println("titik X : ");
-                // x = scanner.nextInt();
-                // System.out.println("titik Y : ");
-                // y = scanner.nextInt();
-                // Point kiriAtas = new Point(x, y);
-                // sim.getRuanganSim().moveObject(kumpulanObjek.get(namaBarang).getPosisi(),
-                // kiriAtas,
-                // isPlaying, sim.getInventory());
-                // break;
-                // } else {
-                // System.out.println("Barang tidak ditemukan");
-                // }
-                // }
                 boolean objekDitemukan = false;
-                // Sim sim = world.getCurrentSim();
                 Object objek;
                 while (!objekDitemukan) {
                     sim.getRuanganSim().printListObjek();
@@ -266,7 +240,6 @@ public class Game {
 
                             objekDitemukan = true;
                         } catch (Exception e) {
-                            // TODO: handle exception
                             System.out.println("Hadeeeeeh...Input koordinat salah\nBarang gagal dipindahkan");
                             break;
                         }
@@ -305,39 +278,6 @@ public class Game {
                     System.out.print("\n");
                     boolean objekDitemukan = false;
                     Object objek;
-                    /*
-                     * Masakan masakan = new Masakan(object);
-                     * kenyang = masakan.getValueKekenyangan();
-                     * ArrayList<Object> listObjek = new ArrayList<Object>();
-                     * ArrayList<String> listStringInventory = new ArrayList<>();
-                     * for (Map.Entry<Object, Integer> entry : inventory.getInventory().entrySet())
-                     * {
-                     * Objek objek = (Objek) entry.getKey();
-                     * listStringInventory.add(objek.getNamaObjek());
-                     * listObjek.add(entry.getKey());
-                     * }
-                     * 
-                     * if (listStringInventory.contains(object)) {
-                     * for (int i = 0; i < listStringInventory.size(); i++) {
-                     * if (listStringInventory.get(i).equals(object)) {
-                     * // System.out.println("HEHEH");
-                     * inventory.getInventory().remove((Object) listObjek.get(i));
-                     * break;
-                     * }
-                     * }
-                     * System.out.println("Sim sedang makan");
-                     * for (int i = 0; i < 30; i++) {
-                     * world.getTime().delayWaktu(1);
-                     * world.getTime().updateWaktu(1);
-                     * System.out.print("nyam...");
-                     * }
-                     * System.out.println("\nSim sudah selesai makan");
-                     * setKekenyangan(kenyang);
-                     * } else {
-                     * System.out.println("Makanan tidak tersedia di inventory, silahkan masak dulu"
-                     * );
-                     * }
-                     */
                     while (!objekDitemukan) {
                         System.out.print("Pilih objek : ");
                         objek = scanner.nextLine();
@@ -365,7 +305,6 @@ public class Game {
                                 }
                                 objekDitemukan = true;
                             } catch (Exception e) {
-                                // TODO: handle exception
                                 System.out.println("Hadeeeeeh...Input koordinat salah\nBarang gagal dipasang");
                                 break;
                             }
@@ -384,10 +323,29 @@ public class Game {
 
                 scanner.nextLine();
                 break;
+            } else if (idx.equals("4")) {
+                System.out.println("* Daftar Object Pada Ruangan Saat Ini *");
+                sim.getRuanganSim().printListObjek();
+                System.out.println("Format Input : [Nama Objek][Koordinat Objek]");
+                System.out.println("Contoh : Jam(1,4)");
+                System.out.print("\n");
+                System.out.print("Pilih objek : ");
+                Object objek = scanner.nextLine();
+                System.out.print("\n");
+                if (sim.getRuanganSim().getListObjek().containsKey((String) objek)) {
+                    Object obj = sim.getRuanganSim().getListObjek().get((String) objek);
+                    sim.getInventory().addInventory(obj);
+                    sim.getRuanganSim().getListObjek().remove(objek);
+                    System.out.println("Berhasil memindahkan barang ke inventory");
+                } else {
+                    System.out.println("Objek tidak ditemukan");
+                }
+
             } else {
                 System.out.println("Masukkan nomor yang sesuai");
                 break;
             }
+            break;
         }
     }
 
