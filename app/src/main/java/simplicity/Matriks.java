@@ -55,18 +55,13 @@ public class Matriks {
     public boolean setDenahRumah(Point kiriAtas, int kodeRuangan) {
         // return true jika denah rumah berhasil dibuat, false jika denah gagal dibuat
         int x, y, x1, y1;
-        boolean empty = true;
+        boolean empty;
         x1 = kiriAtas.getX();
         y1 = kiriAtas.getY();
         
         // cek seluruh bagian yang ingin di-cover belum memiliki kode ruangan tertentu
-        for (y = y1; y <= (y1 + 5); y++) {
-            for (x = x1; x <= (x1 + 5); x++) {
-                if (matriks[y][x] != 0) {
-                    empty = false;
-                }
-            }
-        } 
+        empty = denahRumahAvailable(kiriAtas);
+        
         if (empty == true) {
             for (y = y1; y <= (y1 + 5); y++) {
                 for (x = x1; x <= (x1 + 5); x++) {
@@ -74,8 +69,45 @@ public class Matriks {
                 }
             }    
         }
-        return empty;   
+        
+        return empty;
+        
     }
+    
+    public boolean denahRumahAvailable(Point kiriAtas) {
+        int x, y, x1, y1;
+        boolean empty = true;
+        x1 = kiriAtas.getX();
+        y1 = kiriAtas.getY();
+        
+        for (y = y1; y <= (y1 + 5); y++) {
+            for (x = x1; x <= (x1 + 5); x++) {
+                if (matriks[y][x] != 0) {
+                    empty = false;
+                }
+            }
+        } 
+        
+        return empty;
+    }   
+    
+    public boolean availabilityKelilingRuangan(Point kiriAtas) {
+        int x, y;
+        x = kiriAtas.getX();
+        y = kiriAtas.getY();
+        boolean available = false;
+        Point ekspansiAtas, ekspansiBawah, ekspansiKanan, ekspansiKiri;
+        
+        ekspansiAtas = new Point(x, (y - 6));
+        ekspansiBawah = new Point(x, (y + 6));
+        ekspansiKanan = new Point((x + 6), y);
+        ekspansiKiri = new Point((x - 6), y);
+        if(denahRumahAvailable(ekspansiAtas) || denahRumahAvailable(ekspansiBawah) || denahRumahAvailable(ekspansiKiri) || denahRumahAvailable(ekspansiKanan)) {
+            available = true;
+        }
+        return available;
+    }
+
 
     public boolean checkAvailability(Point kiriAtas, Point kananBawah) {
         // return true apabila available
