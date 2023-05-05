@@ -32,9 +32,9 @@ public class Sim {
         this.namaLengkap = namaLengkap;
         this.pekerjaan = getRandomPekerjaan();
         this.uang = 100;
-        this.kekenyangan = 800000;
-        this.mood = 800000;
-        this.kesehatan = 800000;
+        this.kekenyangan = 80;
+        this.mood = 80;
+        this.kesehatan = 80;
         this.waktuKerjaSim = 0;
         inventory = new Inventory();
         this.status = "idle";
@@ -331,7 +331,7 @@ public class Sim {
                             System.out.println("Klik enter 2x");
                         }
                     } else {
-                        System.out.println("Sudah selesai olahraga, klik enter");
+                        System.out.println("Sudah selesai olahraga");
                         setStatus("idle");
                     }
                     break;

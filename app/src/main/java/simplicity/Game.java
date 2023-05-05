@@ -496,6 +496,7 @@ public class Game {
 
         else if (aksi.equals("3")) {
             sim.tidur(sim.getRuanganSim(), world.getCurrentSim(), world);
+            scanner.nextLine();
         }
 
         else if (aksi.equals("4")) {
@@ -516,9 +517,10 @@ public class Game {
                 System.out.println("13. Susu");
 
                 sim.makan(world);
-                // scanner.nextLine();
+                scanner.nextLine();
             } else {
                 System.out.println("Silahkan pergi ke objek 'Meja dan Kursi' terlebih dahulu!");
+                scanner.nextLine();
             }
         }
 
@@ -536,7 +538,7 @@ public class Game {
             } else {
                 System.out.println("Silahkan pergi ke objek 'Kompor' terlebih dahulu!");
             }
-            // scanner.nextLine();
+            scanner.nextLine();
         }
 
         else if (aksi.equals("6")) {
@@ -555,6 +557,7 @@ public class Game {
                 }
             }
             sim.berkunjung(sim.getRumahSim(), world.getListRumah().get(simDikunjungi - 1), world);
+            scanner.nextLine();
 
         } else if (aksi.equals("7")) {
             Object objekDipakai = sim.getObjekDipakai();
@@ -563,6 +566,7 @@ public class Game {
             } else {
                 System.out.println("Silahkan pergi ke objek 'Toilet' terlebih dahulu!");
             }
+            scanner.nextLine();
 
         } else if (aksi.equals("8")) {
             Object objekDipakai = sim.getObjekDipakai();
@@ -571,6 +575,7 @@ public class Game {
                 scanner.nextLine();
             } else {
                 System.out.println("Silahkan pergi ke object 'Jam' untuk lihat waktu!");
+                scanner.nextLine();
             }
         }
 
@@ -581,6 +586,7 @@ public class Game {
             } else {
                 System.out.println("Silahkan pergi ke object 'Meja dan Kursi' untuk berdoa!");
             }
+            scanner.nextLine();
         }
 
         else if (aksi.equals("10")) {
@@ -590,6 +596,7 @@ public class Game {
             } else {
                 System.out.println("Silahkan pergi ke object 'Meja dan Kursi' untuk meditasi!");
             }
+            scanner.nextLine();
         }
 
         else if (aksi.equals("11")) {
@@ -601,6 +608,7 @@ public class Game {
             } else {
                 System.out.println("Silahkan pergi ke object 'Kasur' untuk merapihkan kasur!");
             }
+            scanner.nextLine();
         }
 
         else if (aksi.equals("12")) {
@@ -623,6 +631,7 @@ public class Game {
             } else {
                 System.out.println("Nomor Sim yang dipilih tidak valid.");
             }
+            scanner.nextLine();
         }
 
         else if (aksi.equals("13")) {
@@ -632,6 +641,7 @@ public class Game {
             } else {
                 System.out.println("Silahkan pergi ke object 'Toilet' untuk beresin kamar mandi!");
             }
+            scanner.nextLine();
         }
 
         else if (aksi.equals("14")) {
@@ -641,6 +651,7 @@ public class Game {
             } else {
                 System.out.println("Silahkan pergi ke object 'Meja dan Kursi' untuk belajar!");
             }
+            scanner.nextLine();
         }
 
         else if (aksi.equals("15")) {
@@ -651,6 +662,7 @@ public class Game {
             } else {
                 System.out.println("Silahkan pergi ke object 'Meja dan Kursi' untuk ngegame!");
             }
+            scanner.nextLine();
         } else if (aksi.equals("16")) {
             sim.printDaftarPekerjaan();
             System.out.println("Pilih nomor pekerjaan : ");
@@ -677,6 +689,7 @@ public class Game {
         } else {
             System.out.println("Masukkan input yang sesuai");
         }
+        // scanner.nextLine();
     }
 
     public static void startGame() {
