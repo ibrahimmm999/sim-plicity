@@ -87,6 +87,7 @@ public class Sim {
                 }
 
             }
+            System.out.print("\n");
             System.out.println("Your Inventory:");
             int i = 1;
             for (String objek : inventoryTemp.keySet()) {
@@ -95,6 +96,7 @@ public class Sim {
                 i++;
             }
         } else {
+            System.out.print("\n");
             System.out.println("Inventory kosong");
         }
     }
@@ -250,6 +252,7 @@ public class Sim {
                     System.out.print("Masukkan durasi kerja dalam satuan detik (kelipatan 120) : ");
                     Scanner scanner = new Scanner(System.in);
                     int durasi = scanner.nextInt();
+                    System.out.print("\n");
                     if (durasi % 120 == 0 && durasi > 0) {
                         System.out.println("Sim sedang bekerjaaaa....");
                         setStatus("kerja");
@@ -826,7 +829,7 @@ public class Sim {
 
     public void upgradeRumah(Rumah rumah) {
         // biayaupgrade nya brp ya? blm tau ini masih ngasal dlu biayanya
-        int biayaUpgrade = 1500; // biaya upgrade untuk menambah satu ruangan
+        int biayaUpgrade = 15; // biaya upgrade untuk menambah satu ruangan
 
         // cek apakah sim memiliki cukup uang untuk upgrade
         if (uang < biayaUpgrade) {
@@ -844,8 +847,6 @@ public class Sim {
         // tambahkan waktu upgrade ke waktu total Sim
         // ini blm di update ke waktu yg di world nnt
         waktuKerjaSim += 18 * 60;
-
-        System.out.println("Rumah berhasil diupgrade dengan tambahan satu ruangan.");
     }
 
     public void beliBarang(Objek barang, World world) {
@@ -926,12 +927,14 @@ public class Sim {
     public void pindahRuangan(Ruangan asal, Ruangan tujuan) {
         // Cek apakah tujuan ruangan sama dengan ruangan saat ini
         if (asal.getNamaRuangan().equals(tujuan.getNamaRuangan())) {
-            System.out.println("Anda sudah berada di ruangan tersebut.");
+            System.out.println("\nYahh....");
+            System.out.println("Aksi gagal, Anda sudah berada di ruangan tersebut.");
             return;
         }
 
         // Pindah ruangan dan update lokasi ruangan
         this.setRuanganSim(tujuan);
+        System.out.println("\nHOORAY...");
         System.out.println("Anda telah pindah ke ruangan " + tujuan.getNamaRuangan() + ".");
     }
 

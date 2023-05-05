@@ -28,6 +28,7 @@ public class World {
             try {
                 System.out.print("Masukkan nama SIM: ");
                 namaSim = scanner.nextLine();
+                System.out.print("\n");
                 if (checkSimAvailability(namaSim) && namaSim.split(" ").length > 0 && namaSim.length() > 0) {
                     sim = new Sim(namaSim);
                     listSim.add(sim);
@@ -105,6 +106,7 @@ public class World {
                 try {
                     System.out.print("Masukkan nama SIM: ");
                     namaSim = scanner.nextLine();
+                    System.out.print("\n");
                     if (checkSimAvailability(namaSim)) {
                         sim = new Sim(namaSim);
                         listSim.add(sim);
@@ -166,9 +168,9 @@ public class World {
                     scanner.nextLine();
                 }
             }
+            System.out.println("HOORAY...");
             System.out.println("Sim " + namaSim + " berhasil dibuat!");
             time.setAddSim(false);
-            System.out.print("\n");
         } else {
             System.out.println("Tunggu sehari dulu baru bisa add Sim");
         }
