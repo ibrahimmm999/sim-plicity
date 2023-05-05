@@ -452,10 +452,10 @@ public class Game {
             System.out.print("\n");
             System.out.print("Pilih objek : ");
             objek = scanner.nextLine();
+            System.out.print("\n");
             if (sim.getRuanganSim().getListObjek().containsKey(objek)) {
                 sim.setObjekDipakai(objek);
                 System.out.println("Sim " + sim.getNamaLengkap() + " menggunakan " + sim.getObjekDipakai());
-                System.out.println(sim.getObjekDipakai().toString());
                 objekDitemukan = true;
             } else {
                 System.out.println("Objek tidak ditemukan");
