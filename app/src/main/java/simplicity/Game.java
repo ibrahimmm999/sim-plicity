@@ -45,8 +45,7 @@ public class Game {
         System.out.println("10. go to object");
         System.out.println("11. action");
         System.out.println("12. help");
-        System.out.println("13. ganti kerja");
-        System.out.println("14. exit");
+        System.out.println("13. exit");
     }
 
     public static void help() {
@@ -551,6 +550,7 @@ public class Game {
             Object objekDipakai = sim.getObjekDipakai();
             if (objekDipakai != null && ((String) objekDipakai).contains("Jam")) {
                 sim.lihatWaktu(world.getCurrentSim().getRuanganSim(), world.getCurrentSim(), world);
+                scanner.nextLine();
             } else {
                 System.out.println("Silahkan pergi ke object 'Jam' untuk lihat waktu!");
             }
@@ -636,6 +636,7 @@ public class Game {
         } else if (aksi.equals("16")) {
             sim.printDaftarPekerjaan();
             System.out.println("Pilih nomor pekerjaan : ");
+            scanner.nextLine();
             String pilihan = scanner.nextLine();
             if (pilihan.equals("1")) {
                 pilihan = "Badut Sulap";
@@ -658,7 +659,6 @@ public class Game {
         } else {
             System.out.println("Masukkan input yang sesuai");
         }
-        scanner.nextLine();
     }
 
     public static void startGame() {
@@ -738,9 +738,6 @@ public class Game {
                                             help();
                                             break;
                                         case "13":
-                                            // help();
-                                            break;
-                                        case "14":
                                             System.out.println("Keluar dari permainan");
                                             isPlaying = false;
                                             a = true;

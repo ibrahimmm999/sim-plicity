@@ -26,15 +26,15 @@ public class Sim {
     private int durasiSimBerkunjung;
     private int durasiTotalTidur;
     private boolean cekBelumEEKsetelahMakan;
-    private int totalGantiKerja;
+    private int waktuGantiKerja;
 
     public Sim(String namaLengkap) {
         this.namaLengkap = namaLengkap;
         this.pekerjaan = getRandomPekerjaan();
-        this.uang = 1000000;
-        this.kekenyangan = 80;
-        this.mood = 80;
-        this.kesehatan = 80;
+        this.uang = 100;
+        this.kekenyangan = 800000;
+        this.mood = 800000;
+        this.kesehatan = 800000;
         this.waktuKerjaSim = 0;
         inventory = new Inventory();
         this.status = "idle";
@@ -44,7 +44,8 @@ public class Sim {
         durasiSimBerkunjung = 0;
         cekBelumEEKsetelahMakan = false;
         durasiTotalTidur = 0;
-        totalGantiKerja = 0;
+        waktuGantiKerja = 0;
+
     }
 
     public void printStatus() {
@@ -242,64 +243,69 @@ public class Sim {
     }
 
     public void kerja(World world) {
-        while (true) {
-            try {
-                System.out.print("Masukkan durasi kerja dalam satuan detik (kelipatan 120) : ");
-                Scanner scanner = new Scanner(System.in);
-                int durasi = scanner.nextInt();
-                if (durasi % 120 == 0 && durasi > 0) {
-                    System.out.println("Sim sedang bekerjaaaa....");
-                    setStatus("kerja");
-                    for (int i = 0; i < durasi; i++) {
-                        world.getTime().delayWaktu(1);
-                        world.getTime().updateWaktu(1);
-                        System.out.print("kerja...");
-                    }
-                    System.out.print("\n");
-                    setKekenyangan(-(10 * (durasi / 30)));
-                    setMood(-(10 * (durasi / 30)));
-                    waktuKerjaSim += durasi;
-                    if (waktuKerjaSim % 240 == 0) {
-                        uang += pekerjaan.getGaji();
-                        System.out.println("Sim mendapatkan uang sebesar " + pekerjaan.getGaji());
-                        System.out.println("Uang sim menjadi : " + uang);
-                    } else {
+        if (world.getTime().getTotalDetik() - waktuGantiKerja >= 720) {
+            while (true) {
+                try {
+                    System.out.print("Masukkan durasi kerja dalam satuan detik (kelipatan 120) : ");
+                    Scanner scanner = new Scanner(System.in);
+                    int durasi = scanner.nextInt();
+                    if (durasi % 120 == 0 && durasi > 0) {
+                        System.out.println("Sim sedang bekerjaaaa....");
+                        setStatus("kerja");
+                        for (int i = 0; i < durasi; i++) {
+                            world.getTime().delayWaktu(1);
+                            world.getTime().updateWaktu(1);
+                            System.out.print("kerja...");
+                            waktuKerjaSim += 1;
+                            if ((i + 1) % 30 == 0) {
+                                setKekenyangan(-(10));
+                                setMood(-(10));
+                            }
+                            if (waktuKerjaSim % 240 == 0) {
+                                uang += pekerjaan.getGaji();
+                                System.out.println("Sim mendapatkan uang sebesar " + pekerjaan.getGaji());
+                                System.out.println("Uang sim menjadi : " + uang);
+                            }
+                        }
+                        System.out.print("\n");
                         System.out.println("sim sudah bekerja selama " + waktuKerjaSim + " detik.");
-                    }
-                    // CEK MATI
-                    if (!(cekMood())) {
-                        // MATI
-                        world.removeSimDanRumah(this);
-                        Game.changeSim();
-                        if (world.getListSim().size() > 0) {
-                            System.out.println("Klik enter 2x");
+                        // CEK MATI
+                        if (!(cekMood())) {
+                            // MATI
+                            world.removeSimDanRumah(this);
+                            Game.changeSim();
+                            if (world.getListSim().size() > 0) {
+                                System.out.println("Klik enter 2x");
+                            }
+                        } else if (!(cekKesehatan())) {
+                            world.removeSimDanRumah(this);
+                            Game.changeSim();
+                            if (world.getListSim().size() > 0) {
+                                System.out.println("Klik enter 2x");
+                            }
+                        } else if (!(cekKekenyangan())) {
+                            world.removeSimDanRumah(this);
+                            Game.changeSim();
+                            if (world.getListSim().size() > 0) {
+                                System.out.println("Klik enter 2x");
+                            }
+                        } else {
+                            System.out.println("Sudah selesai kerja, klik enter");
+                            setStatus("idle");
                         }
-                    } else if (!(cekKesehatan())) {
-                        world.removeSimDanRumah(this);
-                        Game.changeSim();
-                        if (world.getListSim().size() > 0) {
-                            System.out.println("Klik enter 2x");
-                        }
-                    } else if (!(cekKekenyangan())) {
-                        world.removeSimDanRumah(this);
-                        Game.changeSim();
-                        if (world.getListSim().size() > 0) {
-                            System.out.println("Klik enter 2x");
-                        }
+                        break;
                     } else {
-                        System.out.println("Sudah selesai kerja, klik enter");
-                        setStatus("idle");
+                        System.out.println("Masukkan input yang benar");
                     }
-                    break;
-                } else {
-                    System.out.println("Masukkan input yang benar");
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    System.out.println("Input durasi salah");
                 }
-            } catch (Exception e) {
-                // TODO: handle exception
-                System.out.println("Input durasi salah");
-            }
 
+            }
         }
+        System.out.println("Sim baru saja ganti pekerjaan, Tunggu 1 hari dulu baru bisa kerja lagi");
+
     }
 
     public void olahraga(World world) {
@@ -343,7 +349,6 @@ public class Sim {
         QueenSizeBed queenSizeBed = null;
         KingSizeBed kingSizeBed = null;
         Object object = sim.getObjekDipakai();
-        int durasiTidur;
 
         if (object instanceof SingleBed) {
             singleBed = (SingleBed) object;
@@ -371,20 +376,23 @@ public class Sim {
         if (singleBed != null || queenSizeBed != null || kingSizeBed != null) {
             if (singleBed != null) {
                 Scanner scanner = new Scanner(System.in);
+                int inputDurasiTidur;
                 while (true) {
+                    System.out.print("Masukkan berapa lama sim tidur (dalam menit) : ");
+                    inputDurasiTidur = scanner.nextInt();
                     try {
-                        System.out.print("Masukkan berapa lama sim tidur (dalam menit) : ");
-                        durasiTidur = scanner.nextInt();
-                        if (durasiTidur >= 3) {
+                        if (inputDurasiTidur >= 3) {
                             break;
                         } else {
                             System.out.println("Masukkan durasi tidur minimal 3 menit");
+
                         }
                     } catch (Exception e) {
                         System.out.println("Input salah");
+                        break;
                     }
                 }
-                durasiTidur *= 60;
+                int durasiTidur = inputDurasiTidur * 60;
                 String posisi = singleBed.getPosisi().cetakPosisi();
                 System.out.println("Sim sedang tidur pada posisi " + posisi);
                 System.out.println("Sim sedang Tidur di Single Bed....");
@@ -393,19 +401,20 @@ public class Sim {
                     world.getTime().delayWaktu(1);
                     world.getTime().updateWaktu(1);
                     durasiTotalTidur++;
+                    if (durasiTotalTidur > 0 && durasiTotalTidur % 240 == 0) {
+                        setMood(30);
+                        setKesehatan(20);
+                    }
                 }
                 System.out.print("\n");
-                if (durasiTotalTidur > 0 && durasiTotalTidur % 240 == 0) {
-                    setMood(durasiTidur * 30 / 240);
-                    setKesehatan(durasiTidur * 20 / 240);
-                }
             } else if (queenSizeBed != null) {
+                int inputDurasiTidur;
                 Scanner scanner = new Scanner(System.in);
                 while (true) {
                     try {
                         System.out.print("Masukkan berapa lama sim tidur : ");
-                        durasiTidur = scanner.nextInt();
-                        if (durasiTidur >= 3) {
+                        inputDurasiTidur = scanner.nextInt();
+                        if (inputDurasiTidur >= 3) {
                             break;
                         } else {
                             System.out.println("Masukkan durasi tidur lebih dari 3 menit");
@@ -414,7 +423,7 @@ public class Sim {
                         System.out.println("Masukkan durasi tidur yang benar");
                     }
                 }
-                durasiTidur *= 60;
+                int durasiTidur = inputDurasiTidur * 60;
                 String posisi = queenSizeBed.getPosisi().cetakPosisi();
                 System.out.println("Sim sedang tidur pada posisi " + posisi);
                 System.out.println("Sim sedang Tidur di Queen Size Bed....");
@@ -424,19 +433,20 @@ public class Sim {
                     world.getTime().updateWaktu(1);
                     durasiTotalTidur++;
                     if (durasiTotalTidur > 0 && durasiTotalTidur % 240 == 0) {
-                        setMood(durasiTidur * 30 / 240);
-                        setKesehatan(durasiTidur * 20 / 240);
+                        setMood(30);
+                        setKesehatan(20);
                     }
                 }
                 System.out.print("\n");
 
             } else if (kingSizeBed != null) {
+                int inputDurasiTidur;
                 Scanner scanner = new Scanner(System.in);
                 while (true) {
                     try {
                         System.out.print("Masukkan berapa lama sim tidur dalam menit : ");
-                        durasiTidur = scanner.nextInt();
-                        if (durasiTidur >= 3) {
+                        inputDurasiTidur = scanner.nextInt();
+                        if (inputDurasiTidur >= 3) {
                             break;
                         } else {
                             System.out.println("Masukkan durasi tidur lebih dari 3 menit");
@@ -445,7 +455,7 @@ public class Sim {
                         System.out.println("Masukkan durasi tidur yang benar");
                     }
                 }
-                durasiTidur *= 60;
+                int durasiTidur = inputDurasiTidur * 60;
                 String posisi = kingSizeBed.getPosisi().cetakPosisi();
                 System.out.println("Sim sedang tidur pada posisi " + posisi);
                 System.out.println("Sim sedang Tidur di Queen Size Bed....");
@@ -455,8 +465,8 @@ public class Sim {
                     world.getTime().updateWaktu(1);
                     durasiTotalTidur++;
                     if (durasiTotalTidur > 0 && durasiTotalTidur % 240 == 0) {
-                        setMood(durasiTidur * 30 / 240);
-                        setKesehatan(durasiTidur * 20 / 240);
+                        setMood(30);
+                        setKesehatan(20);
                     }
                 }
                 System.out.print("\n");
@@ -761,7 +771,7 @@ public class Sim {
             int cekWaktu = world.getTime().getTotalDetik() - waktuTerakhirSimMakan;
             if (((cekWaktu > 240 || cekWaktu % 240 == 0) && cekWaktu > 0)) {
                 System.out.println("Sim terkena efek tidak buang air");
-                // waktuTerakhirSimMakan = world.getTime().getTotalDetik();
+                waktuTerakhirSimMakan = world.getTime().getTotalDetik();
                 setKesehatan(-5);
                 setMood(-5);
             }
@@ -1310,17 +1320,25 @@ public class Sim {
         System.out.println("5. Dokter (Gaji: 50)");
     }
 
-    public void gantiPekerjaan(Pekerjaan pekerjaan) {
+    public void gantiPekerjaan(Pekerjaan pekerjaan, World world) {
         if (pekerjaan.getNamaPekerjaan().equals(this.pekerjaan.getNamaPekerjaan())) {
             System.out.println("Gagal ganti pekerjaan. Itu adalah pekerjaan Sim yang sekarang");
         } else {
-            if (waktuKerjaSim > 720) {
-                this.pekerjaan = pekerjaan;
-                waktuKerjaSim = 0;
-                setUang(-(pekerjaan.getGaji() / 2));
+            if (uang - (pekerjaan.getGaji() / 2) < 0) {
+                System.out.println("Uang tidak cukup untuk membayar 1/2 gaji pekerjaan");
+                System.out.println("Sim gagal ganti pekerjaan");
             } else {
-                System.out.println("Belum bisa ganti pekerjaan");
+                if (waktuKerjaSim >= 720) {
+                    this.pekerjaan = pekerjaan;
+                    waktuKerjaSim = 0;
+                    waktuGantiKerja = world.getTime().getTotalDetik();
+                    setUang(-(pekerjaan.getGaji() / 2));
+                    System.out.println("Berhasil ganti pekerjaan menjadi" + pekerjaan.getNamaPekerjaan());
+                } else {
+                    System.out.println("Belum bisa ganti pekerjaan, minimal kerja dulu 12 menit");
+                }
             }
+
         }
     }
 
