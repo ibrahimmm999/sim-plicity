@@ -113,18 +113,24 @@ public class Game {
         String idx;
         String nomorBarang;
         while (true) {
+            System.out.print("\n");
             System.out.println("Aksi yang tersedia :");
             System.out.println("1. Membeli barang");
             System.out.println("2. Pindah barang");
             System.out.println("3. Pasang barang");
+            System.out.print("\n");
             System.out.print("Pilih nomor :  ");
             idx = scanner.nextLine();
             if (idx.equals("1")) {
+                System.out.print("\n");
+                System.out.println("Object yang bisa dibeli :");
                 System.out.println("\n1. Non Makanan");
                 System.out.println("2. Bahan Makanan\n");
                 System.out.print("Pilih nomor : ");
                 nomorBarang = scanner.nextLine();
                 if (nomorBarang.equals("1")) {
+                    System.out.print("\n");
+                    System.out.println("Daftar object yang dapat dibeli : ");
                     System.out.println("1. Kasur Single ( harga: 50 )");
                     System.out.println("2. Kasur Queen Size ( harga: 100 )");
                     System.out.println("3. Kasur King Size ( harga: 150 )");
@@ -133,6 +139,7 @@ public class Game {
                     System.out.println("6. Kompor Listrik ( harga: 200 )");
                     System.out.println("7. Meja dan Kursi ( harga: 50 )");
                     System.out.println("8. Jam ( harga: 10)");
+                    System.out.print("\n");
                     System.out.print("Masukkan nama barang yang ingin dibeli : ");
                     String namaBarang = scanner.nextLine();
                     if (namaBarang.equals("1")) {
@@ -164,6 +171,7 @@ public class Game {
                         break;
                     }
                 } else if (nomorBarang.equals("2")) {
+                    System.out.println("Daftar Bahan Makanan yang bisa dibeli : ");
                     System.out.println("1. Nasi ( harga: 5 )");
                     System.out.println("2. Kentang ( harga: 3 )");
                     System.out.println("3. Ayam ( harga: 10 )");
@@ -172,6 +180,7 @@ public class Game {
                     System.out.println("6. Bayam ( harga: 3 )");
                     System.out.println("7. Kacang ( harga: 2 )");
                     System.out.println("8. Susu ( harga: 2 )");
+                    System.out.print("\n");
                     System.out.print("\nPiliih nomor yang tersedia : ");
                     String namaBarang = scanner.nextLine();
                     if (namaBarang.equals("1")) {
