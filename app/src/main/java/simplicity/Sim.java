@@ -243,7 +243,8 @@ public class Sim {
     }
 
     public void kerja(World world) {
-        if (world.getTime().getTotalDetik() - waktuGantiKerja >= 720) {
+        System.out.println("Mau kerja");
+        if (world.getTime().getTotalDetik() - waktuGantiKerja >= 720 || waktuGantiKerja == 0) {
             while (true) {
                 try {
                     System.out.print("Masukkan durasi kerja dalam satuan detik (kelipatan 120) : ");
