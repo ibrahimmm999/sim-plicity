@@ -55,12 +55,15 @@ public class Game {
         System.out.println("1. view sim info \t \t: Command yang menunjukkan informasi umum mengenai Sim");
         System.out.println("2. view current location \t: Command yang menunjukkan keberadaan lokasi Sim saat ini");
         System.out.println("3. view inventory \t \t: Command yang menunjukkan isi inventory yang dimiliki Sim");
-        System.out.println("4. upgrade house \t \t: Command yang berguna untuk melakukan penambahan ruangan pada rumah");
+        System.out
+                .println("4. upgrade house \t \t: Command yang berguna untuk melakukan penambahan ruangan pada rumah");
         System.out.println("5. move room \t \t \t: Command yang berguna agar Sim dapat berpindah ruangan");
-        System.out.println("6. edit room \t \t \t: Command yang berguna untuk membeli barang, memindahkan barang, memasang barang, dan remove barang");
+        System.out.println(
+                "6. edit room \t \t \t: Command yang berguna untuk membeli barang, memindahkan barang, memasang barang, dan remove barang");
         System.out.println("7. add sim \t \t \t: Command yang berguna untuk menambahkan Sim dalam world. ");
         System.out.println("8. change sim \t \t \t: Command yang berguna untuk mengubah Sim yang sedang dimainkan");
-        System.out.println("9. list object \t \t \t: Command yang berguna untuk menampilkan objek-objek dalam sebuah ruangan");
+        System.out.println(
+                "9. list object \t \t \t: Command yang berguna untuk menampilkan objek-objek dalam sebuah ruangan");
         System.out.println("10. go to object \t \t: Command yang berguna untuk berpindah objek tertentu");
         System.out.println("11. action \t \t \t: Command yang berguna untuk melakukan aksi-aksi");
         System.out.println(
@@ -329,9 +332,9 @@ public class Game {
                                 System.out.println("Mau rotate atau tidak? ");
                                 System.out.println("1. Ya");
                                 System.out.println("2. Tidak");
-                                System.out.print("Masukkan nomor yang ingin dipilih :");
+                                System.out.print("\nMasukkan nomor yang ingin dipilih : ");
                                 String noPilihan = scanner.nextLine();
-
+                                System.out.print("\n");
                                 // Non_Makanan barangDipilih
                                 Non_Makanan objekDipilih;
                                 for (Entry<Object, Integer> entry : sim.getInventory().getInventory().entrySet()) {
@@ -371,8 +374,6 @@ public class Game {
                     break;
                     // scanner.nextLine();
                 }
-
-                scanner.nextLine();
                 break;
             } else if (idx.equals("4")) {
                 System.out.println("* Daftar Object Pada Ruangan Saat Ini *");
@@ -843,6 +844,5 @@ public class Game {
         System.out.println("  \\___||____||___|___|       |__|  |_____||____\\____||____|  |__|  |____/ ");
         System.out.print("\n");
     }
-
 
 }

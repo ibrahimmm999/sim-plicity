@@ -126,7 +126,7 @@ public class Ruangan implements Placeable {
         if (posisi.getKananBawah().getX() > 5 || posisi.getKananBawah().getY() > 5) {
             return false;
         } else {
-            return (matriks.checkAvailability(posisi.getKiriAtas(), posisi.getKananBawah()));    
+            return (matriks.checkAvailability(posisi.getKiriAtas(), posisi.getKananBawah()));
         }
     }
 
@@ -184,6 +184,31 @@ public class Ruangan implements Placeable {
         }
     }
 
+    public void addObject2(Non_Makanan objek, Point koordinatObjek, boolean isRotated, Inventory inventory) {
+        int width, length;
+
+        if (isRotated) { // panjang dan lebar (dimensi) default objek ditukar
+            width = objek.getPanjang();
+            length = objek.getLebar();
+        } else {
+            width = objek.getLebar();
+            length = objek.getPanjang();
+        }
+
+        Point kananBawah = new Point(koordinatObjek.getX() + length - 1, koordinatObjek.getY() + width - 1);
+        Posisi posisi = new Posisi(koordinatObjek, kananBawah);
+
+        if (checkEmptyPosisi(posisi)) { // posisi kosong (tersedia)
+            matriks.setMatriks(koordinatObjek, kananBawah, false);
+            addListObjek(objek, posisi);
+            objek.setPosisi(posisi);
+
+            inventory.removeInventory(objek);
+        } else {
+            System.out.println("Tidak bisa meletakkan barang.");
+        }
+    }
+
     public void removeObject(Posisi posisiObjek, Inventory inventory) {
         matriks.setMatriks(posisiObjek.getKiriAtas(), posisiObjek.getKananBawah(), true);
         int x = posisiObjek.getKiriAtas().getX();
@@ -198,6 +223,19 @@ public class Ruangan implements Placeable {
         System.out.println("Barang berhasil dipindahkan ke inventory!");
     }
 
+    public void removeObject1(Posisi posisiObjek, Inventory inventory) {
+        matriks.setMatriks(posisiObjek.getKiriAtas(), posisiObjek.getKananBawah(), true);
+        int x = posisiObjek.getKiriAtas().getX();
+        int y = posisiObjek.getKiriAtas().getY();
+        int z = (x * 1 + y * 2) * (x + y);
+        String namaObjek = listPosisiObjek[z];
+        inventory.addInventory(listObjek.get(namaObjek));
+        Point point = new Point(z, z);
+        Posisi posisi = new Posisi(point, point);
+        listObjek.get(namaObjek).setPosisi(posisi);
+        removeListObjek(namaObjek, listObjek.get(namaObjek));
+    }
+
     public void moveObject(Posisi posisiAwal, Point koordinatAkhir, boolean isRotated, Inventory inventory) {
         int x, y, z;
         x = posisiAwal.getKiriAtas().getX();
@@ -206,9 +244,9 @@ public class Ruangan implements Placeable {
         String namaObjek = listPosisiObjek[z];
         int length, width;
 
-        if(isRotated) { //isRotated == true (dimensi dibalik, dirotasi)
+        if (isRotated) { // isRotated == true (dimensi dibalik, dirotasi)
             length = listObjek.get(namaObjek).getLebar();
-            width = listObjek.get(namaObjek).getPanjang(); 
+            width = listObjek.get(namaObjek).getPanjang();
         } else {
             length = listObjek.get(namaObjek).getPanjang();
             width = listObjek.get(namaObjek).getLebar();
@@ -216,15 +254,15 @@ public class Ruangan implements Placeable {
         Point kananBawah = new Point(koordinatAkhir.getX() + length - 1, koordinatAkhir.getY() + width - 1);
         Posisi posisiAkhir = new Posisi(koordinatAkhir, kananBawah);
         Non_Makanan objek = listObjek.get(namaObjek);
-        
-        removeObject(posisiAwal, inventory);
-        
+
+        removeObject1(posisiAwal, inventory);
+
         if (checkEmptyPosisi(posisiAkhir)) {
-            addObject(objek, koordinatAkhir, isRotated, inventory);
-            System.out.println("Barang berhasil dipindah");
+            addObject2(objek, koordinatAkhir, isRotated, inventory);
+            System.out.println("\nBarang berhasil dipindah");
         } else {
             addObject(objek, posisiAwal.getKiriAtas(), false, inventory);
-            System.out.println("Gagal memindah objek karena koordinat sudah terpakai");
+            System.out.println("\nGagal memindah objek karena koordinat sudah terpakai");
         }
 
     }
