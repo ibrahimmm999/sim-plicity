@@ -65,8 +65,8 @@ public class World {
                 if (checkKoordinatAvailability(x, y)) {
                     rumah = new Rumah(new Point(x, y), sim);
                     sim.setRumahSim(rumah);
-                    sim.setRuanganSim(rumah.getRuangan("Ruang 1"));
-                    sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
+                    sim.setRuanganSim(rumah.getRuangan("Ruang Utama"));
+                    sim.setPosisiSim(rumah.getRuangan("Ruang Utama").getPosisi());
                     System.out.print("\n");
                     System.out.println("Generate object Pertama Kalinya untuk SIM yang dibuat :");
                     System.out.print("- ");
@@ -80,7 +80,7 @@ public class World {
                     System.out.print("- ");
                     sim.getRuanganSim().addObject1(new MejaKursi(), new Point(0, 1), false);
                     System.out.print("\n");
-                    sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
+                    sim.setPosisiSim(rumah.getRuangan("Ruang Utama").getPosisi());
                     listRumah.add(rumah); // add rumah to listRumah
                     break;
                 } else {
@@ -142,8 +142,8 @@ public class World {
                     if (checkKoordinatAvailability(x, y)) {
                         rumah = new Rumah(new Point(x, y), sim);
                         sim.setRumahSim(rumah);
-                        sim.setRuanganSim(rumah.getRuangan("Ruang 1"));
-                        sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
+                        sim.setRuanganSim(rumah.getRuangan("Ruang Utama"));
+                        sim.setPosisiSim(rumah.getRuangan("Ruang Utama").getPosisi());
                         System.out.print("\n");
                         System.out.println("Generate object Pertama Kalinya untuk SIM yang dibuat :");
                         System.out.print("- ");
@@ -157,7 +157,7 @@ public class World {
                         System.out.print("- ");
                         sim.getRuanganSim().addObject1(new MejaKursi(), new Point(0, 1), false);
                         System.out.print("\n");
-                        sim.setPosisiSim(rumah.getRuangan("Ruang 1").getPosisi());
+                        sim.setPosisiSim(rumah.getRuangan("Ruang Utama").getPosisi());
                         listRumah.add(rumah); // add rumah to listRumah
                         break;
                     } else {
