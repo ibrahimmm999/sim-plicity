@@ -632,9 +632,10 @@ public class Game {
             scanner.nextLine();
         } else if (aksi.equals("16")) {
             sim.printDaftarPekerjaan();
-            System.out.println("Pilih nomor pekerjaan : ");
+            System.out.print("\nPilih nomor pekerjaan : ");
             scanner.nextLine();
             String pilihan = scanner.nextLine();
+            System.out.print("\n");
             if (pilihan.equals("1")) {
                 pilihan = "Badut Sulap";
                 sim.gantiPekerjaan(Pekerjaan.BADUT_SULAP, world);
