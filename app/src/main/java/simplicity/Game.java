@@ -235,9 +235,9 @@ public class Game {
                             System.out.print("titik Y : ");
                             int y = scanner.nextInt();
                             Point kiriAtas = new Point(x, y);
-                            System.out.println("Mau pasang : ");
-                            System.out.println("1. Vertical");
-                            System.out.println("2. Horizontal");
+                            System.out.println("Mau rotate atau tidak? ");
+                            System.out.println("1. Ya");
+                            System.out.println("2. Tidak");
                             System.out.print("Masukkan nomor yang ingin dipilih :");
                             String noPilihan = scanner.nextLine();
                             if (noPilihan.equals("1")) {
@@ -307,9 +307,9 @@ public class Game {
                                 System.out.print("titik Y : ");
                                 int y = scanner.nextInt();
                                 System.out.print("\n");
-                                System.out.println("Mau pasang : ");
-                                System.out.println("1. Vertical");
-                                System.out.println("2. Horizontal");
+                                System.out.println("Mau rotate atau tidak? ");
+                                System.out.println("1. Ya");
+                                System.out.println("2. Tidak");
                                 System.out.print("Masukkan nomor yang ingin dipilih :");
                                 String noPilihan = scanner.nextLine();
 
