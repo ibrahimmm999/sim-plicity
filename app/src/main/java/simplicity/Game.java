@@ -235,11 +235,12 @@ public class Game {
                             System.out.print("titik Y : ");
                             int y = scanner.nextInt();
                             Point kiriAtas = new Point(x, y);
-                            System.out.println("Mau rotate atau tidak? ");
+                            System.out.println("\nMau rotate atau tidak? ");
                             System.out.println("1. Ya");
                             System.out.println("2. Tidak");
-                            System.out.print("Masukkan nomor yang ingin dipilih :");
-                            String noPilihan = scanner.nextLine();
+                            System.out.print("\nMasukkan nomor yang ingin dipilih : ");
+                            String noPilihan = scanner.next();
+                            scanner.nextLine();
                             if (noPilihan.equals("1")) {
                                 sim.getRuanganSim().moveObject(
                                         sim.getRuanganSim().getListObjek().get(objek).getPosisi(),
@@ -251,14 +252,11 @@ public class Game {
                                         kiriAtas,
                                         false, sim.getInventory());
                             } else {
-                                System.out.println("Masukkan nomor yang benar");
+                                System.out.println("\nMasukkan nomor yang benar");
                             }
-
-                            scanner.nextLine();
                             objekDitemukan = true;
                         } catch (Exception e) {
-                            System.out.println("Hadeeeeeh...Input koordinat salah\nBarang gagal dipindahkan");
-                            scanner.nextLine();
+                            System.out.println("\nHadeeeeeh...Input koordinat salah\nBarang gagal dipindahkan");
                             break;
                         }
 
