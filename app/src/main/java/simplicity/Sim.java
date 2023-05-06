@@ -32,7 +32,7 @@ public class Sim {
     public Sim(String namaLengkap) {
         this.namaLengkap = namaLengkap;
         this.pekerjaan = getRandomPekerjaan();
-        this.uang = 1000000;
+        this.uang = 100;
         this.kekenyangan = 80;
         this.mood = 80;
         this.kesehatan = 80;
@@ -1089,7 +1089,7 @@ public class Sim {
             System.out.println("Sim sedang berdoa....");
             // world.getTime().delayWaktu(2);
             // world.getTime().updateWaktu(2);
-            for(int i = 0; i < 2; i++){
+            for (int i = 0; i < 2; i++) {
                 world.getTime().delayWaktu(1);
                 world.getTime().updateWaktu(1);
                 System.out.print("seperti biasa ya tuhan amin...");
@@ -1135,7 +1135,7 @@ public class Sim {
                 String posisi = singleBed.getPosisi().cetakPosisi();
                 System.out.println("Sim merapikan Single Bed pada posisi " + posisi);
                 System.out.println("Sim sedang merapikan Single Bed....");
-                for(int i = 0; i < 10; i++){
+                for (int i = 0; i < 10; i++) {
                     world.getTime().delayWaktu(1);
                     world.getTime().updateWaktu(1);
                     System.out.print("srett...");
@@ -1145,7 +1145,7 @@ public class Sim {
                 String posisi = queenSizeBed.getPosisi().cetakPosisi();
                 System.out.println("Sim merapikan Queen Size Bed pada posisi " + posisi);
                 System.out.println("Sim sedang merapikan Queen Size Bed....");
-                for(int i = 0; i < 10; i++){
+                for (int i = 0; i < 10; i++) {
                     world.getTime().delayWaktu(1);
                     world.getTime().updateWaktu(1);
                     System.out.print("srett...");
@@ -1157,7 +1157,7 @@ public class Sim {
                 System.out.println("Sim sedang merapikan Queen Size Bed....");
                 world.getTime().delayWaktu(10);
                 world.getTime().updateWaktu(10);
-                for(int i = 0; i < 10; i++){
+                for (int i = 0; i < 10; i++) {
                     world.getTime().delayWaktu(1);
                     world.getTime().updateWaktu(1);
                     System.out.print("srett...");
@@ -1188,7 +1188,7 @@ public class Sim {
             setKekenyangan(-5);
             setMood(5);
 
-            for(int i = 0; i < 10; i++){
+            for (int i = 0; i < 10; i++) {
                 world.getTime().delayWaktu(1);
                 world.getTime().updateWaktu(1);
                 System.out.print("namaste...");
@@ -1233,7 +1233,7 @@ public class Sim {
                     sim.setStatus("socialize");
                     this.setStatus("socialize");
                     System.out.println("Kedua SIM sedang ngobrol...");
-                    for(int i = 0; i < 10; i++){
+                    for (int i = 0; i < 10; i++) {
                         world.getTime().delayWaktu(1);
                         world.getTime().updateWaktu(1);
                         System.out.print("was wes wos...");
@@ -1277,7 +1277,7 @@ public class Sim {
             System.out.println("Sim membersihkan toilet pada posisi " + posisiToilet);
             System.out.println("Sim sedang membersihkan toilet....");
 
-            for(int i = 0; i < 10; i++){
+            for (int i = 0; i < 10; i++) {
                 world.getTime().delayWaktu(1);
                 world.getTime().updateWaktu(1);
                 System.out.print("srekk...");
@@ -1322,7 +1322,7 @@ public class Sim {
             String posisiMejaKursi = mejaKursi.getPosisi().cetakPosisi();
             System.out.println("Sim belajar di meja kursi pada posisi " + posisiMejaKursi);
             System.out.println("Sim sedang belajar....");
-            for(int i = 0; i < 10; i++){
+            for (int i = 0; i < 10; i++) {
                 world.getTime().delayWaktu(1);
                 world.getTime().updateWaktu(1);
                 System.out.print("stress...");
@@ -1380,7 +1380,7 @@ public class Sim {
             System.out.println("Sim bermain game di meja kursi pada posisi " + posisiMejaKursi);
             System.out.println("Sim sedang ngegame....");
 
-            for(int i = 0; i < 10; i++){
+            for (int i = 0; i < 10; i++) {
                 world.getTime().delayWaktu(1);
                 world.getTime().updateWaktu(1);
                 System.out.print("gg gemink...");
