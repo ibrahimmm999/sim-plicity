@@ -881,6 +881,7 @@ public class Sim {
         // tambahkan waktu upgrade ke waktu total Sim
         // ini blm di update ke waktu yg di world nnt
         waktuKerjaSim += 18 * 60;
+        System.out.println("\nHOORAY...\nBershasil menambahkan Ruangan ke Rumah Anda");
     }
 
     public void beliBarang(Objek barang, World world) {
