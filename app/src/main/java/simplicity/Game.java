@@ -75,7 +75,7 @@ public class Game {
         Sim sim = world.getCurrentSim();
         for (Rumah rumah : world.getListRumah()) {
             if (rumah.getPemilikRumah().getNamaLengkap().equals(sim.getNamaLengkap())) {
-                sim.upgradeRumah(rumah);
+                sim.upgradeRumah(rumah, world);
                 break;
             }
         }

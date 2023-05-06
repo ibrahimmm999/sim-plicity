@@ -31,7 +31,7 @@ public class Sim {
     public Sim(String namaLengkap) {
         this.namaLengkap = namaLengkap;
         this.pekerjaan = getRandomPekerjaan();
-        this.uang = 100;
+        this.uang = 1000000;
         this.kekenyangan = 80;
         this.mood = 80;
         this.kesehatan = 80;
@@ -208,7 +208,31 @@ public class Sim {
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        if (this.status.equals("idle")) {
+            this.status = status;
+            return;
+        } else if (status.equals("idle")) {
+            if (activities.size() > 0) {
+                if (this.status.contains("upgrade rumah")) {
+                    this.status = "upgrade rumah";
+                    return;
+                } else if (this.status.contains("beli barang")) {
+                    this.status = "beli barang";
+                    return;
+                } else {
+                    return;
+                }
+            } else {
+                this.status = status;
+                return;
+            }
+        } else if (this.status.contains("beli barang") && status.equals("beli barang")) {
+            return;
+        } else if (this.status.contains("upgrade rumah") && status.equals("upgrade rumah")) {
+            return;
+        } else {
+            this.status = this.status.concat(", " + status);
+        }
     }
 
     public boolean cekMood() {
@@ -827,7 +851,7 @@ public class Sim {
 
     }
 
-    public void upgradeRumah(Rumah rumah) {
+    public void upgradeRumah(Rumah rumah, World world) {
         // biayaupgrade nya brp ya? blm tau ini masih ngasal dlu biayanya
         int biayaUpgrade = 15; // biaya upgrade untuk menambah satu ruangan
 
@@ -839,7 +863,7 @@ public class Sim {
 
         // tambahkan ruangan baru pada rumah
         // ini blm ada rumah
-        rumah.addRuanganX();
+        rumah.addRuanganX(world);
 
         // kurangi uang sim sesuai biaya upgrade
         setUang(-biayaUpgrade);
@@ -852,7 +876,6 @@ public class Sim {
     public void beliBarang(Objek barang, World world) {
         Random random = new Random();
         int durasi = random.nextInt(30) + 1;
-        setStatus("beli barang");
         if (barang instanceof Non_Makanan) {
             Non_Makanan nm = (Non_Makanan) barang;
             if (world.getCurrentSim().getUang() < nm.getHarga()) {
@@ -862,7 +885,6 @@ public class Sim {
 
             // kurangi uang sim
             setUang(-(nm.getHarga()));
-            // tambahkan objek ke inventory
             System.out.print("\n");
             System.out.println("HOORAY...");
             System.out.println("Anda telah membeli " + nm.getNamaObjek() + " seharga " + nm.getHarga()
@@ -875,7 +897,6 @@ public class Sim {
             }
             // kurangi uang sim
             setUang(-(bahan.getHarga()));
-            // tambahkan objek ke inventory
             System.out.print("\n");
             System.out.println("HOORAY...");
             System.out.println(
@@ -893,6 +914,7 @@ public class Sim {
                     Non_Makanan nm = (Non_Makanan) barang;
                     try {
                         for (int i = 0; i < durasi; i++) {
+                            setStatus("beli barang");
                             Thread.sleep(1000);
                             world.getTime().updateWaktu(1);
                             activities.replace(codeKey, activities.get(codeKey) - 1);
@@ -905,6 +927,7 @@ public class Sim {
                     Bahan_Makanan bahan = (Bahan_Makanan) barang;
                     try {
                         for (int i = 0; i < durasi; i++) {
+                            setStatus("beli barang");
                             Thread.sleep(1000);
                             world.getTime().updateWaktu(1);
                             activities.replace(codeKey, activities.get(codeKey) - 1);
@@ -914,9 +937,8 @@ public class Sim {
                         e.printStackTrace();
                     }
                 }
-                // System.out.println("\n" + printWaktu(codeKey) + " sudah sampai\n");
-                world.getCurrentSim().setStatus("idle");
                 activities.remove(codeKey);
+                world.getCurrentSim().setStatus("idle");
             }
         });
         thread.start();

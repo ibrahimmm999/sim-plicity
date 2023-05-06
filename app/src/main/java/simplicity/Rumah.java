@@ -20,15 +20,9 @@ public class Rumah {
         daftarNamaRuangan = new ArrayList<String>();
         daftarRuangan = new ArrayList<Ruangan>();
         Ruangan ruang1 = new Ruangan("Ruang 1", new Posisi(new Point(48, 48), new Point(53, 53)));
-        boolean bool = matriks.setDenahRumah(new Point(48, 48), 1);
         daftarRuangan.add(ruang1);
         daftarNamaRuangan.add("Ruang 1");
-        // MASIH KURANG NAMBAHIN BARANG DEFAULT (liat flow permainan di docs)
     }
-
-    // public String getNamaRumah() {
-    // return namaRumah;
-    // }
 
     public Point getKoordinat() {
         return koordinat;
@@ -63,7 +57,7 @@ public class Rumah {
         }
     }
 
-    public void addRuanganX() {
+    public void addRuanganX(World world) {
         Scanner sc = new Scanner(System.in);
         Point kiriAtas;
         String ruanganPatokan;
@@ -136,11 +130,33 @@ public class Rumah {
                 Posisi posisiRuangBaru = new Posisi(kiriAtas,
                         new Point((kiriAtas.getX() + 5), (kiriAtas.getY() + 5)));
                 Ruangan ruangBaru = new Ruangan(ruanganBaru, posisiRuangBaru);
-                daftarRuangan.add(ruangBaru);
-                daftarNamaRuangan.add(ruanganBaru);
-                System.out.print("\n");
-                System.out.println("Hooray...");
-                System.out.println("Rumah berhasil diupgrade dengan tambahan satu ruangan.");
+                Thread thread = new Thread(new Runnable() {
+                    public void run() {
+                        Thread.currentThread().setName("upgrade rumah, (ruangan :" + ruanganBaru + " )");
+                        String codeKey = "upgrade rumah, (ruangan :" + ruanganBaru + " )";
+                        world.getCurrentSim().getActivities().put(codeKey, 18 * 60); // 18 menit
+                        try {
+                            for (int i = 0; i < 18 * 60; i++) {
+                                world.getCurrentSim().setStatus("upgrade rumah");
+                                Thread.sleep(1000);
+                                world.getTime().updateWaktu(1);
+                                world.getCurrentSim().getActivities().replace(codeKey,
+                                        world.getCurrentSim().getActivities().get(codeKey) - 1);
+                            }
+                            daftarRuangan.add(ruangBaru);
+                            daftarNamaRuangan.add(ruanganBaru);
+                            System.out.print("\n");
+                            System.out.println("Hooray...");
+                            System.out.println("Rumah berhasil diupgrade dengan tambahan satu ruangan.");
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        world.getCurrentSim().getActivities().remove(codeKey);
+                        world.getCurrentSim().setStatus("idle");
+                    }
+                });
+                thread.start();
+
                 break;
             } else {
                 System.out.println(
