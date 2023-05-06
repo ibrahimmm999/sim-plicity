@@ -235,9 +235,24 @@ public class Game {
                             System.out.print("titik Y : ");
                             int y = scanner.nextInt();
                             Point kiriAtas = new Point(x, y);
-                            sim.getRuanganSim().moveObject(sim.getRuanganSim().getListObjek().get(objek).getPosisi(),
-                                    kiriAtas,
-                                    false, sim.getInventory());
+                            System.out.println("Mau pasang : ");
+                            System.out.println("1. Vertical");
+                            System.out.println("2. Horizontal");
+                            System.out.print("Masukkan nomor yang ingin dipilih :");
+                            String noPilihan = scanner.nextLine();
+                            if (noPilihan.equals("1")) {
+                                sim.getRuanganSim().moveObject(
+                                        sim.getRuanganSim().getListObjek().get(objek).getPosisi(),
+                                        kiriAtas,
+                                        true, sim.getInventory());
+                            } else if (noPilihan.equals("2")) {
+                                sim.getRuanganSim().moveObject(
+                                        sim.getRuanganSim().getListObjek().get(objek).getPosisi(),
+                                        kiriAtas,
+                                        false, sim.getInventory());
+                            } else {
+                                System.out.println("Masukkan nomor yang benar");
+                            }
 
                             scanner.nextLine();
                             objekDitemukan = true;
@@ -292,15 +307,30 @@ public class Game {
                                 System.out.print("titik Y : ");
                                 int y = scanner.nextInt();
                                 System.out.print("\n");
+                                System.out.println("Mau pasang : ");
+                                System.out.println("1. Vertical");
+                                System.out.println("2. Horizontal");
+                                System.out.print("Masukkan nomor yang ingin dipilih :");
+                                String noPilihan = scanner.nextLine();
+
                                 // Non_Makanan barangDipilih
                                 Non_Makanan objekDipilih;
                                 for (Entry<Object, Integer> entry : sim.getInventory().getInventory().entrySet()) {
                                     if (entry.getKey() instanceof Non_Makanan) {
                                         objekDipilih = (Non_Makanan) entry.getKey();
                                         if (objekDipilih.getNamaObjek().equals(objek)) {
-                                            sim.getRuanganSim().addObject(objekDipilih, new Point(x, y), false,
-                                                    sim.getInventory());
-                                            break;
+                                            if (noPilihan.equals("1")) {
+                                                sim.getRuanganSim().addObject(objekDipilih, new Point(x, y), true,
+                                                        sim.getInventory());
+                                                break;
+                                            } else if (noPilihan.equals("2")) {
+                                                sim.getRuanganSim().addObject(objekDipilih, new Point(x, y), false,
+                                                        sim.getInventory());
+                                                break;
+
+                                            } else {
+                                                System.out.println("Masukkan nomor yang benar");
+                                            }
                                         } else {
                                         }
                                     }
