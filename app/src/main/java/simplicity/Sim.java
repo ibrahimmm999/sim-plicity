@@ -1087,8 +1087,14 @@ public class Sim {
             Posisi posisiMejaKursi = mejaKursi.getPosisi();
             System.out.println("Sim berdoa di meja kursi pada posisi " + posisiMejaKursi.cetakPosisi());
             System.out.println("Sim sedang berdoa....");
-            world.getTime().delayWaktu(2);
-            world.getTime().updateWaktu(2);
+            // world.getTime().delayWaktu(2);
+            // world.getTime().updateWaktu(2);
+            for(int i = 0; i < 2; i++){
+                world.getTime().delayWaktu(1);
+                world.getTime().updateWaktu(1);
+                System.out.print("seperti biasa ya tuhan amin...");
+            }
+            System.out.print("\n");
             setStatus("idle");
         } else {
             System.out.println("Sim tidak menemukan meja kursi di ruangan ini");
@@ -1129,20 +1135,34 @@ public class Sim {
                 String posisi = singleBed.getPosisi().cetakPosisi();
                 System.out.println("Sim merapikan Single Bed pada posisi " + posisi);
                 System.out.println("Sim sedang merapikan Single Bed....");
-                world.getTime().delayWaktu(10);
-                world.getTime().updateWaktu(10);
+                for(int i = 0; i < 10; i++){
+                    world.getTime().delayWaktu(1);
+                    world.getTime().updateWaktu(1);
+                    System.out.print("srett...");
+                }
+                System.out.print("\n");
             } else if (queenSizeBed != null) {
                 String posisi = queenSizeBed.getPosisi().cetakPosisi();
                 System.out.println("Sim merapikan Queen Size Bed pada posisi " + posisi);
                 System.out.println("Sim sedang merapikan Queen Size Bed....");
-                world.getTime().delayWaktu(10);
-                world.getTime().updateWaktu(10);
+                for(int i = 0; i < 10; i++){
+                    world.getTime().delayWaktu(1);
+                    world.getTime().updateWaktu(1);
+                    System.out.print("srett...");
+                }
+                System.out.print("\n");
             } else if (kingSizeBed != null) {
                 String posisi = kingSizeBed.getPosisi().cetakPosisi();
                 System.out.println("Sim merapikan Queen Size Bed pada posisi " + posisi);
                 System.out.println("Sim sedang merapikan Queen Size Bed....");
                 world.getTime().delayWaktu(10);
                 world.getTime().updateWaktu(10);
+                for(int i = 0; i < 10; i++){
+                    world.getTime().delayWaktu(1);
+                    world.getTime().updateWaktu(1);
+                    System.out.print("srett...");
+                }
+                System.out.print("\n");
             }
 
             setMood(5);
@@ -1167,8 +1187,13 @@ public class Sim {
             System.out.println("SIM sedang meditasi...");
             setKekenyangan(-5);
             setMood(5);
-            world.getTime().delayWaktu(10);
-            world.getTime().updateWaktu(10);
+
+            for(int i = 0; i < 10; i++){
+                world.getTime().delayWaktu(1);
+                world.getTime().updateWaktu(1);
+                System.out.print("namaste...");
+            }
+            System.out.print("\n");
             if (!(cekMood())) {
                 // MATI
                 world.removeSimDanRumah(this);
@@ -1208,8 +1233,12 @@ public class Sim {
                     sim.setStatus("socialize");
                     this.setStatus("socialize");
                     System.out.println("Kedua SIM sedang ngobrol...");
-                    world.getTime().delayWaktu(10);
-                    world.getTime().updateWaktu(10);
+                    for(int i = 0; i < 10; i++){
+                        world.getTime().delayWaktu(1);
+                        world.getTime().updateWaktu(1);
+                        System.out.print("was wes wos...");
+                    }
+                    System.out.print("\n");
                     System.out.println("Udah selesai ngobrol");
                     sim.setStatus("idle");
                     this.setStatus("idle");
@@ -1247,8 +1276,13 @@ public class Sim {
             String posisiToilet = toilet.getPosisi().cetakPosisi();
             System.out.println("Sim membersihkan toilet pada posisi " + posisiToilet);
             System.out.println("Sim sedang membersihkan toilet....");
-            world.getTime().delayWaktu(10);
-            world.getTime().updateWaktu(10);
+
+            for(int i = 0; i < 10; i++){
+                world.getTime().delayWaktu(1);
+                world.getTime().updateWaktu(1);
+                System.out.print("srekk...");
+            }
+            System.out.print("\n");
 
             setKekenyangan(-10);
             if (!(cekKekenyangan())) {
@@ -1288,8 +1322,12 @@ public class Sim {
             String posisiMejaKursi = mejaKursi.getPosisi().cetakPosisi();
             System.out.println("Sim belajar di meja kursi pada posisi " + posisiMejaKursi);
             System.out.println("Sim sedang belajar....");
-            world.getTime().delayWaktu(10);
-            world.getTime().updateWaktu(10);
+            for(int i = 0; i < 10; i++){
+                world.getTime().delayWaktu(1);
+                world.getTime().updateWaktu(1);
+                System.out.print("stress...");
+            }
+            System.out.print("\n");
             setKekenyangan(-10);
             setMood(5);
             if (!(cekMood())) {
@@ -1341,8 +1379,13 @@ public class Sim {
             String posisiMejaKursi = mejaKursi.getPosisi().cetakPosisi();
             System.out.println("Sim bermain game di meja kursi pada posisi " + posisiMejaKursi);
             System.out.println("Sim sedang ngegame....");
-            world.getTime().delayWaktu(10);
-            world.getTime().updateWaktu(10);
+
+            for(int i = 0; i < 10; i++){
+                world.getTime().delayWaktu(1);
+                world.getTime().updateWaktu(1);
+                System.out.print("gg gemink...");
+            }
+            System.out.print("\n");
             setMood(5);
             setStatus("idle");
             System.out.println("Sim sudah selesai main game");
