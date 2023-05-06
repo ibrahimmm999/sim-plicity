@@ -21,12 +21,12 @@ public class Game {
     }
 
     public static void help2() {
-        System.out.println("======= MENU UTAMA =======");
-        System.out.println("Silakan pilih nomor menu : ");
-        System.out.println("1. start");
-        System.out.println("2. help");
-        System.out.println("3. exit");
-        System.out.print("\n");
+        System.out.println(ANSI_GREEN + "======= MENU HELP =======");
+        System.out.println(ANSI_GREEN + "Silakan pilih nomor menu : ");
+        System.out.println(ANSI_GREEN + "1. start \t \t : command yang berguna untuk memulai permainan Simplicity");
+        System.out.println(ANSI_GREEN + "2. help \t \t : command yang berguna untuk menampilkan arahan bermain game");
+        System.out.println(ANSI_GREEN + "3. exit \t \t : command yang berguna untuk keluar dari permaianan");
+        System.out.print(ANSI_RESET + "\n");
     }
 
     public static void showMenu() {
@@ -48,8 +48,36 @@ public class Game {
         System.out.println("13. exit");
     }
 
+    public static void showMenuHelp() {
+        System.out.print("\n");
+        System.out.println(ANSI_GREEN + "=========== MENU HELP===========");
+        System.out.println(ANSI_GREEN + "Silakan pilih nomor menu : ");
+        System.out.println(ANSI_GREEN + "1. view sim info \t \t: Command yang menunjukkan informasi umum mengenai Sim");
+        System.out.println(
+                ANSI_GREEN + "2. view current location \t: Command yang menunjukkan keberadaan lokasi Sim saat ini");
+        System.out.println(
+                ANSI_GREEN + "3. view inventory \t \t: Command yang menunjukkan isi inventory yang dimiliki Sim");
+        System.out.println(ANSI_GREEN
+                + "4. upgrade house \t \t: Command yang berguna untuk melakukan penambahan ruangan pada rumah");
+        System.out.println(ANSI_GREEN + "5. move room \t \t \t: Command yang berguna agar Sim dapat berpindah ruangan");
+        System.out.println(ANSI_GREEN
+                + "6. edit room \t \t \t: Command yang berguna untuk membeli barang, memindahkan barang, memasang barang, dan remove barang");
+        System.out
+                .println(ANSI_GREEN + "7. add sim \t \t \t: Command yang berguna untuk menambahkan Sim dalam world. ");
+        System.out.println(
+                ANSI_GREEN + "8. change sim \t \t \t: Command yang berguna untuk mengubah Sim yang sedang dimainkan");
+        System.out.println(ANSI_GREEN
+                + "9. list object \t \t \t: Command yang berguna untuk menampilkan objek-objek dalam sebuah ruangan");
+        System.out.println(ANSI_GREEN + "10. go to object \t \t: Command yang berguna untuk berpindah objek tertentu");
+        System.out.println(ANSI_GREEN + "11. action \t \t \t: Command yang berguna untuk melakukan aksi-aksi");
+        System.out.println(
+                ANSI_GREEN + "12. help \t \t \t: Command yang berguna untuk memberikan arahan cara bermain Simplicity");
+        System.out.println(ANSI_GREEN + "13. exit \t \t \t: Command yang berguna untuk keluar dari permainan");
+        System.out.print(ANSI_RESET);
+    }
+
     public static void help() {
-        showMenu();
+        showMenuHelp();
     }
 
     public static void viewSimInfo() {
@@ -235,12 +263,12 @@ public class Game {
                             System.out.print("titik Y : ");
                             int y = scanner.nextInt();
                             Point kiriAtas = new Point(x, y);
-                            scanner.nextLine();
-                            System.out.println("Mau rotate atau tidak? ");
+                            System.out.println("\nMau rotate atau tidak? ");
                             System.out.println("1. Ya");
                             System.out.println("2. Tidak");
-                            System.out.print("Masukkan nomor yang ingin dipilih :");
-                            String noPilihan = scanner.nextLine();
+                            System.out.print("\nMasukkan nomor yang ingin dipilih : ");
+                            String noPilihan = scanner.next();
+                            scanner.nextLine();
                             if (noPilihan.equals("1")) {
                                 sim.getRuanganSim().moveObject(
                                         sim.getRuanganSim().getListObjek().get(objek).getPosisi(),
@@ -252,17 +280,12 @@ public class Game {
                                         kiriAtas,
                                         false, sim.getInventory());
                             } else {
-                                System.out.println("Masukkan nomor yang benar");
+                                System.out.println("\nMasukkan nomor yang benar");
                             }
-
-                            scanner.nextLine();
                             objekDitemukan = true;
                         } catch (Exception e) {
-                            throw e;
-                            // System.out.println("Hadeeeeeh...Input koordinat salah\nBarang gagal
-                            // dipindahkan");
-                            // scanner.nextLine();
-                            // break;
+                            System.out.println("\nHadeeeeeh...Input koordinat salah\nBarang gagal dipindahkan");
+                            break;
                         }
 
                     } else {
@@ -811,14 +834,18 @@ public class Game {
 
     public static void banner() {
         System.out.print("\n");
-        System.out.println("█████████████████████████████████████████████████████████████");
-        System.out.println("█▄─█▀▀▀█─▄█▄─▄▄─█▄─▄███─▄▄▄─█─▄▄─█▄─▀█▀─▄█▄─▄▄─███─▄─▄─█─▄▄─█");
-        System.out.println("██─█─█─█─███─▄█▀██─██▀█─███▀█─██─██─█▄█─███─▄█▀█████─███─██─█");
-        System.out.println("▀▀▄▄▄▀▄▄▄▀▀▄▄▄▄▄▀▄▄▄▄▄▀▄▄▄▄▄▀▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▄▄▀▀▀▀▄▄▄▀▀▄▄▄▄▀");
-        System.out.println("████████████████████████████████████████████████████████████████");
-        System.out.println("█─▄▄▄▄█▄─▄█▄─▀█▀─▄█▀▀▀▀▀██▄─▄▄─█▄─▄███▄─▄█─▄▄▄─█▄─▄█─▄─▄─█▄─█─▄█");
-        System.out.println("█▄▄▄▄─██─███─█▄█─██████████─▄▄▄██─██▀██─██─███▀██─████─████▄─▄██");
-        System.out.println("▀▄▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▀▀▀▀▀▀▀▀▄▄▄▀▀▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▄▀▄▄▄▀▀▄▄▄▀▀▀▄▄▄▀▀");
-        System.out.print("\n");
+        System.out.println(ANSI_CYAN + "█████████████████████████████████████████████████████████████");
+        System.out.println(ANSI_CYAN + "█▄─█▀▀▀█─▄█▄─▄▄─█▄─▄███─▄▄▄─█─▄▄─█▄─▀█▀─▄█▄─▄▄─███─▄─▄─█─▄▄─█");
+        System.out.println(ANSI_CYAN + "██─█─█─█─███─▄█▀██─██▀█─███▀█─██─██─█▄█─███─▄█▀█████─███─██─█");
+        System.out.println(ANSI_CYAN + "▀▀▄▄▄▀▄▄▄▀▀▄▄▄▄▄▀▄▄▄▄▄▀▄▄▄▄▄▀▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▄▄▀▀▀▀▄▄▄▀▀▄▄▄▄▀");
+        System.out.println(ANSI_CYAN + "████████████████████████████████████████████████████████████████");
+        System.out.println(ANSI_CYAN + "█─▄▄▄▄█▄─▄█▄─▀█▀─▄█▀▀▀▀▀██▄─▄▄─█▄─▄███▄─▄█─▄▄▄─█▄─▄█─▄─▄─█▄─█─▄█");
+        System.out.println(ANSI_CYAN + "█▄▄▄▄─██─███─█▄█─██████████─▄▄▄██─██▀██─██─███▀██─████─████▄─▄██");
+        System.out.println(ANSI_CYAN + "▀▄▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▀▀▀▀▀▀▀▀▄▄▄▀▀▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▄▀▄▄▄▀▀▄▄▄▀▀▀▄▄▄▀▀");
+        System.out.print(ANSI_RESET + "\n");
     }
+
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_GREEN = "\u001B[32m";
 }
