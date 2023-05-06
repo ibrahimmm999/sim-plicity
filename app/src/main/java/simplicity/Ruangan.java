@@ -11,7 +11,7 @@ public class Ruangan implements Placeable {
     private Posisi posisi;
     private HashMap<String, Non_Makanan> listObjek;
     private Matriks matriks;
-    String[] listPosisiObjek = new String[1000000];
+    String[] listPosisiObjek = new String[20000];
 
     public Ruangan(String namaRuangan, Posisi posisi) {
         this.namaRuangan = namaRuangan;
@@ -123,7 +123,11 @@ public class Ruangan implements Placeable {
     }
 
     public boolean checkEmptyPosisi(Posisi posisi) {
-        return (matriks.checkAvailability(posisi.getKiriAtas(), posisi.getKananBawah()));
+        if (posisi.getKananBawah().getX() > 5 || posisi.getKananBawah().getY() > 5) {
+            return false;
+        } else {
+            return (matriks.checkAvailability(posisi.getKiriAtas(), posisi.getKananBawah()));    
+        }
     }
 
     public Matriks getMatriks() {
@@ -187,7 +191,6 @@ public class Ruangan implements Placeable {
         int z = (x * 1 + y * 2) * (x + y);
         String namaObjek = listPosisiObjek[z];
         inventory.addInventory(listObjek.get(namaObjek));
-        z = 999;
         Point point = new Point(z, z);
         Posisi posisi = new Posisi(point, point);
         listObjek.get(namaObjek).setPosisi(posisi);
@@ -201,15 +204,22 @@ public class Ruangan implements Placeable {
         y = posisiAwal.getKiriAtas().getY();
         z = (x * 1 + y * 2) * (x + y);
         String namaObjek = listPosisiObjek[z];
+        int length, width;
 
-        int length = listObjek.get(namaObjek).getPanjang();
-        int width = listObjek.get(namaObjek).getLebar();
+        if(isRotated) { //isRotated == true (dimensi dibalik, dirotasi)
+            length = listObjek.get(namaObjek).getLebar();
+            width = listObjek.get(namaObjek).getPanjang(); 
+        } else {
+            length = listObjek.get(namaObjek).getPanjang();
+            width = listObjek.get(namaObjek).getLebar();
+        }
         Point kananBawah = new Point(koordinatAkhir.getX() + length - 1, koordinatAkhir.getY() + width - 1);
         Posisi posisiAkhir = new Posisi(koordinatAkhir, kananBawah);
         Non_Makanan objek = listObjek.get(namaObjek);
-
+        
+        removeObject(posisiAwal, inventory);
+        
         if (checkEmptyPosisi(posisiAkhir)) {
-            removeObject(posisiAwal, inventory);
             addObject(objek, koordinatAkhir, isRotated, inventory);
             System.out.println("Barang berhasil dipindah");
         } else {
