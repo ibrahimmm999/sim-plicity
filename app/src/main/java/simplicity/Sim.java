@@ -102,7 +102,6 @@ public class Sim {
         }
     }
 
-    // pekerjaan harusnya dimasukin ke array dulu
     public Pekerjaan getRandomPekerjaan() {
         Pekerjaan[] daftarPekerjaan = Pekerjaan.getAllPekerjaan();
         Random random = new Random();
@@ -246,35 +245,29 @@ public class Sim {
 
     public boolean cekMood() {
         if (mood <= 0) {
-            // tindakan mati karna depresi
             System.out.println("\nSim ini sudah mati karena depresi.");
             return false; // mati
 
         } else {
             return true;
         }
-        // implementasi lainnya
     }
 
     public boolean cekKesehatan() {
         if (kesehatan <= 0) {
-            // tindakan mati karna sakit
             System.out.println("\nSim ini sudah mati karena sakit.");
             return false;
 
         }
         return true;
-        // implementasi lainnya
     }
 
     public boolean cekKekenyangan() {
         if (kekenyangan <= 0) {
-            // tindakan mati karna kelaparan
             System.out.println("\nSim ini sudah mati karena kelaparan.");
             return false;
         }
         return true;
-        // implementasi lainnya
     }
 
     public void kerja(World world) {
@@ -306,9 +299,7 @@ public class Sim {
                         }
                         System.out.print("\n");
                         System.out.println("sim sudah bekerja selama " + waktuKerjaSim + " detik.");
-                        // CEK MATI
                         if (!(cekMood())) {
-                            // MATI
                             world.removeSimDanRumah(this);
                             Game.changeSim();
                             if (world.getListSim().size() > 0) {
@@ -335,7 +326,6 @@ public class Sim {
                         System.out.println("Masukkan input yang benar");
                     }
                 } catch (Exception e) {
-                    // TODO: handle exception
                     System.out.println("Input durasi salah");
                 }
 
@@ -376,7 +366,6 @@ public class Sim {
                 }
 
             } catch (Exception e) {
-                // TODO: handle exception
                 System.out.println("Input durasi salah");
             }
         }
@@ -534,7 +523,6 @@ public class Sim {
             setMood(-5);
         }
         if (!(cekMood())) {
-            // MATI
             world.removeSimDanRumah(this);
             Game.changeSim();
             if (world.getListSim().size() > 0) {
@@ -586,7 +574,6 @@ public class Sim {
             if (listStringInventory.contains(object)) {
                 for (int i = 0; i < listStringInventory.size(); i++) {
                     if (listStringInventory.get(i).equals(object)) {
-                        // System.out.println("HEHEH");
                         inventory.getInventory().remove((Object) listObjek.get(i));
                         break;
                     }
@@ -754,13 +741,10 @@ public class Sim {
 
     public void berkunjung(Rumah now, Rumah tujuan, World world) {
         int waktuTempuh;
-        // this.getRumah() maksudnya buat rumah sim yang sedang dimainkan
         if (now.getPemilikRumah().getNamaLengkap().equals(tujuan.getPemilikRumah().getNamaLengkap())) {
             waktuTempuh = 0;
             System.out.println("Sim sudah berada di rumah tersebut!");
         } else {
-            // getRumah yang disini maksudnya rumah nya si sim yg dimainkan
-            // kurang tau gmn buatnya jadi aku buat this.getRumah() aja dulu
             waktuTempuh = (int) Math
                     .round(Math.sqrt(Math.pow(tujuan.getKoordinat().getX() - koordinatPosisiSim.getX(), 2)
                             + Math.pow(tujuan.getKoordinat().getY() - koordinatPosisiSim.getY(), 2)));
@@ -777,7 +761,6 @@ public class Sim {
                 setMood(10);
                 setKekenyangan(-10);
             }
-            // tujuan.masukRumah(now, tujuan.getKoordinat());
             setRumahSim(tujuan);
             setRuanganSim(tujuan.getRuangan("Ruang Utama"));
             setKoordinatPosisiSim(tujuan.getKoordinat());

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 public class Rumah {
-    // private String namaRumah;
     private Point koordinat;
     private ArrayList<String> daftarNamaRuangan;
     private ArrayList<Ruangan> daftarRuangan;
@@ -13,7 +12,6 @@ public class Rumah {
     private Matriks matriks;
 
     public Rumah(Point koordinat, Sim pemilik) {
-        // this.namaRumah = namaRumah;
         this.koordinat = koordinat;
         this.pemilik = pemilik;
         matriks = new Matriks(96, 96);
@@ -246,10 +244,6 @@ public class Rumah {
         }
         return true;
     }
-
-    // public void masukRumah(Rumah now, Point koordinat) {
-    // now.koordinat = koordinat;
-    // }
 
     public Sim getPemilikRumah() {
         return pemilik;

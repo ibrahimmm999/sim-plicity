@@ -720,7 +720,6 @@ public class Game {
         try {
             while (!a) {
                 try {
-                    // System.out.println("=== MENU AWAL ====");
                     System.out.print("Masukkan nomor perintah : ");
                     command = scanner.nextLine();
                     switch (command) {
@@ -844,5 +843,4 @@ public class Game {
         System.out.println("  \\___||____||___|___|       |__|  |_____||____\\____||____|  |__|  |____/ ");
         System.out.print("\n");
     }
-
 }
