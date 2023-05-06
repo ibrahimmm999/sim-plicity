@@ -834,15 +834,22 @@ public class Game {
 
     public static void banner() {
         System.out.print("\n");
-        System.out.println(ANSI_CYAN + "█████████████████████████████████████████████████████████████");
-        System.out.println(ANSI_CYAN + "█▄─█▀▀▀█─▄█▄─▄▄─█▄─▄███─▄▄▄─█─▄▄─█▄─▀█▀─▄█▄─▄▄─███─▄─▄─█─▄▄─█");
-        System.out.println(ANSI_CYAN + "██─█─█─█─███─▄█▀██─██▀█─███▀█─██─██─█▄█─███─▄█▀█████─███─██─█");
-        System.out.println(ANSI_CYAN + "▀▀▄▄▄▀▄▄▄▀▀▄▄▄▄▄▀▄▄▄▄▄▀▄▄▄▄▄▀▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▄▄▀▀▀▀▄▄▄▀▀▄▄▄▄▀");
-        System.out.println(ANSI_CYAN + "████████████████████████████████████████████████████████████████");
-        System.out.println(ANSI_CYAN + "█─▄▄▄▄█▄─▄█▄─▀█▀─▄█▀▀▀▀▀██▄─▄▄─█▄─▄███▄─▄█─▄▄▄─█▄─▄█─▄─▄─█▄─█─▄█");
-        System.out.println(ANSI_CYAN + "█▄▄▄▄─██─███─█▄█─██████████─▄▄▄██─██▀██─██─███▀██─████─████▄─▄██");
-        System.out.println(ANSI_CYAN + "▀▄▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▀▀▀▀▀▀▀▀▄▄▄▀▀▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▄▀▄▄▄▀▀▄▄▄▀▀▀▄▄▄▀▀");
-        System.out.print(ANSI_RESET + "\n");
+        System.out.println(" __    __    ___  _        __   ___   ___ ___    ___      ______   ___    ");
+        System.out.println("|  |__|  |  /  _]| |      /  ] /   \\ |   |   |  /  _]    |      | /   \\   ");
+        System.out.println("|  |  |  | /  [_ | |     /  / |     || _   _ | /  [_     |      ||     |  ");
+        System.out.println("|  |  |  ||    _]| |___ /  /  |  O  ||  \\_/  ||    _]    |_|  |_||  O  |  ");
+        System.out.println("|  `  '  ||   [_ |     /   \\_ |     ||   |   ||   [_       |  |  |     |  ");
+        System.out.println(" \\      / |     ||     \\     ||     ||   |   ||     |      |  |  |     |  ");
+        System.out.println("  \\_/\\_/  |_____||_____|\\____| \\___/ |___|___||_____|      |__|   \\___/   ");
+        System.out.println("                                                                          ");
+        System.out.println("  _____ ____  ___ ___         ____  _      ____   __  ____  ______  __ __ ");
+        System.out.println(" / ___/|    ||   |   |       |    \\| |    |    | /  ]|    ||      ||  |  |");
+        System.out.println("(   \\_  |  | | _   _ | _____ |  o  ) |     |  | /  /  |  | |      ||  |  |");
+        System.out.println(" \\__  | |  | |  \\_/  ||     ||   _/| |___  |  |/  /   |  | |_|  |_||  ~  |");
+        System.out.println(" /  \\ | |  | |   |   ||_____||  |  |     | |  /   \\_  |  |   |  |  |___, |");
+        System.out.println(" \\    | |  | |   |   |       |  |  |     | |  \\     | |  |   |  |  |     |");
+        System.out.println("  \\___||____||___|___|       |__|  |_____||____\\____||____|  |__|  |____/ ");
+        System.out.print("\n");
     }
 
     public static final String ANSI_CYAN = "\u001B[36m";
