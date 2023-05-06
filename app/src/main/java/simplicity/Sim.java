@@ -863,7 +863,7 @@ public class Sim {
 
     public void upgradeRumah(Rumah rumah, World world) {
         // biayaupgrade nya brp ya? blm tau ini masih ngasal dlu biayanya
-        int biayaUpgrade = 15; // biaya upgrade untuk menambah satu ruangan
+        int biayaUpgrade = 1500; // biaya upgrade untuk menambah satu ruangan
 
         // cek apakah sim memiliki cukup uang untuk upgrade
         if (uang < biayaUpgrade) {
