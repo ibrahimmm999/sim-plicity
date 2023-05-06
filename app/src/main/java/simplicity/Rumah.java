@@ -16,12 +16,13 @@ public class Rumah {
         // this.namaRumah = namaRumah;
         this.koordinat = koordinat;
         this.pemilik = pemilik;
-        matriks = new Matriks(98, 98);
+        matriks = new Matriks(96, 96);
+        matriks.setDenahRumah(new Point(48, 48), 1);
         daftarNamaRuangan = new ArrayList<String>();
         daftarRuangan = new ArrayList<Ruangan>();
-        Ruangan ruang1 = new Ruangan("Ruang 1", new Posisi(new Point(48, 48), new Point(53, 53)));
+        Ruangan ruang1 = new Ruangan("Ruang Utama", new Posisi(new Point(48, 48), new Point(53, 53)));
         daftarRuangan.add(ruang1);
-        daftarNamaRuangan.add("Ruang 1");
+        daftarNamaRuangan.add("Ruang Utama");
     }
 
     public Point getKoordinat() {
@@ -115,7 +116,13 @@ public class Rumah {
                 if (berhasilEkspansi) {
                     break;
                 } else {
-                    System.out.println("Harap masukkan sisi ekspansi yang valid");
+                    if (matriks.availabilityKelilingRuangan(titikRuangPenanda)) {
+                        System.out.println("Harap masukkan sisi ekspansi yang lain. Sisi tersebut sudah ditempati ruangan.");
+                    } else {
+                        System.out.println("Seluruh sisi ruangan tersebut penuh, tidak bisa dilakukan ekspansi. Harap memilih ruangan lain sebagai patokan");
+                        addRuanganX(world);
+                    }
+                    
                 }
             } else {
                 System.out.println("\nMasukan tidak valid, harap masukkan sisi ekspansi yang valid...");
@@ -130,6 +137,8 @@ public class Rumah {
                 Posisi posisiRuangBaru = new Posisi(kiriAtas,
                         new Point((kiriAtas.getX() + 5), (kiriAtas.getY() + 5)));
                 Ruangan ruangBaru = new Ruangan(ruanganBaru, posisiRuangBaru);
+                daftarRuangan.add(ruangBaru);
+                daftarNamaRuangan.add(ruanganBaru);
                 Thread thread = new Thread(new Runnable() {
                     public void run() {
                         Thread.currentThread().setName("upgrade rumah, (ruangan :" + ruanganBaru + " )");
