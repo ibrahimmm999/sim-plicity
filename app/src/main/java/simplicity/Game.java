@@ -25,7 +25,7 @@ public class Game {
         System.out.println("Silakan pilih nomor menu : ");
         System.out.println("1. start \t \t : command yang berguna untuk memulai permainan Simplicity");
         System.out.println("2. help \t \t : command yang berguna untuk menampilkan arahan bermain game");
-        System.out.println("3. exit \t \t : command yang berguna untuk keluar dari permaianan");
+        System.out.println("3. exit \t \t : command yang berguna untuk keluar dari permaianan\n");
 
     }
 
