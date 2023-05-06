@@ -209,9 +209,9 @@ public class Ruangan implements Placeable {
         Non_Makanan objek = listObjek.get(namaObjek);
 
         if (checkEmptyPosisi(posisiAkhir)) {
+            removeObject(posisiAwal, inventory);
             addObject(objek, koordinatAkhir, isRotated, inventory);
             System.out.println("Barang berhasil dipindah");
-            removeObject(posisiAwal, inventory);
         } else {
             addObject(objek, posisiAwal.getKiriAtas(), false, inventory);
             System.out.println("Gagal memindah objek karena koordinat sudah terpakai");
