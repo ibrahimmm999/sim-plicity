@@ -139,8 +139,6 @@ public class Rumah {
                 Posisi posisiRuangBaru = new Posisi(kiriAtas,
                         new Point((kiriAtas.getX() + 5), (kiriAtas.getY() + 5)));
                 Ruangan ruangBaru = new Ruangan(ruanganBaru, posisiRuangBaru);
-                daftarRuangan.add(ruangBaru);
-                daftarNamaRuangan.add(ruanganBaru);
                 Thread thread = new Thread(new Runnable() {
                     public void run() {
                         Thread.currentThread().setName("upgrade rumah, (ruangan :" + ruanganBaru + " )");
