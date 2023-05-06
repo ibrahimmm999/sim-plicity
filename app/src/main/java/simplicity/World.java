@@ -64,6 +64,7 @@ public class World {
                 }
                 if (checkKoordinatAvailability(x, y)) {
                     rumah = new Rumah(new Point(x, y), sim);
+                    sim.setKoordinatPosisiSim(rumah.getKoordinat());
                     sim.setRumahSim(rumah);
                     sim.setRuanganSim(rumah.getRuangan("Ruang Utama"));
                     sim.setPosisiSim(rumah.getRuangan("Ruang Utama").getPosisi());
@@ -141,6 +142,7 @@ public class World {
                     }
                     if (checkKoordinatAvailability(x, y)) {
                         rumah = new Rumah(new Point(x, y), sim);
+                        sim.setKoordinatPosisiSim(rumah.getKoordinat());
                         sim.setRumahSim(rumah);
                         sim.setRuanganSim(rumah.getRuangan("Ruang Utama"));
                         sim.setPosisiSim(rumah.getRuangan("Ruang Utama").getPosisi());

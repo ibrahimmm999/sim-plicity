@@ -117,12 +117,14 @@ public class Rumah {
                     break;
                 } else {
                     if (matriks.availabilityKelilingRuangan(titikRuangPenanda)) {
-                        System.out.println("Harap masukkan sisi ekspansi yang lain. Sisi tersebut sudah ditempati ruangan.");
+                        System.out.println(
+                                "Harap masukkan sisi ekspansi yang lain. Sisi tersebut sudah ditempati ruangan.");
                     } else {
-                        System.out.println("Seluruh sisi ruangan tersebut penuh, tidak bisa dilakukan ekspansi. Harap memilih ruangan lain sebagai patokan");
+                        System.out.println(
+                                "Seluruh sisi ruangan tersebut penuh, tidak bisa dilakukan ekspansi. Harap memilih ruangan lain sebagai patokan");
                         addRuanganX(world);
                     }
-                    
+
                 }
             } else {
                 System.out.println("\nMasukan tidak valid, harap masukkan sisi ekspansi yang valid...");
@@ -247,9 +249,9 @@ public class Rumah {
         return true;
     }
 
-    public void masukRumah(Rumah now, Point koordinat) {
-        now.koordinat = koordinat;
-    }
+    // public void masukRumah(Rumah now, Point koordinat) {
+    // now.koordinat = koordinat;
+    // }
 
     public Sim getPemilikRumah() {
         return pemilik;

@@ -27,6 +27,7 @@ public class Sim {
     private int durasiTotalTidur;
     private boolean cekBelumEEKsetelahMakan;
     private int waktuGantiKerja;
+    private Point koordinatPosisiSim; // koordinat rumah
 
     public Sim(String namaLengkap) {
         this.namaLengkap = namaLengkap;
@@ -127,6 +128,14 @@ public class Sim {
 
     public Ruangan getRuanganSim() {
         return ruanganSim;
+    }
+
+    public Point getKoordinatPosisiSim() {
+        return koordinatPosisiSim;
+    }
+
+    public void setKoordinatPosisiSim(Point point) {
+        koordinatPosisiSim = point;
     }
 
     public void setPosisiSim(Posisi posisiSim) {
@@ -753,8 +762,8 @@ public class Sim {
             // getRumah yang disini maksudnya rumah nya si sim yg dimainkan
             // kurang tau gmn buatnya jadi aku buat this.getRumah() aja dulu
             waktuTempuh = (int) Math
-                    .round(Math.sqrt(Math.pow(tujuan.getKoordinat().getX() - now.getKoordinat().getX(), 2)
-                            + Math.pow(tujuan.getKoordinat().getY() - now.getKoordinat().getY(), 2)));
+                    .round(Math.sqrt(Math.pow(tujuan.getKoordinat().getX() - koordinatPosisiSim.getX(), 2)
+                            + Math.pow(tujuan.getKoordinat().getY() - koordinatPosisiSim.getY(), 2)));
             System.out.println("Sim dalam perjalanan....");
             for (int i = 0; i < waktuTempuh; i++) {
                 world.getTime().delayWaktu(1);
@@ -768,9 +777,10 @@ public class Sim {
                 setMood(10);
                 setKekenyangan(-10);
             }
-            tujuan.masukRumah(now, tujuan.getKoordinat());
+            // tujuan.masukRumah(now, tujuan.getKoordinat());
             setRumahSim(tujuan);
-            setRuanganSim(tujuan.getRuangan("Ruang 1"));
+            setRuanganSim(tujuan.getRuangan("Ruang Utama"));
+            setKoordinatPosisiSim(tujuan.getKoordinat());
             setStatus("idle");
             if (!(cekMood())) {
                 // MATI
