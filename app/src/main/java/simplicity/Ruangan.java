@@ -11,7 +11,7 @@ public class Ruangan implements Placeable {
     private Posisi posisi;
     private HashMap<String, Non_Makanan> listObjek;
     private Matriks matriks;
-    String[] listPosisiObjek = new String[217];
+    String[] listPosisiObjek = new String[1000000];
 
     public Ruangan(String namaRuangan, Posisi posisi) {
         this.namaRuangan = namaRuangan;
